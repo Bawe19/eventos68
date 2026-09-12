@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -16,19 +17,25 @@
 
     <style>
         :root {
-            --primary: #b45309;
-            --primary-hover: #92400e;
-            --dark: #0f172a;
-            --dark-surface: #1e293b;
-            --light-bg: #f8fafc;
-            --accent: #d97706;
-            --card-border: #e2e8f0;
+            --brand-black: #1C1B19;
+            --brand-dark: #262523;
+            --brand-cream: #F5EEE3;
+            --brand-cream-light: #FAF6F0;
+            --brand-cream-subtle: #F1E8DC;
+            --brand-gold: #C8860A;
+            --brand-gold-hover: #A86E06;
+            --brand-gold-subtle: rgba(200, 134, 10, 0.12);
+            --brand-border: #E8E2D8;
+            --brand-text: #2B2927;
+            --brand-muted: #736E67;
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--light-bg);
-            color: #334155;
+            background-color: var(--brand-cream-light);
+            background-image: radial-gradient(rgba(38, 37, 35, 0.03) 1px, transparent 0);
+            background-size: 24px 24px;
+            color: var(--brand-text);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -38,107 +45,191 @@
             font-family: 'Playfair Display', serif;
         }
 
-        .navbar-custom {
-            background-color: var(--dark);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            padding: 0.85rem 0;
+        /* Top Notification Bar */
+        .topbar-brand {
+            background-color: var(--brand-black);
+            color: #CFCAC2;
+            font-size: 0.8rem;
+            letter-spacing: 0.02em;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
-        .navbar-brand {
+        /* Navbar Header */
+        .navbar-brand-custom {
+            background-color: var(--brand-dark);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(200, 134, 10, 0.25);
+        }
+
+        .navbar-brand-img {
+            height: 48px;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
+        .navbar-brand-title {
             font-weight: 800;
-            font-size: 1.5rem;
-            color: #fff !important;
+            font-size: 1.4rem;
+            color: #FFFFFF !important;
             letter-spacing: -0.5px;
         }
 
-        .navbar-brand span {
-            color: var(--accent);
+        .navbar-brand-title span {
+            color: var(--brand-gold);
         }
 
-        .btn-primary-custom {
-            background-color: var(--primary);
-            border-color: var(--primary);
-            color: #fff;
-            font-weight: 600;
-            padding: 0.6rem 1.4rem;
-            border-radius: 8px;
+        .nav-link-custom {
+            color: #D6D1C9 !important;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.5rem 1rem !important;
             transition: all 0.2s ease;
         }
 
-        .btn-primary-custom:hover {
-            background-color: var(--primary-hover);
-            border-color: var(--primary-hover);
-            color: #fff;
-            transform: translateY(-1px);
+        .nav-link-custom:hover {
+            color: var(--brand-gold) !important;
+        }
+
+        .btn-brand-gold {
+            background: linear-gradient(135deg, var(--brand-gold) 0%, #D49826 100%);
+            border: none;
+            color: #FFFFFF !important;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.03em;
+            padding: 0.6rem 1.4rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(200, 134, 10, 0.3);
+            transition: all 0.25s ease;
+        }
+
+        .btn-brand-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(200, 134, 10, 0.45);
+            background: linear-gradient(135deg, #D49826 0%, #E8A835 100%);
+        }
+
+        .btn-brand-dark {
+            background-color: var(--brand-dark);
+            border: 1px solid var(--brand-border);
+            color: #FFFFFF !important;
+            font-weight: 600;
+            border-radius: 50px;
+            padding: 0.6rem 1.4rem;
+            transition: all 0.25s;
+        }
+
+        .btn-brand-dark:hover {
+            background-color: var(--brand-black);
+            border-color: var(--brand-gold);
+            transform: translateY(-2px);
         }
 
         .card-custom {
-            background: #fff;
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
+            background: #FFFFFF;
+            border: 1px solid var(--brand-border);
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(38, 37, 35, 0.04);
+            transition: all 0.3s ease;
         }
 
         .card-custom:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 12px 28px rgba(38, 37, 35, 0.08);
+            border-color: #D6CABA;
         }
 
+        /* Background Pattern with Sellos */
+        .bg-sellos-overlay {
+            position: relative;
+            background-color: var(--brand-dark);
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+
+        .bg-sellos-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("{% static 'images/logos/sello68.jpg' %}");
+            background-repeat: repeat;
+            background-size: 320px;
+            opacity: 0.08;
+            pointer-events: none;
+        }
+
+        /* Footer Styling */
         footer {
             margin-top: auto;
-            background-color: var(--dark);
-            color: #94a3b8;
-            padding: 3rem 0 1.5rem;
+            background-color: var(--brand-black);
+            color: #A39D94;
+            padding: 3.5rem 0 1.5rem;
             font-size: 0.9rem;
+            border-top: 2px solid var(--brand-gold);
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("{% static 'images/logos/sello68.jpg' %}");
+            background-repeat: repeat;
+            background-size: 280px;
+            opacity: 0.03;
+            pointer-events: none;
         }
 
         footer a {
-            color: #cbd5e1;
+            color: #D6D1C9;
             text-decoration: none;
             transition: color 0.2s;
         }
 
         footer a:hover {
-            color: var(--accent);
+            color: var(--brand-gold);
         }
 
         .social-link-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.08);
-            color: #fff;
-            transition: all 0.2s;
-            font-size: 1.1rem;
+            background: rgba(255,255,255,0.06);
+            color: #FFFFFF;
+            border: 1px solid rgba(255,255,255,0.12);
+            transition: all 0.25s ease;
+            font-size: 1.15rem;
         }
 
         .social-link-btn:hover {
-            background: var(--primary);
-            color: #fff;
-            transform: translateY(-2px);
+            background: var(--brand-gold);
+            border-color: var(--brand-gold);
+            color: #FFFFFF;
+            transform: translateY(-3px);
         }
     </style>
     {% block extra_head %}{% endblock %}
 </head>
 <body>
 
-    <!-- Top Bar with Contact Info -->
-    <div class="py-1 bg-black text-white-50 small border-bottom border-secondary border-opacity-25">
+    <!-- Top Contact Bar -->
+    <div class="topbar-brand py-1">
         <div class="container d-flex justify-content-between align-items-center">
-            <div>
-                <a href="{{ EMPRESA_DOMINIO_URL }}" class="text-white-50 text-decoration-none me-3">
-                    <i class="bi bi-globe me-1 text-warning"></i>{{ EMPRESA_DOMINIO }}
+            <div class="d-flex align-items-center gap-3">
+                <a href="{{ EMPRESA_DOMINIO_URL }}" class="text-white-50 text-decoration-none">
+                    <i class="bi bi-globe me-1" style="color:var(--brand-gold);"></i>{{ EMPRESA_DOMINIO }}
                 </a>
+                <span class="text-secondary opacity-50">|</span>
                 <a href="mailto:{{ EMPRESA_EMAIL }}" class="text-white-50 text-decoration-none">
-                    <i class="bi bi-envelope me-1 text-warning"></i>{{ EMPRESA_EMAIL }}
+                    <i class="bi bi-envelope me-1" style="color:var(--brand-gold);"></i>{{ EMPRESA_EMAIL }}
                 </a>
             </div>
             <div class="d-flex align-items-center gap-3">
                 <a href="{{ EMPRESA_INSTAGRAM_LINK }}" target="_blank" class="text-white-50 text-decoration-none" title="Instagram">
-                    <i class="bi bi-instagram me-1 text-warning"></i>{{ EMPRESA_INSTAGRAM }}
+                    <i class="bi bi-instagram me-1 text-danger"></i>{{ EMPRESA_INSTAGRAM }}
                 </a>
                 <a href="{{ EMPRESA_FACEBOOK_LINK }}" target="_blank" class="text-white-50 text-decoration-none" title="Facebook">
                     <i class="bi bi-facebook me-1 text-primary"></i>{{ EMPRESA_FACEBOOK }}
@@ -148,33 +239,34 @@
     </div>
 
     <!-- Navigation Header -->
-    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-brand-custom sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'web:home' %}">
-                <i class="bi bi-fire me-2 text-warning"></i>{{ EMPRESA_NOMBRE }}<span>.lat</span>
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'web:home' %}">
+                <img src="{% static 'images/logos/logoFondoNegro.png' %}" alt="{{ EMPRESA_NOMBRE }}" class="navbar-brand-img" onerror="this.onerror=null; this.src='{% static 'images/logos/logo68principal.jpg' %}';">
+                <span class="navbar-brand-title serif">{{ EMPRESA_NOMBRE }}<span>.lat</span></span>
             </a>
-            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <button class="navbar-toggler text-white border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navMenu">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                     <li class="nav-item">
-                        <a class="nav-link text-white-50 hover-white" href="{% url 'web:home' %}">Inicio</a>
+                        <a class="nav-link nav-link-custom" href="{% url 'web:home' %}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white-50 hover-white" href="{% url 'web:solicitar' %}">Cotizar Evento</a>
+                        <a class="nav-link nav-link-custom" href="{% url 'web:solicitar' %}">Cotizar Evento</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white-50 hover-white" href="/admin/" target="_blank">
-                            <i class="bi bi-shield-lock me-1"></i>Portal Admin
+                        <a class="nav-link nav-link-custom" href="/admin/" target="_blank">
+                            <i class="bi bi-shield-lock me-1" style="color:var(--brand-gold);"></i>Portal Admin
                         </a>
                     </li>
                 </ul>
                 <div class="d-flex align-items-center gap-3">
-                    <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                    <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-3" style="border-color: rgba(255,255,255,0.2);">
                         <i class="bi bi-whatsapp me-1 text-success"></i>WhatsApp: {{ EMPRESA_TELEFONO }}
                     </a>
-                    <a href="{% url 'web:solicitar' %}" class="btn btn-primary-custom btn-sm">
+                    <a href="{% url 'web:solicitar' %}" class="btn btn-brand-gold btn-sm">
                         <i class="bi bi-calculator me-1"></i>Cotizar en Línea
                     </a>
                 </div>
@@ -201,13 +293,16 @@
 
     <!-- Footer -->
     <footer>
-        <div class="container">
+        <div class="container position-relative">
             <div class="row g-4 mb-4">
                 <div class="col-lg-5">
-                    <h5 class="text-white fw-bold serif mb-2">
-                        <i class="bi bi-fire text-warning me-2"></i>{{ EMPRESA_NOMBRE }}
-                    </h5>
-                    <p class="mb-3 text-white-50">{{ EMPRESA_SLOGAN }}. Especialistas en parrilladas gourmet, banquetes para bodas, quinceaños y recepciones corporativas en Costa Rica.</p>
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <img src="{% static 'images/logos/logoFondoNegro.png' %}" alt="{{ EMPRESA_NOMBRE }}" style="height: 44px; object-fit: contain;" onerror="this.onerror=null; this.src='{% static 'images/logos/logo68principal.jpg' %}';">
+                        <h4 class="text-white fw-bold serif mb-0">{{ EMPRESA_NOMBRE }}</h4>
+                    </div>
+                    <p class="mb-4 text-white-50" style="max-width: 420px; font-size: 0.92rem;">
+                        {{ EMPRESA_SLOGAN }}. Especialistas en parrilladas gourmet, carnes a las brasas, banquetes para bodas de gala, celebraciones familiares y eventos corporativos de alto nivel.
+                    </p>
                     <div class="d-flex gap-2">
                         <a href="{{ EMPRESA_INSTAGRAM_LINK }}" target="_blank" class="social-link-btn" title="Instagram {{ EMPRESA_INSTAGRAM }}">
                             <i class="bi bi-instagram"></i>
@@ -215,20 +310,20 @@
                         <a href="{{ EMPRESA_FACEBOOK_LINK }}" target="_blank" class="social-link-btn" title="Facebook {{ EMPRESA_FACEBOOK }}">
                             <i class="bi bi-facebook"></i>
                         </a>
-                        <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank" class="social-link-btn" title="WhatsApp">
-                            <i class="bi bi-whatsapp"></i>
+                        <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank" class="social-link-btn" title="WhatsApp Directo">
+                            <i class="bi bi-whatsapp text-success"></i>
                         </a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <h6 class="text-white fw-bold text-uppercase small mb-3">Canales Oficiales</h6>
+                    <h6 class="text-white fw-bold text-uppercase small mb-3" style="letter-spacing: 0.1em; color: var(--brand-gold) !important;">Canales Oficiales</h6>
                     <ul class="list-unstyled text-white-50 small mb-0">
                         <li class="mb-2">
-                            <i class="bi bi-globe me-2 text-warning"></i>
+                            <i class="bi bi-globe me-2" style="color:var(--brand-gold);"></i>
                             <a href="{{ EMPRESA_DOMINIO_URL }}" target="_blank">{{ EMPRESA_DOMINIO }}</a>
                         </li>
                         <li class="mb-2">
-                            <i class="bi bi-envelope-fill me-2 text-warning"></i>
+                            <i class="bi bi-envelope-fill me-2" style="color:var(--brand-gold);"></i>
                             <a href="mailto:{{ EMPRESA_EMAIL }}">{{ EMPRESA_EMAIL }}</a>
                         </li>
                         <li class="mb-2">
@@ -246,18 +341,21 @@
                     </ul>
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    <h6 class="text-white fw-bold text-uppercase small mb-3">Atención & Cobertura</h6>
-                    <p class="text-white-50 small mb-2"><i class="bi bi-geo-alt-fill me-2 text-warning"></i>{{ EMPRESA_UBICACION }} (Cobertura en todo el Gran Área Metropolitana y zonas aledañas).</p>
-                    <p class="text-white-50 small mb-0"><i class="bi bi-shield-check me-2 text-success"></i>Exclusividad garantizada: Solo atendemos 1 evento por día para garantizar excelencia absoluta.</p>
+                    <h6 class="text-white fw-bold text-uppercase small mb-3" style="letter-spacing: 0.1em; color: var(--brand-gold) !important;">Atención & Cobertura</h6>
+                    <p class="text-white-50 small mb-2"><i class="bi bi-geo-alt-fill me-2" style="color:var(--brand-gold);"></i>{{ EMPRESA_UBICACION }}. Cobertura en todo el Gran Área Metropolitana (San José, Alajuela, Heredia, Cartago) y playas aledañas.</p>
+                    <div class="p-3 mt-3 rounded" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(200, 134, 10, 0.2);">
+                        <small class="d-block text-white fw-semibold mb-1"><i class="bi bi-award-fill me-1" style="color:var(--brand-gold);"></i>Política de Exclusividad</small>
+                        <small class="text-white-50">Solo atendemos 1 evento por día para asegurar servicio impecable y personal dedicado al 100%.</small>
+                    </div>
                 </div>
             </div>
-            <hr class="border-secondary my-4">
+            <hr class="border-secondary border-opacity-25 my-4">
             <div class="d-flex flex-wrap justify-content-between align-items-center text-white-50 small">
                 <div>
-                    &copy; {% now "Y" %} {{ EMPRESA_NOMBRE }}. Todos los derechos reservados.
+                    &copy; {% now "Y" %} <b>{{ EMPRESA_NOMBRE }}</b>. Todos los derechos reservados.
                 </div>
                 <div>
-                    Sitio web oficial: <a href="{{ EMPRESA_DOMINIO_URL }}" target="_blank" class="text-warning fw-semibold">{{ EMPRESA_DOMINIO }}</a>
+                    Sitio web oficial: <a href="{{ EMPRESA_DOMINIO_URL }}" target="_blank" style="color:var(--brand-gold);">{{ EMPRESA_DOMINIO }}</a>
                 </div>
             </div>
         </div>

@@ -1,9 +1,10 @@
 import io
 from decimal import Decimal
-from django.utils import timezone
+from pathlib import Path
+from django.conf import settings
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, HRFlowable
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, HRFlowable, Image as RLImage
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 
@@ -25,12 +26,12 @@ def generar_pdf_cotizacion(cotizacion) -> bytes:
 
     styles = getSampleStyleSheet()
     
-    # Custom Palette - Eventos68 Elegant Amber & Slate
-    c_primary = colors.HexColor('#B45309')    # Warm Amber Gold
-    c_secondary = colors.HexColor('#1E293B')  # Slate Dark
-    c_light = colors.HexColor('#F8FAFC')      # Slate Light
-    c_accent = colors.HexColor('#0F172A')     # Jet Dark
-    c_border = colors.HexColor('#E2E8F0')
+    # Custom Palette - Eventos68 Official Brand Identity
+    c_primary = colors.HexColor('#C8860A')    # Brand Gold
+    c_secondary = colors.HexColor('#1C1B19')  # Brand Charcoal Black
+    c_light = colors.HexColor('#FAF6F0')      # Brand Warm Cream
+    c_accent = colors.HexColor('#262523')     # Deep Espresso
+    c_border = colors.HexColor('#E8E2D8')     # Warm Border Tint
 
     title_style = ParagraphStyle(
         'DocTitle',
@@ -100,10 +101,19 @@ def generar_pdf_cotizacion(cotizacion) -> bytes:
 
     elements = []
 
-    # 1. Header Banner
+    # 1. Header Banner with Official Logo
+    logo_path = Path(settings.BASE_DIR) / 'static' / 'images' / 'logos' / 'logo68principal.jpg'
+    logo_cell = ""
+    if logo_path.exists():
+        try:
+            logo_cell = RLImage(str(logo_path), width=1.1 * inch, height=1.1 * inch)
+        except Exception:
+            logo_cell = ""
+
     header_data = [
         [
-            Paragraph("<b>EVENTOS68</b><br/><font size=8 color='#B45309'>CATERING SERVICE & LOGÍSTICA</font>", title_style),
+            logo_cell if logo_cell else Paragraph("<b>E68</b>", title_style),
+            Paragraph("<b>EVENTOS68</b><br/><font size=8 color='#C8860A'>CATERING SERVICE & LOGÍSTICA</font><br/><font size=7 color='#736E67'>San José, Costa Rica • Tel: +506 6168-0639</font>", title_style),
             Paragraph(
                 "<b>PRESUPUESTO FORMAL</b><br/>"
                 f"<b>Cotización #:</b> EV68-{cotizacion.id:04d}<br/>"
@@ -113,13 +123,14 @@ def generar_pdf_cotizacion(cotizacion) -> bytes:
             )
         ]
     ]
-    t_header = Table(header_data, colWidths=[3.5 * inch, 4.0 * inch])
+    t_header = Table(header_data, colWidths=[1.3 * inch, 3.2 * inch, 3.0 * inch])
     t_header.setStyle(TableStyle([
-        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
+        ('TOPPADDING', (0, 0), (-1, -1), 0),
     ]))
     elements.append(t_header)
-    elements.append(Spacer(1, 10))
+    elements.append(Spacer(1, 8))
     elements.append(HRFlowable(width="100%", thickness=1.5, color=c_primary, spaceAfter=12))
 
     # 2. Client & Event Information Grid

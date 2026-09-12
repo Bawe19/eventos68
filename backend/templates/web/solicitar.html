@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Cotizar Evento | {{ EMPRESA_NOMBRE }}{% endblock %}
 
 {% block content %}
-<div class="py-4 bg-dark text-white mb-4">
-    <div class="container">
-        <span class="text-warning text-uppercase fw-bold small"><i class="bi bi-magic me-1"></i>Cotizador en Línea</span>
+<div class="py-4 position-relative mb-4 text-white" style="background-color: var(--brand-black); border-bottom: 2px solid var(--brand-gold); overflow: hidden;">
+    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('{% static 'images/logos/sello68.jpg' %}'); background-repeat: repeat; background-size: 320px; opacity: 0.12; pointer-events: none;"></div>
+    <div class="container position-relative" style="z-index: 2;">
+        <span class="badge px-3 py-1 rounded-pill mb-2 fw-bold small" style="background: var(--brand-gold-subtle); color: var(--brand-gold); border: 1px solid rgba(200,134,10,0.3);"><i class="bi bi-magic me-1"></i>Cotizador en Línea Eventos68</span>
         <h1 class="serif fw-bold display-6 mb-1 text-white">Solicitud de Presupuesto</h1>
-        <p class="text-white-50 mb-0">Selecciona los servicios para tu evento. Calcularemos la vajilla, mobiliario y presupuesto automáticamente.</p>
+        <p class="text-white-50 mb-0">Selecciona los componentes para tu evento. Calcularemos vajilla, manteles, mesas, impuestos y presupuesto automáticamente.</p>
     </div>
 </div>
 
@@ -245,7 +247,7 @@
                     <h5 class="fw-bold mb-0 serif">¿Listo para generar tu cotización?</h5>
                     <p class="text-muted small mb-0">Recibirás tu presupuesto detallado con desglose de impuestos y PDF oficial al instante.</p>
                 </div>
-                <button type="submit" class="btn btn-primary-custom btn-lg px-5 shadow">
+                <button type="submit" class="btn btn-brand-gold btn-lg px-5 shadow">
                     <i class="bi bi-send-check-fill me-2"></i>Generar y Enviar Cotización
                 </button>
             </div>

@@ -1,92 +1,319 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Inicio | {{ EMPRESA_NOMBRE }}{% endblock %}
 
+{% block extra_head %}
+<style>
+    /* Hero Banner with Sello Background */
+    .hero-sellos-section {
+        position: relative;
+        background-color: var(--brand-black);
+        padding: 5rem 0 6rem;
+        overflow: hidden;
+        border-bottom: 2px solid var(--brand-gold);
+    }
+
+    .hero-sellos-section::before {
+        content: '';
+        position: absolute;
+        top: -50px; left: -50px; right: -50px; bottom: -50px;
+        background-image: url("{% static 'images/logos/sello68.jpg' %}");
+        background-repeat: repeat;
+        background-size: 340px;
+        opacity: 0.12;
+        filter: contrast(110%);
+        pointer-events: none;
+    }
+
+    .hero-sellos-section::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: radial-gradient(circle at 75% 30%, rgba(200, 134, 10, 0.2) 0%, rgba(28, 27, 25, 0.85) 60%, rgba(28, 27, 25, 0.98) 100%);
+        pointer-events: none;
+    }
+
+    .hero-logo-frame {
+        max-width: 320px;
+        border-radius: 20px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        border: 2px solid var(--brand-gold);
+        transition: transform 0.3s ease;
+    }
+
+    .hero-logo-frame:hover {
+        transform: scale(1.02);
+    }
+
+    /* Event Category Image Card */
+    .card-event-type {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        height: 280px;
+        border: 1px solid var(--brand-border);
+        box-shadow: 0 6px 20px rgba(38, 37, 35, 0.06);
+        transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+        display: block;
+        text-decoration: none;
+    }
+
+    .card-event-type img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+
+    .card-event-type-overlay {
+        position: absolute;
+        bottom: 0; left: 0; right: 0; top: 0;
+        background: linear-gradient(to top, rgba(28, 27, 25, 0.92) 0%, rgba(28, 27, 25, 0.4) 50%, rgba(28, 27, 25, 0.1) 100%);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        color: #FFFFFF;
+    }
+
+    .card-event-type:hover img {
+        transform: scale(1.08);
+    }
+
+    .card-event-type:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 36px rgba(38, 37, 35, 0.16);
+        border-color: var(--brand-gold);
+    }
+
+    /* Services Feature Card */
+    .card-service-img {
+        border-radius: 16px;
+        overflow: hidden;
+        background: #FFFFFF;
+        border: 1px solid var(--brand-border);
+        transition: all 0.35s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-service-img:hover {
+        transform: translateY(-6px);
+        border-color: var(--brand-gold);
+        box-shadow: 0 14px 30px rgba(38, 37, 35, 0.08);
+    }
+
+    .card-service-img-top {
+        height: 190px;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .badge-luxury {
+        background-color: var(--brand-gold-subtle);
+        border: 1px solid rgba(200, 134, 10, 0.35);
+        color: var(--brand-gold);
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+        padding: 0.45rem 1rem;
+        border-radius: 50px;
+        display: inline-block;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<!-- Hero Section -->
-<section class="py-5 text-white position-relative" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);">
-    <div class="container py-5">
+<!-- HERO SECTION WITH OFFICIAL SELLO BACKGROUND -->
+<section class="hero-sellos-section">
+    <div class="container position-relative" style="z-index: 2;">
         <div class="row align-items-center g-5">
-            <div class="col-lg-7">
-                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold text-uppercase mb-3">
-                    <i class="bi bi-stars me-1"></i>Servicio Premium de Catering
+            <div class="col-lg-7 text-white">
+                <span class="badge-luxury mb-3">
+                    <i class="bi bi-shield-fill-check me-1"></i>Exclusividad Garantizada: 1 Evento Por Día
                 </span>
-                <h1 class="display-4 fw-extrabold serif text-white mb-3">
-                    Momentos Memorables con <span style="color: var(--accent);">{{ EMPRESA_NOMBRE }}</span>
+                <h1 class="display-4 fw-extrabold serif text-white mb-3" style="line-height: 1.15;">
+                    Momentos Memorables con <span style="color: var(--brand-gold);">{{ EMPRESA_NOMBRE }}</span>
                 </h1>
-                <p class="lead text-light mb-4" style="font-weight: 300;">
-                    Organizamos parrilladas gourmets, bufetes elegantes, banquetes para bodas y recepciones corporativas en Costa Rica. Personaliza tu menú y cotiza en línea en menos de 2 minutos.
+                <p class="lead text-light opacity-90 mb-4" style="font-weight: 300; font-size: 1.15rem; max-width: 580px;">
+                    Catering service gourmet, parrilladas a las brasas, banquetes nupciales y recepciones corporativas en Costa Rica. Cotiza en línea con menaje, mobiliario y transporte incluido.
                 </p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="{% url 'web:solicitar' %}" class="btn btn-primary-custom btn-lg shadow">
-                        <i class="bi bi-file-earmark-spreadsheet me-2"></i>Cotizar mi Evento Ahora
+                    <a href="{% url 'web:solicitar' %}" class="btn btn-brand-gold btn-lg shadow">
+                        <i class="bi bi-calculator me-2"></i>Cotizar mi Evento Ahora
                     </a>
-                    <a href="#servicios" class="btn btn-outline-light btn-lg">
-                        Ver Servicios & Menús
+                    <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank" class="btn btn-outline-light btn-lg rounded-pill px-4" style="border-color: rgba(255,255,255,0.3);">
+                        <i class="bi bi-whatsapp me-2 text-success"></i>WhatsApp Directo
                     </a>
                 </div>
             </div>
-            <div class="col-lg-5">
-                <div class="card card-custom p-4 bg-white text-dark shadow-lg border-0">
-                    <h4 class="fw-bold serif mb-3 text-dark"><i class="bi bi-lightning-charge-fill text-warning me-2"></i>Cotización Express</h4>
-                    <p class="text-muted small">Selecciona tus datos básicos y nuestro calculador automático te entregará tu presupuesto al instante con vajilla y mobiliario incluido.</p>
-                    <ul class="list-unstyled mb-4">
-                        <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Carnes a la parrilla, guarniciones y postres</li>
-                        <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Vajilla, mantelería y cristalería incluida</li>
-                        <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Exclusividad: Solo 1 evento por día garantizado</li>
-                        <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Descarga inmediata del presupuesto en PDF</li>
-                    </ul>
-                    <a href="{% url 'web:solicitar' %}" class="btn btn-dark w-100 py-2 fw-bold">
-                        Empezar Cotización <i class="bi bi-arrow-right ms-1"></i>
-                    </a>
+            
+            <div class="col-lg-5 text-center">
+                <div class="p-3 bg-white d-inline-block hero-logo-frame shadow-lg">
+                    <img src="{% static 'images/logos/logo68principal.jpg' %}" alt="Logo Oficial Eventos68" class="img-fluid rounded-3">
+                    <div class="mt-3 text-dark text-center">
+                        <h6 class="serif fw-bold mb-0 text-uppercase" style="letter-spacing: 0.1em; color: var(--brand-dark);">Eventos68 Catering</h6>
+                        <small class="text-muted d-block">{{ EMPRESA_DOMINIO }} | {{ EMPRESA_TELEFONO }}</small>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Services Preview Section -->
-<section id="servicios" class="py-5">
+<!-- TIPOS DE EVENTO SECTION -->
+<section class="py-5" style="background-color: var(--brand-cream-light);">
     <div class="container py-4">
         <div class="text-center max-w-700 mx-auto mb-5">
-            <h6 class="text-uppercase fw-bold text-primary" style="color: var(--primary) !important;">Nuestras Soluciones</h6>
-            <h2 class="display-6 fw-bold serif">Todo lo que necesitas para tu evento</h2>
-            <p class="text-muted">Cuidamos cada detalle gastronómico y logístico para que disfrutes junto a tus invitados.</p>
+            <span class="badge-luxury mb-2">Celebraciones & Ocasiones</span>
+            <h2 class="display-6 fw-bold serif" style="color: var(--brand-dark);">Tipos de Eventos que Atendemos</h2>
+            <p class="text-muted">Diseñamos propuestas gastronómicas a la medida de tus expectativas para cada fecha inolvidable.</p>
         </div>
 
         <div class="row g-4">
-            {% for s in servicios %}
-            <div class="col-md-4">
-                <div class="card card-custom h-100 p-4">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="bg-warning-subtle text-warning p-3 rounded-circle me-3">
-                            <i class="bi bi-cup-hot-fill fs-4"></i>
-                        </div>
-                        <h5 class="fw-bold mb-0">{{ s.nombre }}</h5>
+            <!-- Bodas -->
+            <div class="col-md-4 col-sm-6">
+                <a href="{% url 'web:solicitar' %}" class="card-event-type">
+                    <img src="{% static 'images/bodas.jpeg' %}" alt="Bodas de Ensueño Eventos68">
+                    <div class="card-event-type-overlay">
+                        <span class="badge bg-warning text-dark fw-bold mb-1 align-self-start">Banquetes de Gala</span>
+                        <h4 class="serif fw-bold mb-1">Bodas de Ensueño</h4>
+                        <small class="opacity-90">Menús exquisitos, protocolo a la mesa y cristalería fina para el día más esperado.</small>
                     </div>
-                    <p class="text-muted small mb-4 flex-grow-1">{{ s.descripcion|default:"Servicio integral garantizado para eventos sociales y corporativos." }}</p>
-                    <div class="border-top pt-3 text-muted small">
-                        <i class="bi bi-check2-circle text-primary me-1"></i> {{ s.detalles.count }} opciones disponibles
+                </a>
+            </div>
+
+            <!-- Cumpleaños & Quinceaños -->
+            <div class="col-md-4 col-sm-6">
+                <a href="{% url 'web:solicitar' %}" class="card-event-type">
+                    <img src="{% static 'images/cumpleanos.jpg' %}" alt="Cumpleaños y Quinceaños">
+                    <div class="card-event-type-overlay">
+                        <span class="badge bg-warning text-dark fw-bold mb-1 align-self-start">Fiestas Sociales</span>
+                        <h4 class="serif fw-bold mb-1">Cumpleaños y 15 Años</h4>
+                        <small class="opacity-90">Ambiente festivo con las mejores parrilladas, guarniciones y mesas de postres.</small>
                     </div>
-                </div>
+                </a>
             </div>
-            {% empty %}
-            <div class="col-12 text-center py-4">
-                <p class="text-muted">Catálogo en proceso de carga inicial.</p>
+
+            <!-- Graduaciones -->
+            <div class="col-md-4 col-sm-6">
+                <a href="{% url 'web:solicitar' %}" class="card-event-type">
+                    <img src="{% static 'images/graduaciones.jpg' %}" alt="Graduaciones">
+                    <div class="card-event-type-overlay">
+                        <span class="badge bg-warning text-dark fw-bold mb-1 align-self-start">Académico</span>
+                        <h4 class="serif fw-bold mb-1">Graduaciones</h4>
+                        <small class="opacity-90">Celebra la culminación de tus metas con banquetes servidos con total distinción.</small>
+                    </div>
+                </a>
             </div>
-            {% endfor %}
+
+            <!-- Corporativos -->
+            <div class="col-md-6">
+                <a href="{% url 'web:solicitar' %}" class="card-event-type">
+                    <img src="{% static 'images/coorporativo.jpg' %}" alt="Eventos Corporativos">
+                    <div class="card-event-type-overlay">
+                        <span class="badge bg-warning text-dark fw-bold mb-1 align-self-start">Empresarial</span>
+                        <h4 class="serif fw-bold mb-1">Eventos Corporativos & Convivios</h4>
+                        <small class="opacity-90">Almuerzos ejecutivos, lanzamientos de marca y cenas de fin de año con puntualidad rigurosa.</small>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Bautizos y Baby Showers -->
+            <div class="col-md-6">
+                <a href="{% url 'web:solicitar' %}" class="card-event-type">
+                    <img src="{% static 'images/bautizo.jpg' %}" alt="Bautizos y Baby Showers">
+                    <div class="card-event-type-overlay">
+                        <span class="badge bg-warning text-dark fw-bold mb-1 align-self-start">Familiar</span>
+                        <h4 class="serif fw-bold mb-1">Bautizos & Baby Showers</h4>
+                        <small class="opacity-90">Momentos tiernos compartidos en familia con atención cálida y detalles impecables.</small>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- Call to Action Banner -->
-<section class="py-5 text-white text-center" style="background-color: var(--primary);">
-    <div class="container py-3">
-        <h2 class="fw-bold serif mb-3 text-white">¿Listo para hacer realidad tu celebración?</h2>
-        <p class="lead mb-4 text-white-50">Déjanos los números y la cocina a nosotros. Recibe tu cotización formal hoy mismo.</p>
-        <a href="{% url 'web:solicitar' %}" class="btn btn-light btn-lg px-4 fw-bold text-dark shadow">
-            <i class="bi bi-send-fill me-2"></i>Solicitar Presupuesto Online
-        </a>
+<!-- SOLUCIONES INTEGRALES SECTION -->
+<section class="py-5 bg-white border-top border-bottom" style="border-color: var(--brand-border) !important;">
+    <div class="container py-4">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <span class="badge-luxury mb-2">Servicios Todo Incluido</span>
+            <h2 class="display-6 fw-bold serif" style="color: var(--brand-dark);">Soluciones Integrales para tu Evento</h2>
+            <p class="text-muted">Nos encargamos de toda la gastronomía, montaje y logística para que solo disfrutes.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Alimentación -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card-service-img">
+                    <img src="{% static 'images/alimentacion.jpg' %}" alt="Alimentación Gourmet" class="card-service-img-top">
+                    <div class="p-3 d-flex flex-column flex-grow-1">
+                        <h5 class="fw-bold mb-2 serif" style="color: var(--brand-dark);">Alimentación Gourmet</h5>
+                        <p class="text-muted small mb-3 flex-grow-1">Parrilladas mixtas, cortes de carne premium, lomito en salsa de hongos y exquisitas guarniciones.</p>
+                        <span class="text-primary fw-semibold small" style="color: var(--brand-gold) !important;"><i class="bi bi-check2-circle me-1"></i>Servicio a la mesa o bufete</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decoración -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card-service-img">
+                    <img src="{% static 'images/decoracion.jpg' %}" alt="Decoración Temática" class="card-service-img-top">
+                    <div class="p-3 d-flex flex-column flex-grow-1">
+                        <h5 class="fw-bold mb-2 serif" style="color: var(--brand-dark);">Decoración & Flores</h5>
+                        <p class="text-muted small mb-3 flex-grow-1">Centros de mesa, iluminación vintage y arreglos según la temática deseada con foto de referencia.</p>
+                        <span class="text-primary fw-semibold small" style="color: var(--brand-gold) !important;"><i class="bi bi-check2-circle me-1"></i>Carga de referencias</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vajilla y Cristalería -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card-service-img">
+                    <img src="{% static 'images/vajilla.jpg' %}" alt="Alquiler de Vajilla" class="card-service-img-top">
+                    <div class="p-3 d-flex flex-column flex-grow-1">
+                        <h5 class="fw-bold mb-2 serif" style="color: var(--brand-dark);">Vajilla & Cristalería</h5>
+                        <p class="text-muted small mb-3 flex-grow-1">Platos de porcelana, cubiertos de acero inoxidable, copas de brindis y vasos de cristal fino.</p>
+                        <span class="text-primary fw-semibold small" style="color: var(--brand-gold) !important;"><i class="bi bi-check2-circle me-1"></i>Cálculo automático</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobiliario y Mantelería -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card-service-img">
+                    <img src="{% static 'images/manteleria.jpg' %}" alt="Mobiliario y Mantelería" class="card-service-img-top">
+                    <div class="p-3 d-flex flex-column flex-grow-1">
+                        <h5 class="fw-bold mb-2 serif" style="color: var(--brand-dark);">Mobiliario & Manteles</h5>
+                        <p class="text-muted small mb-3 flex-grow-1">Mesas redondas para 10 personas o rectangulares, manteles de gala blancos y sillas vestidas.</p>
+                        <span class="text-primary fw-semibold small" style="color: var(--brand-gold) !important;"><i class="bi bi-check2-circle me-1"></i>Mesas calculadas por comensal</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CALL TO ACTION BANNER -->
+<section class="py-5 text-white position-relative" style="background: linear-gradient(135deg, var(--brand-black) 0%, var(--brand-dark) 100%);">
+    <div class="container py-4 text-center position-relative" style="z-index: 2;">
+        <span class="badge-luxury mb-3">Tu Presupuesto en Menos de 2 Minutos</span>
+        <h2 class="display-5 fw-bold serif mb-3 text-white">¿Listo para calcular el presupuesto de tu evento?</h2>
+        <p class="lead mb-4 text-white-50 max-w-700 mx-auto" style="font-weight: 300;">
+            Selecciona el número de invitados y los componentes gastronómicos deseados. Obtendrás el cálculo de vajilla, mobiliario e impuestos con descarga en PDF de inmediato.
+        </p>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+            <a href="{% url 'web:solicitar' %}" class="btn btn-brand-gold btn-lg shadow px-4">
+                <i class="bi bi-send-fill me-2"></i>Cotizar en Línea Ahora
+            </a>
+            <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank" class="btn btn-outline-light btn-lg rounded-pill px-4" style="border-color: rgba(255,255,255,0.3);">
+                <i class="bi bi-whatsapp me-2 text-success"></i>Hablar con un Asesor
+            </a>
+        </div>
     </div>
 </section>
 {% endblock %}
