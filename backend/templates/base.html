@@ -41,7 +41,7 @@
         .navbar-custom {
             background-color: var(--dark);
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            padding: 1rem 0;
+            padding: 0.85rem 0;
         }
 
         .navbar-brand {
@@ -84,39 +84,74 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
         }
 
-        .badge-status {
-            font-size: 0.85rem;
-            font-weight: 600;
-            padding: 0.35rem 0.75rem;
-            border-radius: 50px;
-        }
-
         footer {
             margin-top: auto;
             background-color: var(--dark);
             color: #94a3b8;
-            padding: 2.5rem 0;
+            padding: 3rem 0 1.5rem;
             font-size: 0.9rem;
         }
 
         footer a {
             color: #cbd5e1;
             text-decoration: none;
+            transition: color 0.2s;
         }
 
         footer a:hover {
             color: var(--accent);
+        }
+
+        .social-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            transition: all 0.2s;
+            font-size: 1.1rem;
+        }
+
+        .social-link-btn:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-2px);
         }
     </style>
     {% block extra_head %}{% endblock %}
 </head>
 <body>
 
+    <!-- Top Bar with Contact Info -->
+    <div class="py-1 bg-black text-white-50 small border-bottom border-secondary border-opacity-25">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div>
+                <a href="{{ EMPRESA_DOMINIO_URL }}" class="text-white-50 text-decoration-none me-3">
+                    <i class="bi bi-globe me-1 text-warning"></i>{{ EMPRESA_DOMINIO }}
+                </a>
+                <a href="mailto:{{ EMPRESA_EMAIL }}" class="text-white-50 text-decoration-none">
+                    <i class="bi bi-envelope me-1 text-warning"></i>{{ EMPRESA_EMAIL }}
+                </a>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <a href="{{ EMPRESA_INSTAGRAM_LINK }}" target="_blank" class="text-white-50 text-decoration-none" title="Instagram">
+                    <i class="bi bi-instagram me-1 text-warning"></i>{{ EMPRESA_INSTAGRAM }}
+                </a>
+                <a href="{{ EMPRESA_FACEBOOK_LINK }}" target="_blank" class="text-white-50 text-decoration-none" title="Facebook">
+                    <i class="bi bi-facebook me-1 text-primary"></i>{{ EMPRESA_FACEBOOK }}
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- Navigation Header -->
     <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
         <div class="container">
             <a class="navbar-brand" href="{% url 'web:home' %}">
-                <i class="bi bi-fire me-2 text-warning"></i>{{ EMPRESA_NOMBRE }}<span>.cr</span>
+                <i class="bi bi-fire me-2 text-warning"></i>{{ EMPRESA_NOMBRE }}<span>.lat</span>
             </a>
             <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
                 <span class="navbar-toggler-icon"></span>
@@ -136,8 +171,8 @@
                     </li>
                 </ul>
                 <div class="d-flex align-items-center gap-3">
-                    <a href="https://wa.me/50688886868" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-3">
-                        <i class="bi bi-whatsapp me-1 text-success"></i>WhatsApp
+                    <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                        <i class="bi bi-whatsapp me-1 text-success"></i>WhatsApp: {{ EMPRESA_TELEFONO }}
                     </a>
                     <a href="{% url 'web:solicitar' %}" class="btn btn-primary-custom btn-sm">
                         <i class="bi bi-calculator me-1"></i>Cotizar en Línea
@@ -167,19 +202,63 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="row g-4 align-items-center">
-                <div class="col-md-6">
-                    <h5 class="text-white fw-bold serif mb-1">{{ EMPRESA_NOMBRE }} Catering & Eventos</h5>
-                    <p class="mb-0 text-white-50">{{ EMPRESA_SLOGAN }}. Especialistas en parrilladas, bufetes, bodas y banquetes corporativos.</p>
+            <div class="row g-4 mb-4">
+                <div class="col-lg-5">
+                    <h5 class="text-white fw-bold serif mb-2">
+                        <i class="bi bi-fire text-warning me-2"></i>{{ EMPRESA_NOMBRE }}
+                    </h5>
+                    <p class="mb-3 text-white-50">{{ EMPRESA_SLOGAN }}. Especialistas en parrilladas gourmet, banquetes para bodas, quinceaños y recepciones corporativas en Costa Rica.</p>
+                    <div class="d-flex gap-2">
+                        <a href="{{ EMPRESA_INSTAGRAM_LINK }}" target="_blank" class="social-link-btn" title="Instagram {{ EMPRESA_INSTAGRAM }}">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                        <a href="{{ EMPRESA_FACEBOOK_LINK }}" target="_blank" class="social-link-btn" title="Facebook {{ EMPRESA_FACEBOOK }}">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank" class="social-link-btn" title="WhatsApp">
+                            <i class="bi bi-whatsapp"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="mb-1"><i class="bi bi-geo-alt me-1 text-warning"></i>{{ EMPRESA_UBICACION }}</p>
-                    <p class="mb-0"><i class="bi bi-envelope me-1 text-warning"></i>{{ EMPRESA_EMAIL }} | <i class="bi bi-telephone me-1 text-warning"></i>{{ EMPRESA_TELEFONO }}</p>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-white fw-bold text-uppercase small mb-3">Canales Oficiales</h6>
+                    <ul class="list-unstyled text-white-50 small mb-0">
+                        <li class="mb-2">
+                            <i class="bi bi-globe me-2 text-warning"></i>
+                            <a href="{{ EMPRESA_DOMINIO_URL }}" target="_blank">{{ EMPRESA_DOMINIO }}</a>
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-envelope-fill me-2 text-warning"></i>
+                            <a href="mailto:{{ EMPRESA_EMAIL }}">{{ EMPRESA_EMAIL }}</a>
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-whatsapp me-2 text-success"></i>
+                            <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank">{{ EMPRESA_TELEFONO }}</a>
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-instagram me-2 text-danger"></i>
+                            <a href="{{ EMPRESA_INSTAGRAM_LINK }}" target="_blank">{{ EMPRESA_INSTAGRAM }}</a>
+                        </li>
+                        <li>
+                            <i class="bi bi-facebook me-2 text-primary"></i>
+                            <a href="{{ EMPRESA_FACEBOOK_LINK }}" target="_blank">{{ EMPRESA_FACEBOOK }}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h6 class="text-white fw-bold text-uppercase small mb-3">Atención & Cobertura</h6>
+                    <p class="text-white-50 small mb-2"><i class="bi bi-geo-alt-fill me-2 text-warning"></i>{{ EMPRESA_UBICACION }} (Cobertura en todo el Gran Área Metropolitana y zonas aledañas).</p>
+                    <p class="text-white-50 small mb-0"><i class="bi bi-shield-check me-2 text-success"></i>Exclusividad garantizada: Solo atendemos 1 evento por día para garantizar excelencia absoluta.</p>
                 </div>
             </div>
             <hr class="border-secondary my-4">
-            <div class="text-center text-white-50 small">
-                &copy; {% now "Y" %} {{ EMPRESA_NOMBRE }}. Todos los derechos reservados. Arquitectura moderna Django & Flutter.
+            <div class="d-flex flex-wrap justify-content-between align-items-center text-white-50 small">
+                <div>
+                    &copy; {% now "Y" %} {{ EMPRESA_NOMBRE }}. Todos los derechos reservados.
+                </div>
+                <div>
+                    Sitio web oficial: <a href="{{ EMPRESA_DOMINIO_URL }}" target="_blank" class="text-warning fw-semibold">{{ EMPRESA_DOMINIO }}</a>
+                </div>
             </div>
         </div>
     </footer>

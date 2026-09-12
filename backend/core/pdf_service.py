@@ -229,8 +229,9 @@ def generar_pdf_cotizacion(cotizacion) -> bytes:
                       "• Los precios están expresados en colones costarricenses (CRC).<br/>"
                       "• Para reservar la fecha en firme se requiere el comprobante del pago inicial.<br/>"
                       "• El saldo restante se cancela mediante abonos programados previo al evento.<br/>"
-                      "• Pagos por transferencia SINPE Móvil o cuenta bancaria.<br/>"
-                      "• Contáctenos al <b>+506 8888-6868</b> o <b>contacto@eventos68.com</b>",
+                      "• Pagos por transferencia SINPE Móvil al <b>+506 6168-0639</b> o cuenta bancaria.<br/>"
+                      "• Contáctenos al <b>+506 6168-0639</b> | <b>info@eventos68.lat</b> | <b>eventos68.lat</b><br/>"
+                      "• Síganos en Instagram: <b>@eventos68_cr</b> | Facebook: <b>Eventos68</b>",
                       subtitle_style),
             Table([
                 [Paragraph("Subtotal Servicios:", cell_style), Paragraph(f"₡{cotizacion.subtotal_servicios:,.2f}", cell_right)],
