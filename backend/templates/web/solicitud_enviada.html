@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Solicitud Registrada | {{ EMPRESA_NOMBRE }}{% endblock %}
+
+{% block content %}
+<div class="container py-5 my-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <div class="card card-custom p-5 border-0 shadow-lg">
+                <div class="mb-4">
+                    <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="bi bi-check-lg display-5"></i>
+                    </div>
+                </div>
+
+                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill d-inline-block mx-auto mb-2 fw-bold">
+                    Presupuesto #EV68-{{ cotizacion.id|stringformat:"04d" }}
+                </span>
+                
+                <h1 class="serif fw-bold display-6 mb-3">¡Hemos recibido tu solicitud con éxito!</h1>
+                <p class="lead text-muted mb-4">
+                    Muchas gracias <b>{{ cotizacion.cliente.nombre }}</b>. Hemos registrado tu presupuesto para el evento de tipo <b>{{ cotizacion.tipo_evento.nombre }}</b> programado para el <b>{{ cotizacion.fecha_evento|date:"d/m/Y" }}</b> con <b>{{ cotizacion.cantidad_personas }}</b> comensales.
+                </p>
+
+                <!-- Resumen Financiero Rápido -->
+                <div class="row g-3 justify-content-center mb-4">
+                    <div class="col-md-4">
+                        <div class="p-3 bg-light rounded border">
+                            <small class="text-muted text-uppercase fw-bold">Total General (IVA Incluido)</small>
+                            <h4 class="text-dark fw-bold mb-0 mt-1">₡{{ cotizacion.total_general|floatformat:2 }}</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 bg-light rounded border">
+                            <small class="text-muted text-uppercase fw-bold">Precio por Persona</small>
+                            <h4 class="text-dark fw-bold mb-0 mt-1">₡{{ cotizacion.total_por_persona|floatformat:2 }}</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 bg-warning-subtle rounded border border-warning">
+                            <small class="text-dark text-uppercase fw-bold">Adelanto para Reservar ({{ cotizacion.porcentaje_pago_inicial }}%)</small>
+                            <h4 class="text-primary fw-bold mb-0 mt-1">₡{{ cotizacion.monto_pago_inicial|floatformat:2 }}</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="{% url 'web:descargar_pdf' cotizacion.id %}" class="btn btn-primary-custom btn-lg shadow" target="_blank">
+                        <i class="bi bi-file-earmark-pdf-fill me-2"></i>Descargar Presupuesto en PDF
+                    </a>
+                    <a href="{% url 'web:detalle_cotizacion' cotizacion.id %}" class="btn btn-outline-dark btn-lg">
+                        <i class="bi bi-eye-fill me-2"></i>Ver Desglose Completo
+                    </a>
+                    <a href="https://wa.me/50688886868?text=Hola%2C%20acabo%20de%20generar%20la%20cotizacion%20EV68-{{ cotizacion.id|stringformat:'04d' }}%20a%20nombre%20de%20{{ cotizacion.cliente.nombre|urlencode }}" target="_blank" class="btn btn-success btn-lg">
+                        <i class="bi bi-whatsapp me-2"></i>Coordinar por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

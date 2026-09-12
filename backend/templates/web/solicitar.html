@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+
+{% block title %}Cotizar Evento | {{ EMPRESA_NOMBRE }}{% endblock %}
+
+{% block content %}
+<div class="py-4 bg-dark text-white mb-4">
+    <div class="container">
+        <span class="text-warning text-uppercase fw-bold small"><i class="bi bi-magic me-1"></i>Cotizador en Línea</span>
+        <h1 class="serif fw-bold display-6 mb-1 text-white">Solicitud de Presupuesto</h1>
+        <p class="text-white-50 mb-0">Selecciona los servicios para tu evento. Calcularemos la vajilla, mobiliario y presupuesto automáticamente.</p>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <form method="POST" action="{% url 'web:solicitar' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- 1. DATOS DE CONTACTO -->
+        <div class="card card-custom mb-4">
+            <div class="card-header bg-white py-3 border-bottom">
+                <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-person-lines-fill text-warning me-2"></i>1. Datos de Contacto</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Identificación (Cédula o Pasaporte) *</label>
+                        <input type="text" name="identificacion" class="form-control" required placeholder="Ej: 1-1234-0567">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Nombre Completo *</label>
+                        <input type="text" name="nombre" class="form-control" required placeholder="Ej: Marcela Vargas">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Teléfono / WhatsApp *</label>
+                        <input type="tel" name="telefono" class="form-control" required placeholder="Ej: 8888-1234">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Correo Electrónico *</label>
+                        <input type="email" name="correo" class="form-control" required placeholder="Para enviar el presupuesto en PDF">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Dirección de Contacto (Opcional)</label>
+                        <input type="text" name="direccionCliente" class="form-control" placeholder="Provincia, cantón, señas">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. DATOS DEL EVENTO -->
+        <div class="card card-custom mb-4">
+            <div class="card-header bg-white py-3 border-bottom">
+                <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-calendar-event-fill text-warning me-2"></i>2. Información del Evento</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Tipo de Evento *</label>
+                        <select name="idTipoEvento" class="form-select" required>
+                            <option value="">-- Seleccionar --</option>
+                            {% for te in tipos_evento %}
+                            <option value="{{ te.id }}">{{ te.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Fecha Deseada *</label>
+                        <input type="date" name="fechaEvento" id="fechaEvento" class="form-control" required min="{% now 'Y-m-d' %}">
+                        <small class="text-muted">Garantizamos exclusividad: 1 evento por día.</small>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Cantidad de Invitados (Comensales) *</label>
+                        <input type="number" name="cantidadPersonas" id="cantidadPersonas" class="form-control" min="1" value="50" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label fw-semibold">Salón o Quinta Asociada (Convenios Opcionales)</label>
+                        <select class="form-select mb-2" onchange="seleccionarSalon(this)">
+                            <option value="">-- Opcional: Seleccionar salón con convenio para autocompletar --</option>
+                            <option value="Salón La Hacienda, 400 metros norte de la Iglesia Católica, Alajuela">Salón La Hacienda (Convenio - Alajuela)</option>
+                            <option value="Centro de Eventos El Prado, 1 km este de las instalaciones deportivas, Heredia">Centro de Eventos El Prado (Convenio - Heredia)</option>
+                            <option value="Villa Toscana Eventos, Paseo Colón, contiguo a la Torre Mercedes, San José">Villa Toscana Eventos (Convenio - San José)</option>
+                            <option value="Salón Garden Palace, 2 km sur del Molino, Cartago">Salón Garden Palace (Convenio - Cartago)</option>
+                            <option value="Quinta El Mirador, San Antonio de Escazú, 500m oeste del mirador, San José">Quinta El Mirador (Convenio - Escazú)</option>
+                        </select>
+                        <label class="form-label fw-semibold">Dirección Exacta del Evento *</label>
+                        <input type="text" name="direccionEvento" id="direccionEvento" class="form-control" required placeholder="Lugar exacto donde se llevará a cabo el evento">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. MENÚ DE ALIMENTACIÓN -->
+        <div class="card card-custom mb-4">
+            <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-egg-fried text-warning me-2"></i>3. Servicio de Alimentación & Menús</h5>
+                <span class="badge bg-warning text-dark">Personalizable</span>
+            </div>
+            <div class="card-body p-4">
+                <!-- Modalidad de Servicio -->
+                <div class="p-3 mb-4 rounded bg-light border">
+                    <label class="form-label fw-bold mb-2">Modalidad de Atención:</label>
+                    <div class="d-flex gap-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="requiereSaloneros" id="modBufete" value="Bufete" checked>
+                            <label class="form-check-label fw-semibold" for="modBufete">
+                                <i class="bi bi-grid-3x3-gap me-1 text-primary"></i>Tipo Bufete (Estaciones de Autoservicio)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="requiereSaloneros" id="modSaloneros" value="Saloneros">
+                            <label class="form-check-label fw-semibold" for="modSaloneros">
+                                <i class="bi bi-people me-1 text-primary"></i>Servicio a la Mesa con Saloneros
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proteínas -->
+                <h6 class="fw-bold text-dark border-bottom pb-2 mt-3"><i class="bi bi-check2-square me-1 text-warning"></i>Carnes y Proteínas</h6>
+                <div class="row g-2 mb-3">
+                    {% for p in proteinas %}
+                    <div class="col-md-6">
+                        <div class="form-check p-2 border rounded bg-white">
+                            <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}">
+                            <label class="form-check-label d-flex justify-content-between pe-2 w-100" for="item_{{ p.id }}">
+                                <span>{{ p.nombre_detalle }}</span>
+                                <b class="text-primary">₡{{ p.costo_unitario|floatformat:2 }}</b>
+                            </label>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Guarniciones -->
+                <h6 class="fw-bold text-dark border-bottom pb-2 mt-4"><i class="bi bi-check2-square me-1 text-warning"></i>Guarniciones</h6>
+                <div class="row g-2 mb-3">
+                    {% for g in guarniciones %}
+                    <div class="col-md-6">
+                        <div class="form-check p-2 border rounded bg-white">
+                            <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ g.id }}" id="item_{{ g.id }}">
+                            <label class="form-check-label d-flex justify-content-between pe-2 w-100" for="item_{{ g.id }}">
+                                <span>{{ g.nombre_detalle }}</span>
+                                <b class="text-primary">₡{{ g.costo_unitario|floatformat:2 }}</b>
+                            </label>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Ensaladas y Postres -->
+                <div class="row g-4 mt-2">
+                    <div class="col-md-6">
+                        <h6 class="fw-bold text-dark border-bottom pb-2"><i class="bi bi-flower1 me-1 text-warning"></i>Ensaladas</h6>
+                        {% for e in ensaladas %}
+                        <div class="form-check p-2 border rounded bg-white mb-2">
+                            <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ e.id }}" id="item_{{ e.id }}">
+                            <label class="form-check-label d-flex justify-content-between pe-2 w-100" for="item_{{ e.id }}">
+                                <span>{{ e.nombre_detalle }}</span>
+                                <b class="text-primary">₡{{ e.costo_unitario|floatformat:2 }}</b>
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="fw-bold text-dark border-bottom pb-2"><i class="bi bi-cake2 me-1 text-warning"></i>Postres</h6>
+                        {% for pos in postres %}
+                        <div class="form-check p-2 border rounded bg-white mb-2">
+                            <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ pos.id }}" id="item_{{ pos.id }}">
+                            <label class="form-check-label d-flex justify-content-between pe-2 w-100" for="item_{{ pos.id }}">
+                                <span>{{ pos.nombre_detalle }}</span>
+                                <b class="text-primary">₡{{ pos.costo_unitario|floatformat:2 }}</b>
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Requerimientos Especiales -->
+                <div class="mt-4">
+                    <label class="form-label fw-bold">Menú o solicitud especial de alimentos:</label>
+                    <textarea name="DetalleOtrosAlimentacion" class="form-control" rows="2" placeholder="Ej: 5 opciones vegetarianas, sin gluten, requerimientos para niños, etc."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. MENAJE, VAJILLA Y MOBILIARIO (AUTOMATIZADOS) -->
+        <div class="card card-custom mb-4">
+            <div class="card-header bg-white py-3 border-bottom">
+                <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-box-seam-fill text-warning me-2"></i>4. Mobiliario, Mantelería y Vajilla</h5>
+            </div>
+            <div class="card-body p-4">
+                <!-- Mobiliario -->
+                <div class="p-3 mb-3 border rounded bg-light">
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" name="incluirMobiliario" id="incluirMobiliario" value="true" checked>
+                        <label class="form-check-label fw-bold" for="incluirMobiliario">
+                            Incluir Mobiliario Completo (Sillas por comensal + Mesas + Mantelería de gala)
+                        </label>
+                    </div>
+                    <div class="row g-3 ms-2" id="seccionMobiliario">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Estilo de Mesa:</label>
+                            <select name="tipoMobiliario" class="form-select">
+                                <option value="Redondas" selected>Mesas Redondas (10 personas c/u)</option>
+                                <option value="RectangularesPequenas">Mesas Rectangulares Pequeñas (8 personas c/u)</option>
+                                <option value="RectangularesGrandes">Mesas Rectangulares Grandes (12 personas c/u)</option>
+                            </select>
+                            <small class="text-muted">El sistema calculará automáticamente la cantidad de mesas y manteles necesarios.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vajilla y Cristalería -->
+                <div class="p-3 border rounded bg-light mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="noVajillaCristaleria" id="noVajillaCristaleria" value="true">
+                        <label class="form-check-label" for="noVajillaCristaleria">
+                            <b>No requiero Vajilla ni Cristalería</b> (El salón o nosotros aportamos la vajilla propia).
+                        </label>
+                    </div>
+                    <small class="text-muted d-block ms-4">Si no marcas esta casilla, se incluirán automáticamente platos base, cubiertos, servilletas, vasos y copas para todos tus invitados.</small>
+                </div>
+
+                <!-- Transporte -->
+                <div class="row g-3 align-items-center mt-2">
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Distancia aproximada de traslado:</label>
+                        <div class="input-group">
+                            <input type="number" name="kilometrosTransporte" class="form-control" value="10" min="1">
+                            <span class="input-group-text">Kilómetros (km)</span>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <label class="form-label fw-semibold">Imagen de Referencia de Decoración (Opcional):</label>
+                        <input type="file" name="imagenDecoracion" class="form-control" accept="image/*">
+                        <small class="text-muted">Sube una foto de referencia de flores, centros de mesa o temáticas deseadas.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUBMIT BAR -->
+        <div class="card card-custom p-4 bg-white border-0 shadow-lg sticky-bottom">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                <div>
+                    <h5 class="fw-bold mb-0 serif">¿Listo para generar tu cotización?</h5>
+                    <p class="text-muted small mb-0">Recibirás tu presupuesto detallado con desglose de impuestos y PDF oficial al instante.</p>
+                </div>
+                <button type="submit" class="btn btn-primary-custom btn-lg px-5 shadow">
+                    <i class="bi bi-send-check-fill me-2"></i>Generar y Enviar Cotización
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+function seleccionarSalon(select) {
+    if (select.value) {
+        document.getElementById('direccionEvento').value = select.value;
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: eventos68-backend
+    runtime: python
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
+    startCommand: "gunicorn config.wsgi:application"
+    plan: free
+    region: oregon
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com,localhost,127.0.0.1"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false # Pega aquí la URL de tu base de datos gratuita de Neon.tech o Supabase
+      - key: EMAIL_BACKEND
+        value: "django.core.mail.backends.console.EmailBackend"

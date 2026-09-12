@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block title %}Cotización #EV68-{{ cotizacion.id|stringformat:"04d" }} | {{ EMPRESA_NOMBRE }}{% endblock %}
+
+{% block content %}
+<div class="container py-4 my-2">
+    <!-- Header de la Cotización -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3 border-bottom pb-3">
+        <div>
+            <span class="badge bg-secondary mb-1">Presupuesto Formal</span>
+            <h2 class="serif fw-bold mb-0">Cotización #EV68-{{ cotizacion.id|stringformat:"04d" }}</h2>
+            <p class="text-muted small mb-0">Registrada el {{ cotizacion.fecha_registro|date:"d/m/Y H:i" }} | Estado: <b class="text-primary">{{ cotizacion.get_estado_display }}</b></p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{% url 'web:descargar_pdf' cotizacion.id %}" target="_blank" class="btn btn-primary-custom">
+                <i class="bi bi-file-earmark-pdf-fill me-1"></i>Descargar PDF
+            </a>
+            <a href="{% url 'web:enviar_correo' cotizacion.id %}" class="btn btn-outline-dark">
+                <i class="bi bi-envelope-at-fill me-1"></i>Enviar al Cliente
+            </a>
+            <a href="/admin/core/cotizacion/{{ cotizacion.id }}/change/" target="_blank" class="btn btn-outline-secondary">
+                <i class="bi bi-pencil-square me-1"></i>Editar en Admin
+            </a>
+        </div>
+    </div>
+
+    <!-- Grid de Datos del Cliente y Evento -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card card-custom p-3 h-100">
+                <h6 class="fw-bold text-dark border-bottom pb-2"><i class="bi bi-person-fill text-warning me-1"></i>Datos del Cliente</h6>
+                <p class="mb-1"><b>Nombre:</b> {{ cotizacion.cliente.nombre }}</p>
+                <p class="mb-1"><b>Identificación:</b> {{ cotizacion.cliente.identificacion }}</p>
+                <p class="mb-1"><b>Teléfono:</b> {{ cotizacion.cliente.telefono }}</p>
+                <p class="mb-1"><b>Correo:</b> {{ cotizacion.cliente.correo }}</p>
+                <p class="mb-0"><b>Dirección:</b> {{ cotizacion.cliente.direccion|default:"No especificada" }}</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-custom p-3 h-100">
+                <h6 class="fw-bold text-dark border-bottom pb-2"><i class="bi bi-calendar-check-fill text-warning me-1"></i>Detalles del Evento</h6>
+                <p class="mb-1"><b>Tipo de Evento:</b> {{ cotizacion.tipo_evento.nombre }}</p>
+                <p class="mb-1"><b>Fecha Programada:</b> <span class="badge bg-warning text-dark fs-6">{{ cotizacion.fecha_evento|date:"l d de F de Y" }}</span></p>
+                <p class="mb-1"><b>Invitados:</b> {{ cotizacion.cantidad_personas }} personas</p>
+                <p class="mb-1"><b>Modalidad:</b> {{ cotizacion.get_modalidad_servicio_display }}</p>
+                <p class="mb-0"><b>Lugar del Evento:</b> {{ cotizacion.direccion_evento }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla de Componentes y Menús -->
+    <div class="card card-custom mb-4">
+        <div class="card-header bg-white py-3 border-bottom">
+            <h5 class="mb-0 fw-bold"><i class="bi bi-card-checklist text-warning me-2"></i>Desglose de Servicios y Componentes</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Servicio</th>
+                        <th>Componente</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-end">Costo Unit.</th>
+                        <th class="text-end">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in cotizacion.detalles.all %}
+                    <tr>
+                        <td><span class="badge bg-light text-dark border">{{ d.servicio.nombre }}</span></td>
+                        <td>
+                            <b>{% if d.detalle_servicio %}{{ d.detalle_servicio.nombre_detalle }}{% else %}{{ d.nombre_personalizado }}{% endif %}</b>
+                            {% if d.detalle_personalizado %}
+                            <br><small class="text-muted">{{ d.detalle_personalizado }}</small>
+                            {% endif %}
+                            {% if d.imagen_referencia %}
+                            <br><a href="{{ d.imagen_referencia.url }}" target="_blank" class="small text-primary"><i class="bi bi-image me-1"></i>Ver Foto Referencia</a>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">{{ d.cantidad }}</td>
+                        <td class="text-end">₡{{ d.costo_unitario|floatformat:2 }}</td>
+                        <td class="text-end fw-bold">₡{{ d.subtotal|floatformat:2 }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-3 text-muted">No hay componentes en este presupuesto.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Gastos Directos y Caja de Totales -->
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card card-custom p-3 h-100">
+                <h6 class="fw-bold text-dark border-bottom pb-2"><i class="bi bi-receipt text-warning me-1"></i>Gastos Directos Presupuestados</h6>
+                {% if cotizacion.gastos.all %}
+                <ul class="list-group list-group-flush mb-3">
+                    {% for g in cotizacion.gastos.all %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                        <div>
+                            <span>{{ g.descripcion }}</span><br>
+                            <small class="text-muted">{{ g.fecha_gasto|date:"d/m/Y" }}</small>
+                        </div>
+                        <b>₡{{ g.monto|floatformat:2 }}</b>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-muted small my-3">No hay gastos directos extras asociados a esta cotización.</p>
+                {% endif %}
+                <div class="mt-auto pt-2 border-top">
+                    <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Los gastos directos pueden añadirse desde el panel administrativo de Eventos68.</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card card-custom p-4 bg-light border">
+                <h5 class="fw-bold serif mb-3 border-bottom pb-2">Resumen Financiero</h5>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal de Servicios:</span>
+                    <b>₡{{ cotizacion.subtotal_servicios|floatformat:2 }}</b>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Gastos Directos:</span>
+                    <b>₡{{ cotizacion.total_gastos|floatformat:2 }}</b>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Margen Ganancia ({{ cotizacion.porcentaje_ganancia }}%):</span>
+                    <b>₡{{ cotizacion.monto_ganancia|floatformat:2 }}</b>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Impuesto IVA ({{ cotizacion.porcentaje_iva }}%):</span>
+                    <b>₡{{ cotizacion.monto_iva|floatformat:2 }}</b>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between mb-2 fs-5">
+                    <span class="fw-bold">TOTAL GENERAL:</span>
+                    <span class="fw-bold text-dark">₡{{ cotizacion.total_general|floatformat:2 }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-3 text-muted small">
+                    <span>Costo por Persona:</span>
+                    <span>₡{{ cotizacion.total_por_persona|floatformat:2 }} / comensal</span>
+                </div>
+                <div class="p-3 bg-warning-subtle rounded border border-warning">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-uppercase fw-bold text-dark d-block">Adelanto Requerido ({{ cotizacion.porcentaje_pago_inicial }}%)</small>
+                            <span class="text-muted small">Para asegurar la fecha</span>
+                        </div>
+                        <h4 class="text-primary fw-bold mb-0">₡{{ cotizacion.monto_pago_inicial|floatformat:2 }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
