@@ -22,6 +22,19 @@ ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS', '*').split(
 if not ALLOWED_HOSTS:
     ALLOWED_HOSTS = ['*']
 
+# CSRF Trusted Origins for custom domain
+CSRF_TRUSTED_ORIGINS = [
+    'https://eventos68.lat',
+    'https://www.eventos68.lat',
+    'http://eventos68.lat',
+    'http://www.eventos68.lat',
+    'http://127.0.0.1:8001',
+    'http://localhost:8001',
+]
+extra_csrf = os.getenv('CSRF_TRUSTED_ORIGINS', '')
+if extra_csrf:
+    CSRF_TRUSTED_ORIGINS.extend([origin.strip() for origin in extra_csrf.split(',') if origin.strip()])
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -146,4 +159,4 @@ EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() in ('true', '1')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'Eventos68 <no-reply@eventos68.com>')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'Eventos68 <info@eventos68.lat>')
