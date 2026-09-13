@@ -102,11 +102,11 @@ def generar_pdf_cotizacion(cotizacion) -> bytes:
     elements = []
 
     # 1. Header Banner with Official Logo
-    logo_path = Path(settings.BASE_DIR) / 'static' / 'images' / 'logos' / 'logo68principal.jpg'
+    logo_path = Path(settings.BASE_DIR) / 'static' / 'images' / 'logos' / 'logo_transparente_negro.png'
     logo_cell = ""
     if logo_path.exists():
         try:
-            logo_cell = RLImage(str(logo_path), width=1.1 * inch, height=1.1 * inch)
+            logo_cell = RLImage(str(logo_path), width=1.3 * inch, height=0.95 * inch)
         except Exception:
             logo_cell = ""
 

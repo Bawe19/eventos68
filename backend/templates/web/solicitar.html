@@ -90,21 +90,21 @@
             </div>
         </div>
 
-        <!-- 3. MENÚ DE ALIMENTACIÓN -->
+        <!-- 3. MENÚ GASTRONÓMICO Y EXPERIENCIAS EN TENDENCIA -->
         <div class="card card-custom mb-4">
             <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
-                <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-egg-fried text-warning me-2"></i>3. Servicio de Alimentación & Menús</h5>
-                <span class="badge bg-warning text-dark">Personalizable</span>
+                <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-egg-fried text-warning me-2"></i>3. Menú Gastronómico & Estaciones en Tendencia</h5>
+                <span class="badge bg-warning text-dark fw-bold">Personalizable</span>
             </div>
             <div class="card-body p-4">
                 <!-- Modalidad de Servicio -->
                 <div class="p-3 mb-4 rounded bg-light border">
-                    <label class="form-label fw-bold mb-2">Modalidad de Atención:</label>
-                    <div class="d-flex gap-4">
+                    <label class="form-label fw-bold mb-2">Modalidad de Atención Principal:</label>
+                    <div class="d-flex flex-wrap gap-4">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="requiereSaloneros" id="modBufete" value="Bufete" checked>
                             <label class="form-check-label fw-semibold" for="modBufete">
-                                <i class="bi bi-grid-3x3-gap me-1 text-primary"></i>Tipo Bufete (Estaciones de Autoservicio)
+                                <i class="bi bi-grid-3x3-gap me-1 text-primary"></i>Tipo Bufete / Estaciones Guiadas
                             </label>
                         </div>
                         <div class="form-check">
@@ -116,61 +116,154 @@
                     </div>
                 </div>
 
-                <!-- Proteínas -->
-                <h6 class="fw-bold text-dark border-bottom pb-2 mt-3"><i class="bi bi-check2-square me-1 text-warning"></i>Carnes y Proteínas (Especialidad a la Leña)</h6>
-                <div class="row g-2 mb-3">
-                    {% for p in proteinas %}
-                    <div class="col-md-6">
-                        <div class="form-check p-2 border rounded bg-white">
-                            <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}">
-                            <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ p.id }}">
-                                <span class="fw-medium">{{ p.nombre_detalle }}</span>
-                                <span class="badge bg-light text-dark border small"><i class="bi bi-fire text-warning me-1"></i>A las brasas</span>
-                            </label>
-                        </div>
+                <!-- BLOQUE A: CATERING TRADICIONAL & BANQUETES -->
+                <div class="p-3 mb-4 rounded border" style="background: rgba(254, 250, 244, 0.75);">
+                    <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+                        <h6 class="fw-bold mb-0 text-dark">
+                            <i class="bi bi-award-fill me-2 text-warning"></i>Catering Tradicional & Banquetes de Gala
+                        </h6>
+                        <span class="badge bg-dark text-warning small">Opción Clásica</span>
                     </div>
-                    {% endfor %}
-                </div>
 
-                <!-- Guarniciones -->
-                <h6 class="fw-bold text-dark border-bottom pb-2 mt-4"><i class="bi bi-check2-square me-1 text-warning"></i>Guarniciones & Acompañamientos</h6>
-                <div class="row g-2 mb-3">
-                    {% for g in guarniciones %}
-                    <div class="col-md-6">
-                        <div class="form-check p-2 border rounded bg-white">
-                            <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ g.id }}" id="item_{{ g.id }}">
-                            <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ g.id }}">
-                                <span class="fw-medium">{{ g.nombre_detalle }}</span>
-                                <span class="badge bg-light text-secondary border small">Guarnición</span>
-                            </label>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-
-                <!-- Ensaladas y Postres -->
-                <div class="row g-4 mt-2">
-                    <div class="col-md-6">
-                        <h6 class="fw-bold text-dark border-bottom pb-2"><i class="bi bi-flower1 me-1 text-warning"></i>Ensaladas Frescas</h6>
-                        {% for e in ensaladas %}
-                        <div class="form-check p-2 border rounded bg-white mb-2">
-                            <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ e.id }}" id="item_{{ e.id }}">
-                            <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ e.id }}">
-                                <span class="fw-medium">{{ e.nombre_detalle }}</span>
-                                <span class="badge bg-light text-success border small">Fresco</span>
-                            </label>
+                    <!-- Proteínas -->
+                    <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">Platos Fuertes & Proteínas:</p>
+                    <div class="row g-2 mb-3">
+                        {% for p in proteinas %}
+                        <div class="col-md-6">
+                            <div class="form-check p-2 border rounded bg-white h-100">
+                                <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}">
+                                <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ p.id }}">
+                                    <span class="fw-medium">{{ p.nombre_detalle }}</span>
+                                    <span class="badge bg-light text-dark border small">Proteína</span>
+                                </label>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
-                    <div class="col-md-6">
-                        <h6 class="fw-bold text-dark border-bottom pb-2"><i class="bi bi-cake2 me-1 text-warning"></i>Postres Artesanales</h6>
-                        {% for pos in postres %}
-                        <div class="form-check p-2 border rounded bg-white mb-2">
-                            <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ pos.id }}" id="item_{{ pos.id }}">
-                            <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ pos.id }}">
-                                <span class="fw-medium">{{ pos.nombre_detalle }}</span>
-                                <span class="badge bg-light text-primary border small">Artesanal</span>
-                            </label>
+
+                    <!-- Guarniciones -->
+                    <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">Guarniciones & Acompañamientos:</p>
+                    <div class="row g-2 mb-3">
+                        {% for g in guarniciones %}
+                        <div class="col-md-6">
+                            <div class="form-check p-2 border rounded bg-white h-100">
+                                <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ g.id }}" id="item_{{ g.id }}">
+                                <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ g.id }}">
+                                    <span class="fw-medium">{{ g.nombre_detalle }}</span>
+                                    <span class="badge bg-light text-secondary border small">Guarnición</span>
+                                </label>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Ensaladas y Postres -->
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">Ensaladas Frescas:</p>
+                            {% for e in ensaladas %}
+                            <div class="form-check p-2 border rounded bg-white mb-2">
+                                <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ e.id }}" id="item_{{ e.id }}">
+                                <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ e.id }}">
+                                    <span class="fw-medium">{{ e.nombre_detalle }}</span>
+                                    <span class="badge bg-light text-success border small">Fresco</span>
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-6">
+                            <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">Postres de Gala:</p>
+                            {% for pos in postres %}
+                            <div class="form-check p-2 border rounded bg-white mb-2">
+                                <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ pos.id }}" id="item_{{ pos.id }}">
+                                <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ pos.id }}">
+                                    <span class="fw-medium">{{ pos.nombre_detalle }}</span>
+                                    <span class="badge bg-light text-primary border small">Artesanal</span>
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BLOQUE B: BARRAS FUERTES Y TÍPICAS EN TENDENCIA -->
+                <div class="p-3 mb-4 rounded border" style="background: rgba(254, 250, 244, 0.75);">
+                    <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+                        <h6 class="fw-bold mb-0 text-dark">
+                            <i class="bi bi-fire me-2 text-danger"></i>Barras Fuertes & Típicas en Tendencia
+                        </h6>
+                        <span class="badge bg-danger text-white small">En Tendencia</span>
+                    </div>
+                    <div class="row g-2">
+                        {% for bf in barras_fuertes %}
+                        <div class="col-12">
+                            <div class="form-check p-3 border rounded bg-white">
+                                <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ bf.id }}" id="item_{{ bf.id }}">
+                                <label class="form-check-label pe-2 w-100" for="item_{{ bf.id }}">
+                                    <span class="fw-bold text-dark d-block mb-1">{{ bf.nombre_detalle }}</span>
+                                    <small class="text-muted"><i class="bi bi-check-circle-fill text-success me-1"></i>Montaje completo con ingredientes y complementos servidos al momento.</small>
+                                </label>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- BLOQUE C: CARRITOS DE FAST FOOD & SNACKS -->
+                <div class="p-3 mb-4 rounded border" style="background: rgba(254, 250, 244, 0.75);">
+                    <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+                        <h6 class="fw-bold mb-0 text-dark">
+                            <i class="bi bi-cart3 me-2 text-primary"></i>Carritos de Fast Food, Snacks & Antojos
+                        </h6>
+                        <span class="badge bg-primary text-white small">Móviles & Divertidos</span>
+                    </div>
+
+                    <!-- Fast Food -->
+                    {% for ff in fast_food %}
+                    <div class="form-check p-3 border rounded bg-white mb-3">
+                        <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ ff.id }}" id="item_{{ ff.id }}">
+                        <label class="form-check-label pe-2 w-100" for="item_{{ ff.id }}">
+                            <span class="fw-bold text-dark d-block mb-1">{{ ff.nombre_detalle }}</span>
+                            <small class="text-muted"><i class="bi bi-check-circle-fill text-success me-1"></i>Carrito móvil interactivo con toppings gourmet y atención personalizada.</small>
+                        </label>
+                    </div>
+                    {% endfor %}
+
+                    <!-- Snacks & Golosinas -->
+                    <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">Estaciones y Carritos de Snacks:</p>
+                    <div class="row g-2">
+                        {% for sn in snacks %}
+                        <div class="col-md-6">
+                            <div class="form-check p-2 border rounded bg-white h-100">
+                                <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ sn.id }}" id="item_{{ sn.id }}">
+                                <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ sn.id }}">
+                                    <span class="fw-medium">{{ sn.nombre_detalle }}</span>
+                                    <span class="badge bg-light text-primary border small">Snack</span>
+                                </label>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- BLOQUE D: ESTACIONES SALUDABLES -->
+                <div class="p-3 mb-4 rounded border" style="background: rgba(254, 250, 244, 0.75);">
+                    <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+                        <h6 class="fw-bold mb-0 text-dark">
+                            <i class="bi bi-heart-pulse-fill me-2 text-success"></i>Estaciones Saludables & Wellness
+                        </h6>
+                        <span class="badge bg-success text-white small">100% Fresco & Nutritivo</span>
+                    </div>
+                    <div class="row g-2">
+                        {% for sal in saludable %}
+                        <div class="col-12">
+                            <div class="form-check p-3 border rounded bg-white">
+                                <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ sal.id }}" id="item_{{ sal.id }}">
+                                <label class="form-check-label pe-2 w-100" for="item_{{ sal.id }}">
+                                    <span class="fw-bold text-dark d-block mb-1">{{ sal.nombre_detalle }}</span>
+                                    <small class="text-muted"><i class="bi bi-check-circle-fill text-success me-1"></i>Montaje fresco con ingredientes seleccionados para un concepto equilibrado.</small>
+                                </label>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
@@ -179,7 +272,7 @@
                 <!-- Requerimientos Especiales -->
                 <div class="mt-4">
                     <label class="form-label fw-bold">Menú o solicitud especial de alimentos:</label>
-                    <textarea name="DetalleOtrosAlimentacion" class="form-control" rows="2" placeholder="Ej: 5 opciones vegetarianas, sin gluten, requerimientos para niños, etc."></textarea>
+                    <textarea name="DetalleOtrosAlimentacion" class="form-control" rows="2" placeholder="Ej: Opciones vegetarianas o veganas, libre de gluten, especificaciones para niños o adultos mayores, etc."></textarea>
                 </div>
             </div>
         </div>

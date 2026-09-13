@@ -105,21 +105,22 @@ def solicitar_cotizacion(request):
     tipos_evento = TipoEvento.objects.filter(activo=True)
     servicios = Servicio.objects.filter(activo=True).prefetch_related('detalles')
     
-    # Agrupar detalles de alimentación por categorías
-    detalles_alimentacion = DetalleServicio.objects.filter(
-        servicio__nombre__icontains='aliment',
-        activo=True
-    )
+    # Agrupar detalles de gastronomía por categorías
+    detalles_comida = DetalleServicio.objects.filter(activo=True)
 
     context = {
         'tipos_evento': tipos_evento,
         'servicios': servicios,
-        'guarniciones': detalles_alimentacion.filter(categoria='Guarnicion'),
-        'proteinas': detalles_alimentacion.filter(categoria='Proteina'),
-        'ensaladas': detalles_alimentacion.filter(categoria='Ensalada'),
-        'postres': detalles_alimentacion.filter(categoria='Postre'),
-        'bebidas': detalles_alimentacion.filter(categoria='Bebida'),
-        'salsas': detalles_alimentacion.filter(categoria='Salsa'),
+        'proteinas': detalles_comida.filter(categoria='Proteina'),
+        'guarniciones': detalles_comida.filter(categoria='Guarnicion'),
+        'ensaladas': detalles_comida.filter(categoria='Ensalada'),
+        'postres': detalles_comida.filter(categoria='Postre'),
+        'bebidas': detalles_comida.filter(categoria='Bebida'),
+        'salsas': detalles_comida.filter(categoria='Salsa'),
+        'barras_fuertes': detalles_comida.filter(categoria='Barra_Fuerte'),
+        'fast_food': detalles_comida.filter(categoria='Fast_Food'),
+        'snacks': detalles_comida.filter(categoria='Snack'),
+        'saludable': detalles_comida.filter(categoria='Saludable'),
     }
     return render(request, 'web/solicitar.html', context)
 
