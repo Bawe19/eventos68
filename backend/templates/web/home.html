@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}Inicio | {{ EMPRESA_NOMBRE }}{% endblock %}
@@ -9,7 +9,7 @@
     .hero-sellos-section {
         position: relative;
         background-color: var(--brand-black);
-        padding: 5rem 0 6rem;
+        padding: 5.5rem 0 6.5rem;
         overflow: hidden;
         border-bottom: 2px solid var(--brand-gold);
     }
@@ -22,7 +22,7 @@
         background-repeat: repeat;
         background-size: 340px;
         opacity: 0.12;
-        filter: contrast(110%);
+        filter: contrast(115%);
         pointer-events: none;
     }
 
@@ -30,31 +30,63 @@
         content: '';
         position: absolute;
         top: 0; left: 0; right: 0; bottom: 0;
-        background: radial-gradient(circle at 75% 30%, rgba(200, 134, 10, 0.2) 0%, rgba(28, 27, 25, 0.85) 60%, rgba(28, 27, 25, 0.98) 100%);
+        background: radial-gradient(circle at 75% 30%, rgba(200, 134, 10, 0.22) 0%, rgba(28, 27, 25, 0.85) 60%, rgba(28, 27, 25, 0.98) 100%);
         pointer-events: none;
     }
 
     .hero-logo-frame {
-        max-width: 320px;
-        border-radius: 20px;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        max-width: 330px;
+        border-radius: 24px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.6);
         border: 2px solid var(--brand-gold);
-        transition: transform 0.3s ease;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .hero-logo-frame:hover {
-        transform: scale(1.02);
+        transform: scale(1.03) rotate(0.5deg);
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+        background: #FFFFFF;
+        border-radius: 20px;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+        border: 1px solid var(--brand-border);
+        margin-top: -3.5rem;
+        position: relative;
+        z-index: 10;
+        backdrop-filter: blur(10px);
+    }
+
+    .stat-item {
+        padding: 1.5rem 1rem;
+        text-align: center;
+        border-right: 1px solid var(--brand-border);
+    }
+    .stat-item:last-child {
+        border-right: none;
+    }
+    .stat-number {
+        font-family: 'Playfair Display', serif;
+        font-weight: 800;
+        font-size: 2.2rem;
+        color: var(--brand-dark);
+        line-height: 1;
+        margin-bottom: 0.25rem;
+    }
+    .stat-number span {
+        color: var(--brand-gold);
     }
 
     /* Event Category Image Card */
     .card-event-type {
         position: relative;
-        border-radius: 16px;
+        border-radius: 20px;
         overflow: hidden;
-        height: 280px;
+        height: 300px;
         border: 1px solid var(--brand-border);
         box-shadow: 0 6px 20px rgba(38, 37, 35, 0.06);
-        transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         display: block;
         text-decoration: none;
     }
@@ -63,14 +95,14 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.6s ease;
+        transition: transform 0.65s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
 
     .card-event-type-overlay {
         position: absolute;
         bottom: 0; left: 0; right: 0; top: 0;
-        background: linear-gradient(to top, rgba(28, 27, 25, 0.92) 0%, rgba(28, 27, 25, 0.4) 50%, rgba(28, 27, 25, 0.1) 100%);
-        padding: 1.5rem;
+        background: linear-gradient(to top, rgba(28, 27, 25, 0.95) 0%, rgba(28, 27, 25, 0.4) 55%, rgba(28, 27, 25, 0.05) 100%);
+        padding: 1.75rem;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
@@ -78,18 +110,18 @@
     }
 
     .card-event-type:hover img {
-        transform: scale(1.08);
+        transform: scale(1.1);
     }
 
     .card-event-type:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 16px 36px rgba(38, 37, 35, 0.16);
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(38, 37, 35, 0.22);
         border-color: var(--brand-gold);
     }
 
     /* Services Feature Card */
     .card-service-img {
-        border-radius: 16px;
+        border-radius: 20px;
         overflow: hidden;
         background: #FFFFFF;
         border: 1px solid var(--brand-border);
@@ -100,17 +132,71 @@
     }
 
     .card-service-img:hover {
+        transform: translateY(-8px);
+        border-color: var(--brand-gold);
+        box-shadow: 0 16px 36px rgba(38, 37, 35, 0.1);
+    }
+
+    .card-service-img-top {
+        height: 210px;
+        width: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    .card-service-img:hover .card-service-img-top {
+        transform: scale(1.05);
+    }
+
+    /* Process Steps */
+    .step-box {
+        background: #FFFFFF;
+        border-radius: 20px;
+        padding: 2rem 1.5rem;
+        border: 1px solid var(--brand-border);
+        height: 100%;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+    .step-box:hover {
         transform: translateY(-6px);
         border-color: var(--brand-gold);
         box-shadow: 0 14px 30px rgba(38, 37, 35, 0.08);
     }
-
-    .card-service-img-top {
-        height: 190px;
-        width: 100%;
-        object-fit: cover;
+    .step-number {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--brand-black);
+        color: var(--brand-gold);
+        font-family: 'Playfair Display', serif;
+        font-weight: 800;
+        font-size: 1.3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.25rem;
+        border: 2px solid var(--brand-gold);
     }
 
+    /* Testimonial Card */
+    .testimonial-card {
+        background: #FFFFFF;
+        border-radius: 20px;
+        padding: 2rem;
+        border: 1px solid var(--brand-border);
+        box-shadow: 0 6px 20px rgba(38, 37, 35, 0.05);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .stars {
+        color: #F59E0B;
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    /* Luxury Badge */
     .badge-luxury {
         background-color: var(--brand-gold-subtle);
         border: 1px solid rgba(200, 134, 10, 0.35);
@@ -119,7 +205,7 @@
         letter-spacing: 0.12em;
         text-transform: uppercase;
         font-size: 0.72rem;
-        padding: 0.45rem 1rem;
+        padding: 0.45rem 1.1rem;
         border-radius: 50px;
         display: inline-block;
     }
@@ -127,36 +213,36 @@
 {% endblock %}
 
 {% block content %}
-<!-- HERO SECTION WITH OFFICIAL SELLO BACKGROUND -->
+<!-- 1. HERO SECTION -->
 <section class="hero-sellos-section">
     <div class="container position-relative" style="z-index: 2;">
         <div class="row align-items-center g-5">
             <div class="col-lg-7 text-white">
                 <span class="badge-luxury mb-3">
-                    <i class="bi bi-shield-fill-check me-1"></i>Exclusividad Garantizada: 1 Evento Por Día
+                    <i class="bi bi-shield-fill-check me-1"></i>Exclusividad Total: 1 Evento Por Día en Costa Rica
                 </span>
                 <h1 class="display-4 fw-extrabold serif text-white mb-3" style="line-height: 1.15;">
-                    Momentos Memorables con <span style="color: var(--brand-gold);">{{ EMPRESA_NOMBRE }}</span>
+                    Gastronomía a la Leña & Momentos Inolvidables con <span style="color: var(--brand-gold);">{{ EMPRESA_NOMBRE }}</span>
                 </h1>
-                <p class="lead text-light opacity-90 mb-4" style="font-weight: 300; font-size: 1.15rem; max-width: 580px;">
-                    Catering service gourmet, parrilladas a las brasas, banquetes nupciales y recepciones corporativas en Costa Rica. Cotiza en línea con menaje, mobiliario y transporte incluido.
+                <p class="lead text-light opacity-90 mb-4" style="font-weight: 300; font-size: 1.15rem; max-width: 600px;">
+                    Catering service de autor, parrilladas al carbón, banquetes nupciales y recepciones empresariales. Diseña tu presupuesto con menaje de gala, mobiliario y saloneros incluidos.
                 </p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="{% url 'web:solicitar' %}" class="btn btn-brand-gold btn-lg shadow">
-                        <i class="bi bi-calculator me-2"></i>Cotizar mi Evento Ahora
+                    <a href="{% url 'web:solicitar' %}" class="btn btn-brand-gold btn-lg shadow px-4">
+                        <i class="bi bi-calculator me-2"></i>Cotizar mi Evento en Línea
                     </a>
                     <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank" class="btn btn-outline-light btn-lg rounded-pill px-4" style="border-color: rgba(255,255,255,0.3);">
-                        <i class="bi bi-whatsapp me-2 text-success"></i>WhatsApp Directo
+                        <i class="bi bi-whatsapp me-2 text-success"></i>WhatsApp: {{ EMPRESA_TELEFONO }}
                     </a>
                 </div>
             </div>
             
             <div class="col-lg-5 text-center">
                 <div class="p-3 bg-white d-inline-block hero-logo-frame shadow-lg">
-                    <img src="{% static 'images/logos/logo68principal.jpg' %}" alt="Logo Oficial Eventos68" class="img-fluid rounded-3">
+                    <img src="{% static 'images/logos/logo68principal.jpg' %}" alt="Logo Oficial Eventos68 Catering" class="img-fluid rounded-3" style="max-height: 280px; object-fit: contain;">
                     <div class="mt-3 text-dark text-center">
-                        <h6 class="serif fw-bold mb-0 text-uppercase" style="letter-spacing: 0.1em; color: var(--brand-dark);">Eventos68 Catering</h6>
-                        <small class="text-muted d-block">{{ EMPRESA_DOMINIO }} | {{ EMPRESA_TELEFONO }}</small>
+                        <h5 class="serif fw-bold mb-0 text-uppercase" style="letter-spacing: 0.1em; color: var(--brand-dark);">Eventos68 Catering</h5>
+                        <small class="text-muted d-block">{{ EMPRESA_DOMINIO }} | Costa Rica</small>
                     </div>
                 </div>
             </div>
@@ -164,13 +250,45 @@
     </div>
 </section>
 
-<!-- TIPOS DE EVENTO SECTION -->
-<section class="py-5" style="background-color: var(--brand-cream-light);">
+<!-- 2. STATS COUNTER BAR -->
+<div class="container">
+    <div class="stats-bar">
+        <div class="row g-0">
+            <div class="col-6 col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">+12<span> Años</span></div>
+                    <small class="text-muted fw-semibold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.05em;">Tradición y Sabor a la Leña</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">+850<span>+</span></div>
+                    <small class="text-muted fw-semibold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.05em;">Eventos Exitosos Realizados</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">100<span>%</span></div>
+                    <small class="text-muted fw-semibold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.05em;">Cortes Frescos & Calidad</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">1<span> / Día</span></div>
+                    <small class="text-muted fw-semibold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.05em;">Exclusividad por Fecha</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. TIPOS DE EVENTO -->
+<section class="py-5" style="background-color: var(--brand-cream-light); margin-top: 2rem;">
     <div class="container py-4">
         <div class="text-center max-w-700 mx-auto mb-5">
             <span class="badge-luxury mb-2">Celebraciones & Ocasiones</span>
-            <h2 class="display-6 fw-bold serif" style="color: var(--brand-dark);">Tipos de Eventos que Atendemos</h2>
-            <p class="text-muted">Diseñamos propuestas gastronómicas a la medida de tus expectativas para cada fecha inolvidable.</p>
+            <h2 class="display-6 fw-bold serif" style="color: var(--brand-dark);">Experiencias Gastronómicas para Cada Ocasión</h2>
+            <p class="text-muted">Diseñamos propuestas gastronómicas a la medida de tus expectativas con servicio impecable.</p>
         </div>
 
         <div class="row g-4">
@@ -179,9 +297,9 @@
                 <a href="{% url 'web:solicitar' %}" class="card-event-type">
                     <img src="{% static 'images/bodas.jpeg' %}" alt="Bodas de Ensueño Eventos68">
                     <div class="card-event-type-overlay">
-                        <span class="badge bg-warning text-dark fw-bold mb-1 align-self-start">Banquetes de Gala</span>
+                        <span class="badge bg-warning text-dark fw-bold mb-1 align-self-start">Banquetes Nupciales</span>
                         <h4 class="serif fw-bold mb-1">Bodas de Ensueño</h4>
-                        <small class="opacity-90">Menús exquisitos, protocolo a la mesa y cristalería fina para el día más esperado.</small>
+                        <small class="opacity-90">Menús exquisitos, protocolo a la mesa y cristalería fina para el día más especial.</small>
                     </div>
                 </a>
             </div>
@@ -192,8 +310,8 @@
                     <img src="{% static 'images/cumpleanos.jpg' %}" alt="Cumpleaños y Quinceaños">
                     <div class="card-event-type-overlay">
                         <span class="badge bg-warning text-dark fw-bold mb-1 align-self-start">Fiestas Sociales</span>
-                        <h4 class="serif fw-bold mb-1">Cumpleaños y 15 Años</h4>
-                        <small class="opacity-90">Ambiente festivo con las mejores parrilladas, guarniciones y mesas de postres.</small>
+                        <h4 class="serif fw-bold mb-1">Cumpleaños & 15 Años</h4>
+                        <small class="opacity-90">Ambiente festivo con parrilladas mixtas al carbón, guarniciones y postres artesanales.</small>
                     </div>
                 </a>
             </div>
@@ -217,7 +335,7 @@
                     <div class="card-event-type-overlay">
                         <span class="badge bg-warning text-dark fw-bold mb-1 align-self-start">Empresarial</span>
                         <h4 class="serif fw-bold mb-1">Eventos Corporativos & Convivios</h4>
-                        <small class="opacity-90">Almuerzos ejecutivos, lanzamientos de marca y cenas de fin de año con puntualidad rigurosa.</small>
+                        <small class="opacity-90">Almuerzos ejecutivos, celebraciones de fin de año y convivios de empresa con máxima puntualidad.</small>
                     </div>
                 </a>
             </div>
@@ -229,7 +347,7 @@
                     <div class="card-event-type-overlay">
                         <span class="badge bg-warning text-dark fw-bold mb-1 align-self-start">Familiar</span>
                         <h4 class="serif fw-bold mb-1">Bautizos & Baby Showers</h4>
-                        <small class="opacity-90">Momentos tiernos compartidos en familia con atención cálida y detalles impecables.</small>
+                        <small class="opacity-90">Momentos compartidos en familia con atención personalizada y estaciones gastronómicas delicadas.</small>
                     </div>
                 </a>
             </div>
@@ -237,60 +355,68 @@
     </div>
 </section>
 
-<!-- SOLUCIONES INTEGRALES SECTION -->
+<!-- 4. SOLUCIONES INTEGRALES -->
 <section class="py-5 bg-white border-top border-bottom" style="border-color: var(--brand-border) !important;">
     <div class="container py-4">
         <div class="text-center max-w-700 mx-auto mb-5">
             <span class="badge-luxury mb-2">Servicios Todo Incluido</span>
             <h2 class="display-6 fw-bold serif" style="color: var(--brand-dark);">Soluciones Integrales para tu Evento</h2>
-            <p class="text-muted">Nos encargamos de toda la gastronomía, montaje y logística para que solo disfrutes.</p>
+            <p class="text-muted">Nos encargamos de toda la gastronomía, montaje y logística para que tú solo disfrutes con tus invitados.</p>
         </div>
 
         <div class="row g-4">
             <!-- Alimentación -->
             <div class="col-lg-3 col-md-6">
-                <div class="card-service-img">
-                    <img src="{% static 'images/alimentacion.jpg' %}" alt="Alimentación Gourmet" class="card-service-img-top">
+                <div class="card-service-img overflow-hidden">
+                    <div class="overflow-hidden">
+                        <img src="{% static 'images/alimentacion.jpg' %}" alt="Alimentación Gourmet" class="card-service-img-top">
+                    </div>
                     <div class="p-3 d-flex flex-column flex-grow-1">
                         <h5 class="fw-bold mb-2 serif" style="color: var(--brand-dark);">Alimentación Gourmet</h5>
-                        <p class="text-muted small mb-3 flex-grow-1">Parrilladas mixtas, cortes de carne premium, lomito en salsa de hongos y exquisitas guarniciones.</p>
-                        <span class="text-primary fw-semibold small" style="color: var(--brand-gold) !important;"><i class="bi bi-check2-circle me-1"></i>Servicio a la mesa o bufete</span>
+                        <p class="text-muted small mb-3 flex-grow-1">Parrilladas mixtas a la leña, cortes de carne premium, lomito en salsa de hongos y exquisitas guarniciones.</p>
+                        <span class="fw-semibold small" style="color: var(--brand-gold);"><i class="bi bi-fire me-1"></i>Servicio a la mesa o bufete</span>
                     </div>
                 </div>
             </div>
 
             <!-- Decoración -->
             <div class="col-lg-3 col-md-6">
-                <div class="card-service-img">
-                    <img src="{% static 'images/decoracion.jpg' %}" alt="Decoración Temática" class="card-service-img-top">
+                <div class="card-service-img overflow-hidden">
+                    <div class="overflow-hidden">
+                        <img src="{% static 'images/decoracion.jpg' %}" alt="Decoración Temática" class="card-service-img-top">
+                    </div>
                     <div class="p-3 d-flex flex-column flex-grow-1">
                         <h5 class="fw-bold mb-2 serif" style="color: var(--brand-dark);">Decoración & Flores</h5>
-                        <p class="text-muted small mb-3 flex-grow-1">Centros de mesa, iluminación vintage y arreglos según la temática deseada con foto de referencia.</p>
-                        <span class="text-primary fw-semibold small" style="color: var(--brand-gold) !important;"><i class="bi bi-check2-circle me-1"></i>Carga de referencias</span>
+                        <p class="text-muted small mb-3 flex-grow-1">Centros de mesa, iluminación cálida y arreglos según la temática deseada con carga de fotos de referencia.</p>
+                        <span class="fw-semibold small" style="color: var(--brand-gold);"><i class="bi bi-flower1 me-1"></i>Ambientes personalizados</span>
                     </div>
                 </div>
             </div>
 
             <!-- Vajilla y Cristalería -->
             <div class="col-lg-3 col-md-6">
-                <div class="card-service-img">
-                    <img src="{% static 'images/vajilla.jpg' %}" alt="Alquiler de Vajilla" class="card-service-img-top">
+                <div class="card-service-img overflow-hidden">
+                    <div class="overflow-hidden">
+                        <img src="{% static 'images/vajilla.jpg' %}" alt="Alquiler de Vajilla" class="card-service-img-top">
+                    </div>
                     <div class="p-3 d-flex flex-column flex-grow-1">
                         <h5 class="fw-bold mb-2 serif" style="color: var(--brand-dark);">Vajilla & Cristalería</h5>
-                        <p class="text-muted small mb-3 flex-grow-1">Platos de porcelana, cubiertos de acero inoxidable, copas de brindis y vasos de cristal fino.</p>
-                        <span class="text-primary fw-semibold small" style="color: var(--brand-gold) !important;"><i class="bi bi-check2-circle me-1"></i>Cálculo automático</span>
+                        <p class="text-muted small mb-3 flex-grow-1">Platos de porcelana de gala, cubiertos de acero inoxidable, copas de brindis y cristalería fina.</p>
+                        <span class="fw-semibold small" style="color: var(--brand-gold);"><i class="bi bi-cup-straw me-1"></i>Cálculo automatizado</span>
                     </div>
                 </div>
             </div>
 
             <!-- Mobiliario y Mantelería -->
             <div class="col-lg-3 col-md-6">
-                <div class="card-service-img">
-                    <img src="{% static 'images/manteleria.jpg' %}" alt="Mobiliario y Mantelería" class="card-service-img-top">
+                <div class="card-service-img overflow-hidden">
+                    <div class="overflow-hidden">
+                        <img src="{% static 'images/manteleria.jpg' %}" alt="Mobiliario y Mantelería" class="card-service-img-top">
+                    </div>
                     <div class="p-3 d-flex flex-column flex-grow-1">
-                        <h5 class="fw-bold mb-2 serif" style="color: var(--brand-dark);">Mobiliario & Manteles</h5>
+                        <h5 class="fw-bold mb-2 serif" style="color: var(--brand-dark);">Mobiliario & Mantelería</h5>
                         <p class="text-muted small mb-3 flex-grow-1">Mesas redondas para 10 personas o rectangulares, manteles de gala blancos y sillas vestidas.</p>
-                        <span class="text-primary fw-semibold small" style="color: var(--brand-gold) !important;"><i class="bi bi-check2-circle me-1"></i>Mesas calculadas por comensal</span>
+                        <span class="fw-semibold small" style="color: var(--brand-gold);"><i class="bi bi-check2-circle me-1"></i>Montaje profesional</span>
                     </div>
                 </div>
             </div>
@@ -298,20 +424,153 @@
     </div>
 </section>
 
-<!-- CALL TO ACTION BANNER -->
+<!-- 5. CÓMO FUNCIONA (3 PASOS SENCILLOS) -->
+<section class="py-5" style="background-color: var(--brand-cream-light);">
+    <div class="container py-4">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <span class="badge-luxury mb-2">Proceso Ágil & Transparente</span>
+            <h2 class="display-6 fw-bold serif" style="color: var(--brand-dark);">¿Cómo Cotizar y Contratar con Eventos68?</h2>
+            <p class="text-muted">Un proceso simple diseñado para brindarte tranquilidad y rapidez en tu organización.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="step-box shadow-sm">
+                    <div class="step-number">1</div>
+                    <h5 class="fw-bold serif text-dark mb-2">Arma tu Menú en Línea</h5>
+                    <p class="text-muted small mb-0">Selecciona el tipo de evento, invitados, tus proteínas al carbón favoritas, guarniciones y si requieres mobiliario o vajilla completa.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="step-box shadow-sm">
+                    <div class="step-number">2</div>
+                    <h5 class="fw-bold serif text-dark mb-2">Recibe tu Presupuesto PDF</h5>
+                    <p class="text-muted small mb-0">Obtén de inmediato tu propuesta formal de paquete en PDF. Nuestro equipo se comunicará por WhatsApp para afinar los detalles que desees.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="step-box shadow-sm">
+                    <div class="step-number">3</div>
+                    <h5 class="fw-bold serif text-dark mb-2">Bloquea con el 30%</h5>
+                    <p class="text-muted small mb-0">Asegura la exclusividad de tu fecha con el adelanto inicial y paga el saldo cómodamente mediante abonos previos a tu gran día.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 6. TESTIMONIOS REALES (SOCIAL PROOF) -->
+<section class="py-5 bg-white border-top border-bottom" style="border-color: var(--brand-border) !important;">
+    <div class="container py-4">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <span class="badge-luxury mb-2">Opiniones de Nuestros Clientes</span>
+            <h2 class="display-6 fw-bold serif" style="color: var(--brand-dark);">Historias de Éxito y Celebración</h2>
+            <p class="text-muted">La satisfacción de nuestros comensales es nuestra mejor carta de presentación.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+                        <p class="text-muted small fst-italic mb-3">"Contratamos la parrillada gourmet para nuestra boda de 120 personas en Alajuela. La carne estaba en su punto perfecto, los saloneros súper amables y el montaje de manteles impecable. ¡Todos los invitados quedaron encantados!"</p>
+                    </div>
+                    <div class="d-flex align-items-center gap-3 pt-3 border-top">
+                        <div class="rounded-circle bg-warning text-dark fw-bold d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">MV</div>
+                        <div>
+                            <h6 class="fw-bold mb-0 text-dark">Marcela Vargas</h6>
+                            <small class="text-muted">Boda Nupcial • Alajuela</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+                        <p class="text-muted small fst-italic mb-3">"El convivio corporativo de fin de año de nuestra empresa fue un éxito rotundo. Puntualidad impecable, comida caliente en las estaciones de bufete y el proceso de cotización por la web nos ahorró muchísimo tiempo."</p>
+                    </div>
+                    <div class="d-flex align-items-center gap-3 pt-3 border-top">
+                        <div class="rounded-circle bg-dark text-warning fw-bold d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">CR</div>
+                        <div>
+                            <h6 class="fw-bold mb-0 text-dark">Carlos Rodríguez</h6>
+                            <small class="text-muted">Evento Corporativo • San José</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div>
+                        <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+                        <p class="text-muted small fst-italic mb-3">"Para los 50 años de mi papá queríamos un asado especial. El lomo de cerdo y el lomito con salsa de hongos tenían un sabor a la leña increíble. La política de un solo evento por día se nota en la atención al 100%."</p>
+                    </div>
+                    <div class="d-flex align-items-center gap-3 pt-3 border-top">
+                        <div class="rounded-circle bg-warning text-dark fw-bold d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">EM</div>
+                        <div>
+                            <h6 class="fw-bold mb-0 text-dark">Elena Mora</h6>
+                            <small class="text-muted">Cumpleaños Familiar • Heredia</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 7. INSTAGRAM SOCIAL FEED PREVIEW -->
+<section class="py-5" style="background-color: var(--brand-cream-light);">
+    <div class="container py-4 text-center">
+        <span class="badge-luxury mb-2">Comunidad & Redes Sociales</span>
+        <h2 class="display-6 fw-bold serif mb-2" style="color: var(--brand-dark);">Síguenos en Instagram</h2>
+        <p class="text-muted mb-4">Fotos reales de nuestros montajes, cortes a las brasas y comensales felices en <a href="{{ EMPRESA_INSTAGRAM_LINK }}" target="_blank" class="fw-bold text-danger text-decoration-none"><i class="bi bi-instagram me-1"></i>{{ EMPRESA_INSTAGRAM }}</a></p>
+
+        <div class="row g-3 justify-content-center mb-4">
+            <div class="col-6 col-md-3">
+                <a href="{{ EMPRESA_INSTAGRAM_LINK }}" target="_blank" class="d-block overflow-hidden rounded-3 shadow-sm hover-lift">
+                    <img src="{% static 'images/bodas.jpeg' %}" alt="Boda Eventos68" class="img-fluid w-100" style="height: 180px; object-fit: cover;">
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="{{ EMPRESA_INSTAGRAM_LINK }}" target="_blank" class="d-block overflow-hidden rounded-3 shadow-sm hover-lift">
+                    <img src="{% static 'images/alimentacion.jpg' %}" alt="Parrilladas al carbón" class="img-fluid w-100" style="height: 180px; object-fit: cover;">
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="{{ EMPRESA_INSTAGRAM_LINK }}" target="_blank" class="d-block overflow-hidden rounded-3 shadow-sm hover-lift">
+                    <img src="{% static 'images/decoracion.jpg' %}" alt="Decoración de mesas" class="img-fluid w-100" style="height: 180px; object-fit: cover;">
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="{{ EMPRESA_INSTAGRAM_LINK }}" target="_blank" class="d-block overflow-hidden rounded-3 shadow-sm hover-lift">
+                    <img src="{% static 'images/vajilla.jpg' %}" alt="Montaje de gala" class="img-fluid w-100" style="height: 180px; object-fit: cover;">
+                </a>
+            </div>
+        </div>
+
+        <a href="{{ EMPRESA_INSTAGRAM_LINK }}" target="_blank" class="btn btn-outline-dark rounded-pill px-4">
+            <i class="bi bi-instagram me-2 text-danger"></i>Ver Galería en Instagram {{ EMPRESA_INSTAGRAM }}
+        </a>
+    </div>
+</section>
+
+<!-- 8. CALL TO ACTION BANNER -->
 <section class="py-5 text-white position-relative" style="background: linear-gradient(135deg, var(--brand-black) 0%, var(--brand-dark) 100%);">
+    <div style="position: absolute; top:0; left:0; right:0; bottom:0; background-image: url('{% static 'images/logos/sello68.jpg' %}'); background-repeat: repeat; background-size: 320px; opacity: 0.08; pointer-events: none;"></div>
     <div class="container py-4 text-center position-relative" style="z-index: 2;">
-        <span class="badge-luxury mb-3">Tu Presupuesto en Menos de 2 Minutos</span>
-        <h2 class="display-5 fw-bold serif mb-3 text-white">¿Listo para calcular el presupuesto de tu evento?</h2>
+        <span class="badge-luxury mb-3">Presupuesto en Menos de 2 Minutos</span>
+        <h2 class="display-5 fw-bold serif mb-3 text-white">¿Listo para hacer realidad el banquete de tu evento?</h2>
         <p class="lead mb-4 text-white-50 max-w-700 mx-auto" style="font-weight: 300;">
-            Selecciona el número de invitados y los componentes gastronómicos deseados. Obtendrás el cálculo de vajilla, mobiliario e impuestos con descarga en PDF de inmediato.
+            Elige los componentes de tu menú y calcula automáticamente vajilla, mobiliario y transporte con descarga inmediata en PDF.
         </p>
         <div class="d-flex flex-wrap justify-content-center gap-3">
             <a href="{% url 'web:solicitar' %}" class="btn btn-brand-gold btn-lg shadow px-4">
-                <i class="bi bi-send-fill me-2"></i>Cotizar en Línea Ahora
+                <i class="bi bi-calculator me-2"></i>Cotizar en Línea Ahora
             </a>
             <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank" class="btn btn-outline-light btn-lg rounded-pill px-4" style="border-color: rgba(255,255,255,0.3);">
-                <i class="bi bi-whatsapp me-2 text-success"></i>Hablar con un Asesor
+                <i class="bi bi-whatsapp me-2 text-success"></i>Atención por WhatsApp
             </a>
         </div>
     </div>

@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gestión Cotización #EV68-{{ cotizacion.id|stringformat:"04d" }} | {{ EMPRESA_NOMBRE }}{% endblock %}
+
+{% block content %}
+<div class="container py-4 my-2">
+    <!-- Header Administrativo -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3 border-bottom pb-3">
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <a href="{% url 'web:gestor_dashboard' %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Volver al Panel</a>
+                <span class="badge bg-dark">Vista Interna de Colaborador</span>
+            </div>
+            <h2 class="serif fw-bold mb-0">Cotización #EV68-{{ cotizacion.id|stringformat:"04d" }}</h2>
+            <p class="text-muted small mb-0">Registrada el {{ cotizacion.fecha_registro|date:"d/m/Y H:i" }} | Estado actual: <b class="text-primary">{{ cotizacion.get_estado_display }}</b></p>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{% url 'web:descargar_pdf' cotizacion.id %}" target="_blank" class="btn btn-outline-dark btn-sm">
+                <i class="bi bi-file-earmark-pdf-fill me-1 text-danger"></i>PDF Formal
+            </a>
+            <a href="https://wa.me/506{{ cotizacion.cliente.telefono|cut:'-'|cut:' ' }}?text=Hola%20{{ cotizacion.cliente.nombre|urlencode }},%20le%20saluda%20Eventos68%20Catering..." target="_blank" class="btn btn-outline-success btn-sm">
+                <i class="bi bi-whatsapp me-1"></i>WhatsApp
+            </a>
+            <a href="{% url 'web:enviar_correo' cotizacion.id %}" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-envelope-at-fill me-1"></i>Enviar por Correo
+            </a>
+        </div>
+    </div>
+
+    <!-- Barra de Cambio de Estado Rápido -->
+    <div class="card card-custom p-3 mb-4 bg-light">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div class="d-flex align-items-center gap-2">
+                <span class="fw-bold small text-muted">Acciones de Estado:</span>
+                <span class="badge bg-warning text-dark fs-6">{{ cotizacion.get_estado_display }}</span>
+            </div>
+            <div class="d-flex gap-2">
+                <form method="POST" action="{% url 'web:gestor_cambiar_estado' cotizacion.id %}" class="d-inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="nuevo_estado" value="Aprobada">
+                    <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-check-circle me-1"></i>Aprobar Presupuesto</button>
+                </form>
+                <form method="POST" action="{% url 'web:gestor_cambiar_estado' cotizacion.id %}" class="d-inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="nuevo_estado" value="Pendiente">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm">Marcar como Pendiente</button>
+                </form>
+                <form method="POST" action="{% url 'web:gestor_cambiar_estado' cotizacion.id %}" class="d-inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="nuevo_estado" value="Rechazada">
+                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('¿Rechazar cotización?');">Rechazar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Datos del Cliente y Evento -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card card-custom p-3 h-100">
+                <h6 class="fw-bold text-dark border-bottom pb-2"><i class="bi bi-person-fill text-warning me-1"></i>Datos del Cliente</h6>
+                <p class="mb-1"><b>Nombre:</b> {{ cotizacion.cliente.nombre }}</p>
+                <p class="mb-1"><b>Cédula / Identificación:</b> {{ cotizacion.cliente.identificacion }}</p>
+                <p class="mb-1"><b>Teléfono:</b> <a href="tel:{{ cotizacion.cliente.telefono }}">{{ cotizacion.cliente.telefono }}</a></p>
+                <p class="mb-1"><b>Correo:</b> <a href="mailto:{{ cotizacion.cliente.correo }}">{{ cotizacion.cliente.correo }}</a></p>
+                <p class="mb-0"><b>Dirección Cliente:</b> {{ cotizacion.cliente.direccion|default:"No indicada" }}</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-custom p-3 h-100">
+                <h6 class="fw-bold text-dark border-bottom pb-2"><i class="bi bi-calendar-check-fill text-warning me-1"></i>Detalles del Evento</h6>
+                <p class="mb-1"><b>Tipo de Evento:</b> {{ cotizacion.tipo_evento.nombre }}</p>
+                <p class="mb-1"><b>Fecha Programada:</b> <span class="badge bg-dark text-white fs-6">{{ cotizacion.fecha_evento|date:"l, d/m/Y" }}</span></p>
+                <p class="mb-1"><b>Cantidad de Personas:</b> {{ cotizacion.cantidad_personas }} invitados</p>
+                <p class="mb-1"><b>Modalidad:</b> {{ cotizacion.get_modalidad_servicio_display }}</p>
+                <p class="mb-0"><b>Lugar del Evento:</b> {{ cotizacion.direccion_evento }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desglose Interno con Costos y Márgenes (Solo Gestor) -->
+    <div class="card card-custom mb-4">
+        <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold"><i class="bi bi-card-checklist text-warning me-2"></i>Desglose Interno de Componentes y Costos</h5>
+            <span class="badge bg-info-subtle text-info border border-info small">Costos Base Internos Visibles</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Servicio</th>
+                        <th>Componente</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-end">Costo Unitario Base</th>
+                        <th class="text-end">Subtotal Base</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in cotizacion.detalles.all %}
+                    <tr>
+                        <td><span class="badge bg-light text-dark border">{{ d.servicio.nombre }}</span></td>
+                        <td>
+                            <b>{% if d.detalle_servicio %}{{ d.detalle_servicio.nombre_detalle }}{% else %}{{ d.nombre_personalizado }}{% endif %}</b>
+                            {% if d.detalle_personalizado %}
+                            <br><small class="text-muted">{{ d.detalle_personalizado }}</small>
+                            {% endif %}
+                            {% if d.imagen_referencia %}
+                            <br><a href="{{ d.imagen_referencia.url }}" target="_blank" class="small text-primary"><i class="bi bi-image me-1"></i>Ver Foto de Decoración</a>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">{{ d.cantidad }}</td>
+                        <td class="text-end">₡{{ d.costo_unitario|floatformat:2 }}</td>
+                        <td class="text-end fw-bold">₡{{ d.subtotal|floatformat:2 }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5" class="text-center text-muted py-3">Sin componentes.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Resumen Financiero Interno (Costos, Margen y Ganancia) -->
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card card-custom p-4 h-100">
+                <h5 class="fw-bold serif mb-3 border-bottom pb-2"><i class="bi bi-calculator me-2 text-warning"></i>Estructura Financiera del Negocio</h5>
+                <div class="d-flex justify-content-between mb-2"><span>Costos Directos de Servicios:</span><b>₡{{ cotizacion.subtotal_servicios|floatformat:2 }}</b></div>
+                <div class="d-flex justify-content-between mb-2"><span>Gastos Directos Operativos:</span><b>₡{{ cotizacion.total_gastos|floatformat:2 }}</b></div>
+                <div class="d-flex justify-content-between mb-2 text-success">
+                    <span>Margen de Ganancia ({{ cotizacion.porcentaje_ganancia }}%):</span>
+                    <b>₡{{ cotizacion.monto_ganancia|floatformat:2 }}</b>
+                </div>
+                <div class="d-flex justify-content-between mb-2 text-muted">
+                    <span>Impuesto IVA ({{ cotizacion.porcentaje_iva }}%):</span>
+                    <b>₡{{ cotizacion.monto_iva|floatformat:2 }}</b>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between mb-2 fs-5">
+                    <span class="fw-bold">TOTAL PARA EL CLIENTE:</span>
+                    <b class="text-dark">₡{{ cotizacion.total_general|floatformat:2 }}</b>
+                </div>
+                <div class="d-flex justify-content-between mb-3 text-muted small">
+                    <span>Precio por Persona:</span>
+                    <span>₡{{ cotizacion.total_por_persona|floatformat:2 }} / invitado</span>
+                </div>
+                <div class="p-3 bg-warning-subtle rounded border border-warning">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="fw-bold text-dark d-block">Adelanto Mínimo de Reserva ({{ cotizacion.porcentaje_pago_inicial }}%):</small>
+                            <span class="text-muted small">Requerido para bloquear la fecha</span>
+                        </div>
+                        <h4 class="fw-bold mb-0 text-dark">₡{{ cotizacion.monto_pago_inicial|floatformat:2 }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card card-custom p-4 h-100 bg-white">
+                <h5 class="fw-bold serif mb-3 border-bottom pb-2"><i class="bi bi-file-earmark-check me-2 text-warning"></i>Vista Previa del Cliente</h5>
+                <p class="text-muted small">Al cliente se le entrega la propuesta con los componentes solicitados y el valor total del paquete integral, protegiendo tus márgenes de ganancia y costos unitarios de insumos.</p>
+                <div class="d-grid gap-2 mt-4">
+                    <a href="{% url 'web:detalle_cotizacion' cotizacion.id %}" target="_blank" class="btn btn-outline-dark">
+                        <i class="bi bi-box-arrow-up-right me-2"></i>Ver Vista Pública del Cliente
+                    </a>
+                    <a href="{% url 'web:descargar_pdf' cotizacion.id %}" target="_blank" class="btn btn-brand-gold">
+                        <i class="bi bi-file-earmark-pdf-fill me-2"></i>Descargar PDF Oficial
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

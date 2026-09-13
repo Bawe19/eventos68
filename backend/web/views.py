@@ -2,9 +2,13 @@ from decimal import Decimal
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.core.mail import EmailMessage
 from django.conf import settings
+from django.db.models import Sum, Q, Count
+from django.utils import timezone
 
 from core.models import (
     Cliente, TipoEvento, Servicio, DetalleServicio,
@@ -178,3 +182,158 @@ def enviar_correo_cotizacion(request, cotizacion_id):
         messages.error(request, f"Error al enviar correo: {str(ex)}")
 
     return redirect('web:detalle_cotizacion', cotizacion_id=cotizacion.id)
+
+
+# ==============================================================================
+# PORTAL DE ADMINISTRACIÓN Y GESTIÓN PARA EL PERSONAL (NO-TÉCNICO)
+# ==============================================================================
+
+def gestor_login(request):
+    """Pantalla de inicio de sesión intuitiva para el personal de Eventos68."""
+    if request.user.is_authenticated:
+        return redirect('web:gestor_dashboard')
+
+    if request.method == 'POST':
+        usuario = request.POST.get('username', '').strip()
+        clave = request.POST.get('password', '')
+        user = authenticate(request, username=usuario, password=clave)
+        if user is not None:
+            auth_login(request, user)
+            messages.success(request, f"¡Bienvenido(a), {user.get_full_name() or user.username}!")
+            next_url = request.GET.get('next') or 'web:gestor_dashboard'
+            return redirect(next_url)
+        else:
+            messages.error(request, "Credenciales incorrectas. Verifique su usuario y contraseña.")
+
+    return render(request, 'web/gestor_login.html')
+
+
+def gestor_logout(request):
+    """Cierra la sesión del gestor."""
+    auth_logout(request)
+    messages.info(request, "Has cerrado sesión correctamente.")
+    return redirect('web:home')
+
+
+@login_required(login_url='web:gestor_login')
+def gestor_dashboard(request):
+    """
+    Panel central de gestión:
+    - KPIs clave (Cotizaciones pendientes, aprobadas, eventos, abonos recaudados)
+    - Listado y control de cotizaciones
+    - Listado de eventos y registro ágil de abonos
+    """
+    # 1. Filtros de búsqueda
+    filtro_estado = request.GET.get('estado', 'Todas')
+    busqueda = request.GET.get('q', '').strip()
+
+    cotizaciones = Cotizacion.objects.select_related('cliente', 'tipo_evento').order_by('-fecha_registro')
+    if filtro_estado != 'Todas':
+        cotizaciones = cotizaciones.filter(estado=filtro_estado)
+    if busqueda:
+        cotizaciones = cotizaciones.filter(
+            Q(cliente__nombre__icontains=busqueda) |
+            Q(cliente__identificacion__icontains=busqueda) |
+            Q(cliente__telefono__icontains=busqueda) |
+            Q(id__icontains=busqueda)
+        )
+
+    # 2. Métricas Generales
+    total_cotizaciones = Cotizacion.objects.count()
+    cotizaciones_pendientes = Cotizacion.objects.filter(estado='Pendiente').count()
+    cotizaciones_aprobadas = Cotizacion.objects.filter(estado='Aprobada').count()
+    eventos_confirmados = Evento.objects.filter(estado__in=['Contratado', 'En Proceso']).count()
+    
+    total_recaudado = Pago.objects.aggregate(total=Sum('monto'))['total'] or Decimal('0.00')
+
+    # 3. Próximos Eventos
+    eventos_proximos = Evento.objects.select_related('cotizacion', 'cotizacion__cliente', 'cotizacion__tipo_evento')\
+                                    .prefetch_related('pagos')\
+                                    .order_by('fecha_evento')[:10]
+
+    # Calcular saldo para cada evento
+    for ev in eventos_proximos:
+        ev.total_abonado = sum(p.monto for p in ev.pagos.all())
+        ev.saldo_pendiente = max(Decimal('0.00'), ev.cotizacion.total_general - ev.total_abonado)
+        ev.porcentaje_pagado = int((ev.total_abonado / ev.cotizacion.total_general * 100)) if ev.cotizacion.total_general > 0 else 0
+
+    context = {
+        'cotizaciones': cotizaciones[:50],
+        'total_cotizaciones': total_cotizaciones,
+        'cotizaciones_pendientes': cotizaciones_pendientes,
+        'cotizaciones_aprobadas': cotizaciones_aprobadas,
+        'eventos_confirmados': eventos_confirmados,
+        'total_recaudado': total_recaudado,
+        'eventos_proximos': eventos_proximos,
+        'filtro_estado': filtro_estado,
+        'busqueda': busqueda,
+    }
+    return render(request, 'web/gestor_dashboard.html', context)
+
+
+@login_required(login_url='web:gestor_login')
+@require_http_methods(['POST'])
+def gestor_cambiar_estado(request, cotizacion_id):
+    """Cambia el estado de una cotización con un solo clic."""
+    cotizacion = get_object_or_404(Cotizacion, id=cotizacion_id)
+    nuevo_estado = request.POST.get('nuevo_estado')
+    estados_validos = ['Pendiente', 'Aprobada', 'Rechazada', 'Cancelada']
+
+    if nuevo_estado in estados_validos:
+        cotizacion.estado = nuevo_estado
+        cotizacion.save(update_fields=['estado'])
+        messages.success(request, f"Cotización #EV68-{cotizacion.id:04d} actualizada a '{cotizacion.get_estado_display()}'.")
+    else:
+        messages.error(request, "Estado no válido.")
+
+    return redirect('web:gestor_dashboard')
+
+
+@login_required(login_url='web:gestor_login')
+@require_http_methods(['POST'])
+def gestor_convertir_evento(request, cotizacion_id):
+    """Convierte una cotización aprobada en un Evento contratado en firme."""
+    comprobante = request.FILES.get('comprobante_pago')
+    notas = request.POST.get('notas_operativas', '').strip()
+
+    try:
+        evento = EventoService.contratar_evento(
+            cotizacion_id=cotizacion_id,
+            comprobante_pago=comprobante,
+            notas_operativas=notas
+        )
+        messages.success(request, f"¡Éxito! La cotización #EV68-{cotizacion_id:04d} ha sido convertida en el Evento #{evento.id:04d}.")
+    except Exception as ex:
+        messages.error(request, f"No se pudo contratar el evento: {str(ex)}")
+
+    return redirect('web:gestor_dashboard')
+
+
+@login_required(login_url='web:gestor_login')
+@require_http_methods(['POST'])
+def gestor_registrar_abono(request, evento_id):
+    """Registra un abono para un evento contratado."""
+    monto = Decimal(request.POST.get('monto', '0') or '0')
+    descripcion = request.POST.get('descripcion', '').strip()
+    comprobante = request.FILES.get('comprobante')
+
+    try:
+        pago = EventoService.registrar_abono(
+            evento_id=evento_id,
+            monto=monto,
+            descripcion=descripcion,
+            comprobante=comprobante
+        )
+        messages.success(request, f"Abono por ₡{pago.monto:,.2f} registrado exitosamente para el Evento #{evento_id:04d}.")
+    except Exception as ex:
+        messages.error(request, f"Error al registrar abono: {str(ex)}")
+
+    return redirect('web:gestor_dashboard')
+
+
+@login_required(login_url='web:gestor_login')
+def gestor_detalle_cotizacion(request, cotizacion_id):
+    """Vista detallada exclusiva para el personal (muestra costos internos, margen y utilidades)."""
+    cotizacion = get_object_or_404(Cotizacion, id=cotizacion_id)
+    return render(request, 'web/gestor_detalle.html', {'cotizacion': cotizacion})
+

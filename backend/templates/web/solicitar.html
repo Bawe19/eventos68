@@ -117,15 +117,15 @@
                 </div>
 
                 <!-- Proteínas -->
-                <h6 class="fw-bold text-dark border-bottom pb-2 mt-3"><i class="bi bi-check2-square me-1 text-warning"></i>Carnes y Proteínas</h6>
+                <h6 class="fw-bold text-dark border-bottom pb-2 mt-3"><i class="bi bi-check2-square me-1 text-warning"></i>Carnes y Proteínas (Especialidad a la Leña)</h6>
                 <div class="row g-2 mb-3">
                     {% for p in proteinas %}
                     <div class="col-md-6">
                         <div class="form-check p-2 border rounded bg-white">
                             <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}">
-                            <label class="form-check-label d-flex justify-content-between pe-2 w-100" for="item_{{ p.id }}">
-                                <span>{{ p.nombre_detalle }}</span>
-                                <b class="text-primary">₡{{ p.costo_unitario|floatformat:2 }}</b>
+                            <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ p.id }}">
+                                <span class="fw-medium">{{ p.nombre_detalle }}</span>
+                                <span class="badge bg-light text-dark border small"><i class="bi bi-fire text-warning me-1"></i>A las brasas</span>
                             </label>
                         </div>
                     </div>
@@ -133,15 +133,15 @@
                 </div>
 
                 <!-- Guarniciones -->
-                <h6 class="fw-bold text-dark border-bottom pb-2 mt-4"><i class="bi bi-check2-square me-1 text-warning"></i>Guarniciones</h6>
+                <h6 class="fw-bold text-dark border-bottom pb-2 mt-4"><i class="bi bi-check2-square me-1 text-warning"></i>Guarniciones & Acompañamientos</h6>
                 <div class="row g-2 mb-3">
                     {% for g in guarniciones %}
                     <div class="col-md-6">
                         <div class="form-check p-2 border rounded bg-white">
                             <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ g.id }}" id="item_{{ g.id }}">
-                            <label class="form-check-label d-flex justify-content-between pe-2 w-100" for="item_{{ g.id }}">
-                                <span>{{ g.nombre_detalle }}</span>
-                                <b class="text-primary">₡{{ g.costo_unitario|floatformat:2 }}</b>
+                            <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ g.id }}">
+                                <span class="fw-medium">{{ g.nombre_detalle }}</span>
+                                <span class="badge bg-light text-secondary border small">Guarnición</span>
                             </label>
                         </div>
                     </div>
@@ -151,25 +151,25 @@
                 <!-- Ensaladas y Postres -->
                 <div class="row g-4 mt-2">
                     <div class="col-md-6">
-                        <h6 class="fw-bold text-dark border-bottom pb-2"><i class="bi bi-flower1 me-1 text-warning"></i>Ensaladas</h6>
+                        <h6 class="fw-bold text-dark border-bottom pb-2"><i class="bi bi-flower1 me-1 text-warning"></i>Ensaladas Frescas</h6>
                         {% for e in ensaladas %}
                         <div class="form-check p-2 border rounded bg-white mb-2">
                             <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ e.id }}" id="item_{{ e.id }}">
-                            <label class="form-check-label d-flex justify-content-between pe-2 w-100" for="item_{{ e.id }}">
-                                <span>{{ e.nombre_detalle }}</span>
-                                <b class="text-primary">₡{{ e.costo_unitario|floatformat:2 }}</b>
+                            <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ e.id }}">
+                                <span class="fw-medium">{{ e.nombre_detalle }}</span>
+                                <span class="badge bg-light text-success border small">Fresco</span>
                             </label>
                         </div>
                         {% endfor %}
                     </div>
                     <div class="col-md-6">
-                        <h6 class="fw-bold text-dark border-bottom pb-2"><i class="bi bi-cake2 me-1 text-warning"></i>Postres</h6>
+                        <h6 class="fw-bold text-dark border-bottom pb-2"><i class="bi bi-cake2 me-1 text-warning"></i>Postres Artesanales</h6>
                         {% for pos in postres %}
                         <div class="form-check p-2 border rounded bg-white mb-2">
                             <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ pos.id }}" id="item_{{ pos.id }}">
-                            <label class="form-check-label d-flex justify-content-between pe-2 w-100" for="item_{{ pos.id }}">
-                                <span>{{ pos.nombre_detalle }}</span>
-                                <b class="text-primary">₡{{ pos.costo_unitario|floatformat:2 }}</b>
+                            <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ pos.id }}">
+                                <span class="fw-medium">{{ pos.nombre_detalle }}</span>
+                                <span class="badge bg-light text-primary border small">Artesanal</span>
                             </label>
                         </div>
                         {% endfor %}

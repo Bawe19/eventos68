@@ -1,0 +1,402 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Panel de Control Gestor | {{ EMPRESA_NOMBRE }}{% endblock %}
+
+{% block extra_head %}
+<style>
+    .kpi-card {
+        border-radius: 16px;
+        border: 1px solid var(--brand-border);
+        background: #FFFFFF;
+        box-shadow: 0 4px 15px rgba(38, 37, 35, 0.04);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    .kpi-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgba(38, 37, 35, 0.09);
+        border-color: var(--brand-gold);
+    }
+    .kpi-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; bottom: 0;
+        width: 4px;
+        background: var(--brand-gold);
+    }
+    .kpi-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+    }
+    .status-badge {
+        font-weight: 600;
+        font-size: 0.78rem;
+        padding: 0.35rem 0.75rem;
+        border-radius: 50px;
+        letter-spacing: 0.02em;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- HEADER DEL DASHBOARD -->
+<div class="py-4 position-relative text-white mb-4" style="background-color: var(--brand-black); border-bottom: 2px solid var(--brand-gold);">
+    <div style="position: absolute; top:0; left:0; right:0; bottom:0; background-image: url('{% static 'images/logos/sello68.jpg' %}'); background-repeat: repeat; background-size: 300px; opacity: 0.1; pointer-events: none;"></div>
+    <div class="container position-relative" style="z-index: 2;">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+                <span class="badge px-3 py-1 rounded-pill mb-2 fw-bold small" style="background: var(--brand-gold-subtle); color: var(--brand-gold); border: 1px solid rgba(200,134,10,0.3);">
+                    <i class="bi bi-shield-check me-1"></i>Portal Administrativo del Personal
+                </span>
+                <h1 class="serif fw-bold h2 mb-1 text-white">Panel de Gestión de Eventos & Cotizaciones</h1>
+                <p class="text-white-50 mb-0 small">Bienvenido(a), <b>{{ user.get_full_name|default:user.username }}</b>. Administra presupuestos, contratos y abonos de clientes.</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="{% url 'web:solicitar' %}" target="_blank" class="btn btn-brand-gold btn-sm">
+                    <i class="bi bi-plus-circle me-1"></i>Nueva Cotización
+                </a>
+                <a href="{% url 'web:gestor_logout' %}" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                    <i class="bi bi-box-arrow-right me-1"></i>Cerrar Sesión
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <!-- 1. TARJETAS DE MÉTRICAS (KPIs) -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-lg-3">
+            <div class="kpi-card p-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted small fw-semibold">Cotizaciones Nuevas</span>
+                    <div class="kpi-icon bg-warning-subtle text-warning"><i class="bi bi-hourglass-split"></i></div>
+                </div>
+                <h3 class="fw-bold mb-0 text-dark">{{ cotizaciones_pendientes }}</h3>
+                <small class="text-muted">Por revisar o responder</small>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+            <div class="kpi-card p-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted small fw-semibold">Cotizaciones Aprobadas</span>
+                    <div class="kpi-icon bg-success-subtle text-success"><i class="bi bi-check2-circle"></i></div>
+                </div>
+                <h3 class="fw-bold mb-0 text-dark">{{ cotizaciones_aprobadas }}</h3>
+                <small class="text-success">Listas para contratar</small>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+            <div class="kpi-card p-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted small fw-semibold">Eventos Confirmados</span>
+                    <div class="kpi-icon bg-primary-subtle text-primary"><i class="bi bi-calendar2-check"></i></div>
+                </div>
+                <h3 class="fw-bold mb-0 text-dark">{{ eventos_confirmados }}</h3>
+                <small class="text-primary">En agenda operativa</small>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+            <div class="kpi-card p-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted small fw-semibold">Abonos Recaudados</span>
+                    <div class="kpi-icon text-warning" style="background: rgba(200, 134, 10, 0.15);"><i class="bi bi-cash-stack"></i></div>
+                </div>
+                <h3 class="fw-bold mb-0 text-dark">₡{{ total_recaudado|floatformat:0 }}</h3>
+                <small class="text-muted">Pagos registrados</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. GESTIÓN DE COTIZACIONES -->
+    <div class="card card-custom mb-5">
+        <div class="card-header bg-white py-3 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+                <h5 class="fw-bold mb-0 text-dark"><i class="bi bi-receipt-cutoff text-warning me-2"></i>Cotizaciones Registradas</h5>
+                <small class="text-muted">Presupuestos enviados por clientes y cotizaciones en curso.</small>
+            </div>
+
+            <!-- Filtros por Estado -->
+            <div class="d-flex flex-wrap gap-2 align-items-center">
+                <div class="btn-group btn-group-sm" role="group">
+                    <a href="?estado=Todas{% if busqueda %}&q={{ busqueda }}{% endif %}" class="btn {% if filtro_estado == 'Todas' %}btn-dark{% else %}btn-outline-secondary{% endif %}">Todas ({{ total_cotizaciones }})</a>
+                    <a href="?estado=Pendiente{% if busqueda %}&q={{ busqueda }}{% endif %}" class="btn {% if filtro_estado == 'Pendiente' %}btn-warning text-dark fw-bold{% else %}btn-outline-warning text-dark{% endif %}">Pendientes</a>
+                    <a href="?estado=Aprobada{% if busqueda %}&q={{ busqueda }}{% endif %}" class="btn {% if filtro_estado == 'Aprobada' %}btn-success{% else %}btn-outline-success{% endif %}">Aprobadas</a>
+                    <a href="?estado=Evento{% if busqueda %}&q={{ busqueda }}{% endif %}" class="btn {% if filtro_estado == 'Evento' %}btn-primary{% else %}btn-outline-primary{% endif %}">Contratadas</a>
+                    <a href="?estado=Rechazada{% if busqueda %}&q={{ busqueda }}{% endif %}" class="btn {% if filtro_estado == 'Rechazada' %}btn-danger{% else %}btn-outline-danger{% endif %}">Rechazadas</a>
+                </div>
+
+                <!-- Buscador -->
+                <form method="GET" class="d-flex gap-1">
+                    <input type="hidden" name="estado" value="{{ filtro_estado }}">
+                    <input type="text" name="q" class="form-control form-control-sm" placeholder="Buscar cliente, teléfono o #ID..." value="{{ busqueda }}" style="width: 220px;">
+                    <button type="submit" class="btn btn-dark btn-sm"><i class="bi bi-search"></i></button>
+                    {% if busqueda %}
+                    <a href="?estado={{ filtro_estado }}" class="btn btn-outline-secondary btn-sm" title="Limpiar búsqueda"><i class="bi bi-x"></i></a>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light small text-uppercase">
+                    <tr>
+                        <th># Folio</th>
+                        <th>Cliente / Contacto</th>
+                        <th>Tipo Evento</th>
+                        <th>Fecha Evento</th>
+                        <th class="text-center">Invitados</th>
+                        <th class="text-end">Presupuesto</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-end">Acciones Rápidas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in cotizaciones %}
+                    <tr>
+                        <td>
+                            <b class="text-dark">#EV68-{{ c.id|stringformat:"04d" }}</b>
+                            <br><small class="text-muted">{{ c.fecha_registro|date:"d/m/Y H:i" }}</small>
+                        </td>
+                        <td>
+                            <b class="text-dark">{{ c.cliente.nombre }}</b>
+                            <br><small class="text-muted"><i class="bi bi-telephone me-1"></i>{{ c.cliente.telefono }}</small>
+                            <br><small class="text-muted"><i class="bi bi-envelope me-1"></i>{{ c.cliente.correo }}</small>
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark border">{{ c.tipo_evento.nombre }}</span>
+                            <br><small class="text-muted">{{ c.get_modalidad_servicio_display }}</small>
+                        </td>
+                        <td>
+                            <b>{{ c.fecha_evento|date:"d/m/Y" }}</b>
+                            <br><small class="text-muted">{{ c.fecha_evento|date:"l" }}</small>
+                        </td>
+                        <td class="text-center">
+                            <span class="badge bg-secondary-subtle text-secondary fs-6 px-2 py-1">{{ c.cantidad_personas }}</span>
+                        </td>
+                        <td class="text-end">
+                            <b class="fs-6 text-dark">₡{{ c.total_general|floatformat:2 }}</b>
+                            <br><small class="text-muted">Adelanto: ₡{{ c.monto_pago_inicial|floatformat:0 }}</small>
+                        </td>
+                        <td class="text-center">
+                            {% if c.estado == 'Pendiente' %}
+                            <span class="status-badge bg-warning-subtle text-warning border border-warning">Pendiente</span>
+                            {% elif c.estado == 'Aprobada' %}
+                            <span class="status-badge bg-success-subtle text-success border border-success">Aprobada</span>
+                            {% elif c.estado == 'Evento' %}
+                            <span class="status-badge bg-primary-subtle text-primary border border-primary">Contratado</span>
+                            {% elif c.estado == 'Rechazada' %}
+                            <span class="status-badge bg-danger-subtle text-danger border border-danger">Rechazada</span>
+                            {% else %}
+                            <span class="status-badge bg-secondary-subtle text-secondary">{{ c.get_estado_display }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end">
+                            <div class="d-inline-flex gap-1">
+                                <!-- Ver Detalle Interno -->
+                                <a href="{% url 'web:gestor_detalle' c.id %}" class="btn btn-outline-dark btn-sm" title="Ver Detalle y Costos Internos">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+
+                                <!-- Descargar PDF -->
+                                <a href="{% url 'web:descargar_pdf' c.id %}" target="_blank" class="btn btn-outline-secondary btn-sm" title="Descargar PDF">
+                                    <i class="bi bi-file-pdf"></i>
+                                </a>
+
+                                <!-- WhatsApp con mensaje directo -->
+                                <a href="https://wa.me/506{{ c.cliente.telefono|cut:'-'|cut:' ' }}?text=Hola%20{{ c.cliente.nombre|urlencode }},%20le%20saluda%20el%20equipo%20de%20Eventos68%20Catering.%20Con%20respecto%20a%20su%20solicitud%20de%20cotizaci%C3%B3n%20%23EV68-{{ c.id|stringformat:'04d' }}%20para%20su%20evento%20el%20{{ c.fecha_evento|date:'d/m/Y' }}..." target="_blank" class="btn btn-outline-success btn-sm" title="Contactar por WhatsApp">
+                                    <i class="bi bi-whatsapp"></i>
+                                </a>
+
+                                <!-- Acciones Rápidas de Estado -->
+                                {% if c.estado == 'Pendiente' %}
+                                <form method="POST" action="{% url 'web:gestor_cambiar_estado' c.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="nuevo_estado" value="Aprobada">
+                                    <button type="submit" class="btn btn-success btn-sm" title="Aprobar Cotización">
+                                        <i class="bi bi-check-lg"></i>
+                                    </button>
+                                </form>
+                                <form method="POST" action="{% url 'web:gestor_cambiar_estado' c.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="nuevo_estado" value="Rechazada">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm" title="Rechazar" onclick="return confirm('¿Marcar como rechazada?');">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                </form>
+                                {% elif c.estado == 'Aprobada' %}
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalContratar{{ c.id }}" title="Convertir a Evento Contratado">
+                                    <i class="bi bi-calendar-plus me-1"></i>Contratar
+                                </button>
+                                {% endif %}
+                            </div>
+
+                            <!-- Modal para Contratar Evento -->
+                            {% if c.estado == 'Aprobada' %}
+                            <div class="modal fade text-start" id="modalContratar{{ c.id }}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form method="POST" action="{% url 'web:gestor_convertir_evento' c.id %}" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="modal-header bg-dark text-white">
+                                                <h5 class="modal-title serif">Confirmar Contrato de Evento #EV68-{{ c.id|stringformat:"04d" }}</h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="mb-2">Cliente: <b>{{ c.cliente.nombre }}</b></p>
+                                                <p class="mb-2">Fecha: <b>{{ c.fecha_evento|date:"l d/m/Y" }}</b> (1 evento por día)</p>
+                                                <p class="mb-3">Monto Total: <b>₡{{ c.total_general|floatformat:2 }}</b> | Adelanto mínimo: <b class="text-warning">₡{{ c.monto_pago_inicial|floatformat:2 }}</b></p>
+                                                
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-semibold">Comprobante de Pago Inicial / SINPE (Opcional):</label>
+                                                    <input type="file" name="comprobante_pago" class="form-control" accept="image/*,.pdf">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-semibold">Notas Operativas Internas:</label>
+                                                    <textarea name="notas_operativas" class="form-control" rows="2" placeholder="Indicaciones especiales de logística, hora de llegada de camión, etc."></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-brand-gold">
+                                                    <i class="bi bi-check2-circle me-1"></i>Confirmar y Agendar Evento
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
+                            No se encontraron cotizaciones con los criterios seleccionados.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 3. AGENDA DE PRÓXIMOS EVENTOS CONTRATADOS & REGISTRO DE ABONOS -->
+    <div class="card card-custom">
+        <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="fw-bold mb-0 text-dark"><i class="bi bi-calendar-event text-warning me-2"></i>Agenda de Eventos Contratados</h5>
+                <small class="text-muted">Control de fechas ocupadas y seguimiento de abonos.</small>
+            </div>
+            <span class="badge bg-dark rounded-pill">{{ eventos_proximos|length }} Eventos Programados</span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light small text-uppercase">
+                    <tr>
+                        <th>ID Evento</th>
+                        <th>Fecha Programada</th>
+                        <th>Cliente</th>
+                        <th>Ubicación</th>
+                        <th class="text-center">Invitados</th>
+                        <th class="text-end">Total</th>
+                        <th class="text-end">Abonado</th>
+                        <th class="text-end">Saldo Pendiente</th>
+                        <th class="text-end">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ev in eventos_proximos %}
+                    <tr>
+                        <td><b>#EV-{{ ev.id|stringformat:"04d" }}</b></td>
+                        <td>
+                            <span class="badge bg-dark text-white fs-6"><i class="bi bi-calendar-check me-1 text-warning"></i>{{ ev.fecha_evento|date:"d/m/Y" }}</span>
+                            <br><small class="text-muted">{{ ev.fecha_evento|date:"l" }}</small>
+                        </td>
+                        <td>
+                            <b>{{ ev.cotizacion.cliente.nombre }}</b>
+                            <br><small class="text-muted">{{ ev.cotizacion.cliente.telefono }}</small>
+                        </td>
+                        <td><small class="text-muted">{{ ev.cotizacion.direccion_evento|truncatewords:6 }}</small></td>
+                        <td class="text-center"><b>{{ ev.cantidad_personas }}</b> comensales</td>
+                        <td class="text-end">₡{{ ev.cotizacion.total_general|floatformat:0 }}</td>
+                        <td class="text-end text-success fw-bold">₡{{ ev.total_abonado|floatformat:0 }}</td>
+                        <td class="text-end">
+                            {% if ev.saldo_pendiente > 0 %}
+                            <b class="text-danger">₡{{ ev.saldo_pendiente|floatformat:0 }}</b>
+                            {% else %}
+                            <span class="badge bg-success">100% Cancelado</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end">
+                            <button type="button" class="btn btn-warning btn-sm fw-bold text-dark" data-bs-toggle="modal" data-bs-target="#modalAbono{{ ev.id }}">
+                                <i class="bi bi-cash me-1"></i>Registrar Abono
+                            </button>
+
+                            <!-- Modal Registrar Abono -->
+                            <div class="modal fade text-start" id="modalAbono{{ ev.id }}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form method="POST" action="{% url 'web:gestor_registrar_abono' ev.id %}" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="modal-header bg-dark text-white">
+                                                <h5 class="modal-title serif">Registrar Abono al Evento #EV-{{ ev.id|stringformat:"04d" }}</h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="p-3 bg-light rounded mb-3 border">
+                                                    <div class="d-flex justify-content-between"><span>Total Evento:</span><b>₡{{ ev.cotizacion.total_general|floatformat:2 }}</b></div>
+                                                    <div class="d-flex justify-content-between text-success"><span>Total Abonado:</span><b>₡{{ ev.total_abonado|floatformat:2 }}</b></div>
+                                                    <div class="d-flex justify-content-between text-danger fw-bold"><span>Saldo Pendiente:</span><b>₡{{ ev.saldo_pendiente|floatformat:2 }}</b></div>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-semibold">Monto del Abono (₡ CRC) *</label>
+                                                    <input type="number" name="monto" class="form-control" step="1000" min="1000" max="{{ ev.saldo_pendiente }}" required placeholder="Ej: 50000">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-semibold">Detalle / Referencia *</label>
+                                                    <input type="text" name="descripcion" class="form-control" required placeholder="Ej: Transferencia SINPE Móvil comprobante #12345">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-semibold">Foto de Comprobante (Opcional):</label>
+                                                    <input type="file" name="comprobante" class="form-control" accept="image/*,.pdf">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-brand-gold">Guardar Abono</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="9" class="text-center py-4 text-muted">No hay eventos activos programados.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

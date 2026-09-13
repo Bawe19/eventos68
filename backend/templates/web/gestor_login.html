@@ -1,0 +1,50 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Acceso al Gestor | {{ EMPRESA_NOMBRE }}{% endblock %}
+
+{% block content %}
+<div class="container py-5 my-4">
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-lg-4">
+            <div class="card card-custom shadow-lg overflow-hidden border-0" style="border-radius: 20px;">
+                <div class="p-4 text-center text-white position-relative" style="background-color: var(--brand-black); border-bottom: 2px solid var(--brand-gold);">
+                    <div style="position: absolute; top:0; left:0; right:0; bottom:0; background-image: url('{% static 'images/logos/sello68.jpg' %}'); background-repeat: repeat; background-size: 280px; opacity: 0.12; pointer-events: none;"></div>
+                    <img src="{% static 'images/logos/logo68principal.jpg' %}" alt="Logo Eventos68" class="rounded-circle shadow mb-2" style="width: 75px; height: 75px; object-fit: cover; border: 2px solid var(--brand-gold);">
+                    <h4 class="serif fw-bold mb-0 text-white">Portal de Gestión</h4>
+                    <p class="small text-white-50 mb-0">Control de Cotizaciones y Eventos</p>
+                </div>
+
+                <div class="card-body p-4 bg-white">
+                    <form method="POST" action="{% url 'web:gestor_login' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small text-muted">Usuario</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-person text-secondary"></i></span>
+                                <input type="text" name="username" class="form-control border-start-0" placeholder="admin" required autofocus>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold small text-muted">Contraseña</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock text-secondary"></i></span>
+                                <input type="password" name="password" class="form-control border-start-0" placeholder="••••••••" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-brand-gold w-100 py-2 fw-bold shadow">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>Iniciar Sesión
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-3 pt-3 border-top">
+                        <small class="text-muted"><i class="bi bi-shield-check me-1 text-success"></i>Acceso para colaboradores de Eventos68</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

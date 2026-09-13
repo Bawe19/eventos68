@@ -171,30 +171,29 @@ def generar_pdf_cotizacion(cotizacion) -> bytes:
     elements.append(t_info)
     elements.append(Spacer(1, 14))
 
-    # 3. Items / Services Table
-    elements.append(Paragraph("Desglose de Servicios y Componentes", section_style))
+    # 3. Items / Services Table (Client-Facing Package Presentation)
+    elements.append(Paragraph("Componentes y Menú Incluido en la Propuesta", section_style))
     items_data = [
         [
-            Paragraph("<b>Servicio / Componente</b>", cell_bold),
+            Paragraph("<b>Servicio / Componente Solicitado</b>", cell_bold),
             Paragraph("<b>Categoría</b>", cell_bold),
             Paragraph("<b>Cantidad</b>", cell_right_bold),
-            Paragraph("<b>Precio Unit.</b>", cell_right_bold),
-            Paragraph("<b>Subtotal</b>", cell_right_bold),
+            Paragraph("<b>Modalidad</b>", cell_right_bold),
         ]
     ]
 
     for d in cotizacion.detalles.all():
         nombre_item = d.detalle_servicio.nombre_detalle if d.detalle_servicio else d.nombre_personalizado or d.servicio.nombre
         cat = d.detalle_servicio.categoria if d.detalle_servicio and d.detalle_servicio.categoria else d.servicio.nombre
+        modalidad = "Bufete" if d.es_bufete else ("Saloneros" if d.requiere_saloneros else "Incluido")
         items_data.append([
             Paragraph(f"<b>{d.servicio.nombre}</b>: {nombre_item}", cell_style),
             Paragraph(str(cat), cell_style),
             Paragraph(str(d.cantidad), cell_right),
-            Paragraph(f"₡{d.costo_unitario:,.2f}", cell_right),
-            Paragraph(f"₡{d.subtotal:,.2f}", cell_right_bold),
+            Paragraph(modalidad, cell_right),
         ])
 
-    t_items = Table(items_data, colWidths=[3.2 * inch, 1.3 * inch, 0.8 * inch, 1.1 * inch, 1.1 * inch])
+    t_items = Table(items_data, colWidths=[4.0 * inch, 1.8 * inch, 0.8 * inch, 0.9 * inch])
     t_items.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), c_light),
         ('BOX', (0, 0), (-1, -1), 0.5, c_border),
@@ -205,52 +204,23 @@ def generar_pdf_cotizacion(cotizacion) -> bytes:
     elements.append(t_items)
     elements.append(Spacer(1, 14))
 
-    # 4. Direct Expenses Table (if any)
-    gastos = cotizacion.gastos.all()
-    if gastos.exists():
-        elements.append(Paragraph("Gastos Directos Operativos", section_style))
-        gastos_data = [
-            [
-                Paragraph("<b>Descripción del Gasto</b>", cell_bold),
-                Paragraph("<b>Fecha</b>", cell_style),
-                Paragraph("<b>Monto</b>", cell_right_bold),
-            ]
-        ]
-        for g in gastos:
-            gastos_data.append([
-                Paragraph(g.descripcion, cell_style),
-                Paragraph(g.fecha_gasto.strftime('%d/%m/%Y'), cell_style),
-                Paragraph(f"₡{g.monto:,.2f}", cell_right),
-            ])
-        t_gastos = Table(gastos_data, colWidths=[4.5 * inch, 1.5 * inch, 1.5 * inch])
-        t_gastos.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (-1, 0), c_light),
-            ('BOX', (0, 0), (-1, -1), 0.5, c_border),
-            ('INNERGRID', (0, 0), (-1, -1), 0.5, c_border),
-            ('TOPPADDING', (0, 0), (-1, -1), 4),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
-        ]))
-        elements.append(t_gastos)
-        elements.append(Spacer(1, 14))
-
-    # 5. Financial Summary Box
+    # 4. Financial Summary Box (Professional Package Proposal)
+    subtotal_paquete = cotizacion.subtotal_servicios + cotizacion.monto_ganancia
     totales_data = [
         [
-            Paragraph("<b>Términos y Condiciones</b><br/>"
+            Paragraph("<b>Términos y Condiciones del Servicio</b><br/>"
                       "• Los precios están expresados en colones costarricenses (CRC).<br/>"
-                      "• Para reservar la fecha en firme se requiere el comprobante del pago inicial.<br/>"
+                      "• Para reservar la fecha en firme se requiere el comprobante del adelanto inicial.<br/>"
                       "• El saldo restante se cancela mediante abonos programados previo al evento.<br/>"
                       "• Pagos por transferencia SINPE Móvil al <b>+506 6168-0639</b> o cuenta bancaria.<br/>"
                       "• Contáctenos al <b>+506 6168-0639</b> | <b>info@eventos68.lat</b> | <b>eventos68.lat</b><br/>"
                       "• Síganos en Instagram: <b>@eventos68_cr</b> | Facebook: <b>Eventos68</b>",
                       subtitle_style),
             Table([
-                [Paragraph("Subtotal Servicios:", cell_style), Paragraph(f"₡{cotizacion.subtotal_servicios:,.2f}", cell_right)],
-                [Paragraph("Gastos Directos:", cell_style), Paragraph(f"₡{cotizacion.total_gastos:,.2f}", cell_right)],
-                [Paragraph(f"Margen Ganancia ({cotizacion.porcentaje_ganancia}%):", cell_style), Paragraph(f"₡{cotizacion.monto_ganancia:,.2f}", cell_right)],
+                [Paragraph("Subtotal Paquete Integral:", cell_style), Paragraph(f"₡{subtotal_paquete:,.2f}", cell_right)],
                 [Paragraph(f"IVA ({cotizacion.porcentaje_iva}%):", cell_style), Paragraph(f"₡{cotizacion.monto_iva:,.2f}", cell_right)],
-                [Paragraph("<b>TOTAL GENERAL:</b>", cell_bold), Paragraph(f"<b>₡{cotizacion.total_general:,.2f}</b>", cell_right_bold)],
-                [Paragraph("Precio por Persona:", cell_style), Paragraph(f"₡{cotizacion.total_por_persona:,.2f}", cell_right)],
+                [Paragraph("<b>TOTAL DEL EVENTO:</b>", cell_bold), Paragraph(f"<b>₡{cotizacion.total_general:,.2f}</b>", cell_right_bold)],
+                [Paragraph("Inversión por Persona:", cell_style), Paragraph(f"₡{cotizacion.total_por_persona:,.2f}", cell_right)],
                 [Paragraph(f"<b>Adelanto Inicial ({cotizacion.porcentaje_pago_inicial}%):</b>", cell_bold),
                  Paragraph(f"<font color='#B45309'><b>₡{cotizacion.monto_pago_inicial:,.2f}</b></font>", cell_right_bold)],
             ], colWidths=[1.8 * inch, 1.4 * inch])
