@@ -231,8 +231,8 @@
                     <a href="{% url 'web:solicitar' %}" class="btn btn-brand-gold btn-lg shadow px-4 py-3">
                         <i class="bi bi-calculator-fill fs-4 me-2 align-middle"></i>Cotizar mi Evento en Línea
                     </a>
-                    <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank" class="btn btn-outline-dark btn-lg rounded-pill px-4 py-3 d-inline-flex align-items-center" style="border-color: rgba(70, 50, 30, 0.35); background: rgba(255, 255, 255, 0.75);">
-                        <i class="bi bi-whatsapp fs-4 me-2 text-success align-middle"></i>WhatsApp: {{ EMPRESA_TELEFONO }}
+                    <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank" class="btn-whatsapp-pill btn-lg px-4 py-3">
+                        <i class="bi bi-whatsapp fs-4 me-2 text-success align-middle"></i><span>WhatsApp: {{ EMPRESA_TELEFONO }}</span>
                     </a>
                 </div>
             </div>
@@ -294,9 +294,9 @@
 <section class="py-5" style="margin-top: 2rem;">
     <div class="container py-4">
         <div class="text-center max-w-700 mx-auto mb-5">
-            <span class="badge-luxury mb-2">Celebraciones & Ocasiones</span>
-            <h2 class="display-6 fw-bold serif" style="color: var(--brand-charcoal);">Experiencias Gastronómicas para Cada Ocasión</h2>
-            <p class="text-muted">Diseñamos propuestas gastronómicas a la medida de tus expectativas con servicio impecable.</p>
+            <span class="badge-luxury mb-2">Producción de Eventos</span>
+            <h2 class="display-6 fw-bold serif" style="color: var(--brand-charcoal);">Nuestros Servicios de Producción para Cada Ocasión</h2>
+            <p class="text-muted">Planificación integral, logística, montaje de gala y producción profesional para crear recuerdos memorables.</p>
         </div>
 
         <div class="row g-4">
@@ -348,14 +348,14 @@
                 </a>
             </div>
 
-            <!-- Bautizos y Baby Showers -->
+            <!-- Baby Showers y Revelaciones de Sexo -->
             <div class="col-md-6">
                 <a href="{% url 'web:solicitar' %}" class="card-event-type">
-                    <img src="{% static 'images/bautizo.jpg' %}" alt="Bautizos y Baby Showers">
+                    <img src="{% static 'images/bautizo.jpg' %}" alt="Baby Showers y Revelaciones de Sexo">
                     <div class="card-event-type-overlay">
-                        <span class="badge bg-warning text-dark fw-bold mb-1 align-self-start">Familiar</span>
-                        <h4 class="serif fw-bold mb-1">Bautizos & Baby Showers</h4>
-                        <small class="opacity-90">Momentos compartidos en familia con atención personalizada y estaciones gastronómicas delicadas.</small>
+                        <span class="badge bg-warning text-dark fw-bold mb-1 align-self-start">Celebraciones Tiernas</span>
+                        <h4 class="serif fw-bold mb-1">Baby Showers & Revelaciones de Sexo</h4>
+                        <small class="opacity-90">Momentos mágicos y llenos de emoción para celebrar la llegada del bebé con decoración temática, estaciones dulces y carritos de snacks.</small>
                     </div>
                 </a>
             </div>

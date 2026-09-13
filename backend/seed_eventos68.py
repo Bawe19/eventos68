@@ -37,7 +37,7 @@ def seed():
         ('Cumpleaños / Quinceaños', 'Fiestas de aniversario, fiestas de 15 años y reuniones familiares.'),
         ('Graduación', 'Celebraciones de fin de cursos escolares y universitarios.'),
         ('Evento Corporativo', 'Lanzamientos de producto, aniversarios de empresa y convivios ejecutivos.'),
-        ('Baby Shower / Bautizo', 'Reuniones íntimas y celebraciones familiares diurnas.'),
+        ('Baby Shower / Revelación de Sexo', 'Celebraciones de bienvenida al bebé, revelaciones de sexo y momentos familiares íntimos.'),
         ('Fiesta Temática / Estaciones', 'Celebraciones dinámicas con carritos interactivos, barras en tendencia y estaciones de snacks.'),
     ]
     for nombre, desc in tipos:

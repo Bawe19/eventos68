@@ -138,8 +138,9 @@
 
         .topbar-social-btn:hover {
             transform: scale(1.12) translateY(-2px);
-            background: #FFFFFF;
-            box-shadow: 0 4px 12px rgba(60, 45, 30, 0.12);
+            background: var(--brand-black);
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             border-color: var(--brand-gold);
         }
 
@@ -154,7 +155,7 @@
         }
 
         .navbar-brand-img {
-            height: 54px;
+            height: 60px;
             object-fit: contain;
             background: transparent;
             border-radius: 0;
@@ -231,6 +232,37 @@
             border-color: var(--brand-gold);
             transform: translateY(-2px);
             box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        }
+
+        /* Pill de WhatsApp en barra y secciones con hover negro de alta legibilidad */
+        .btn-whatsapp-pill {
+            display: inline-flex;
+            align-items: center;
+            border: 1.5px solid rgba(70, 50, 30, 0.35);
+            background: rgba(254, 250, 244, 0.9);
+            color: var(--brand-charcoal) !important;
+            text-decoration: none !important;
+            border-radius: 50px;
+            padding: 0.45rem 1.15rem;
+            font-size: 0.92rem;
+            font-weight: 700;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .btn-whatsapp-pill:hover {
+            background-color: var(--brand-black) !important;
+            color: #FFFFFF !important;
+            border-color: var(--brand-black) !important;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp-pill:hover .bi-whatsapp {
+            color: #25D366 !important;
+        }
+
+        .btn-whatsapp-pill:hover span {
+            color: #FFFFFF !important;
         }
 
         /* Paper & Card Relief Styles (Letterpress Stationery Feel) */
@@ -340,8 +372,13 @@
         }
         .btn-whatsapp-pulse:hover {
             transform: scale(1.08) translateY(-3px);
-            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            background: var(--brand-black);
+            border-color: #25D366;
             color: #FFFFFF;
+        }
+        .btn-whatsapp-pulse:hover .bi-whatsapp {
+            color: #25D366;
         }
         @keyframes pulse-green {
             0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
@@ -393,9 +430,8 @@
     <!-- Navigation Header (Harmonized with Logo & Envelope Texture) -->
     <nav class="navbar navbar-expand-lg navbar-brand-custom sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-3" href="{% url 'web:home' %}">
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'web:home' %}" title="{{ EMPRESA_NOMBRE }}">
                 <img src="{% static 'images/logos/logo_transparente_negro.png' %}" alt="{{ EMPRESA_NOMBRE }}" class="navbar-brand-img" onerror="this.onerror=null; this.src='{% static 'images/logos/sello68.jpg' %}';">
-                <span class="navbar-brand-title serif">{{ EMPRESA_NOMBRE }}<span>.lat</span></span>
             </a>
             <button class="navbar-toggler text-dark border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
                 <span class="navbar-toggler-icon"></span>
@@ -432,8 +468,8 @@
                     {% endif %}
                 </ul>
                 <div class="d-flex align-items-center gap-3">
-                    <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank" class="btn btn-outline-dark btn-sm rounded-pill px-3 py-2 d-none d-sm-inline-flex align-items-center" style="border-color: rgba(70, 50, 30, 0.3); background: rgba(255,255,255,0.7);">
-                        <i class="bi bi-whatsapp fs-5 me-2 text-success"></i><span class="fw-bold">{{ EMPRESA_TELEFONO }}</span>
+                    <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank" class="btn-whatsapp-pill d-none d-sm-inline-flex" title="Contactar por WhatsApp">
+                        <i class="bi bi-whatsapp fs-5 me-2 text-success"></i><span>{{ EMPRESA_TELEFONO }}</span>
                     </a>
                     <a href="{% url 'web:solicitar' %}" class="btn btn-brand-gold btn-sm py-2 px-3">
                         <i class="bi bi-calculator-fill fs-5 me-2"></i>Cotizar en Línea
