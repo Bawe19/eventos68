@@ -200,7 +200,7 @@ body {
 .section-countdown {
     position: relative;
     overflow: hidden;
-    min-height: 480px;
+    min-height: 540px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -215,8 +215,32 @@ body {
     height: 100%;
     background-image: url('../img/besocontador.jpg');
     background-size: cover;
-    background-position: center;
+    background-position: center 30%;
+    filter: brightness(1.1) contrast(1.05) saturate(1.15);
     z-index: 0;
+}
+
+/* Difuminado suave para eliminar el corte brusco con la imagen superior e inferior */
+.countdown-blend-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 75px;
+    background: linear-gradient(to bottom, #fbf8f3 0%, rgba(251, 248, 243, 0.65) 45%, transparent 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.countdown-blend-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 75px;
+    background: linear-gradient(to top, #fbf8f3 0%, rgba(251, 248, 243, 0.65) 45%, transparent 100%);
+    z-index: 2;
+    pointer-events: none;
 }
 
 .countdown-overlay {
@@ -225,44 +249,47 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.42);
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, rgba(25, 20, 15, 0.12) 100%);
     z-index: 1;
 }
 
 .countdown-content {
     position: relative;
-    z-index: 2;
-    padding: 2.5rem 1.5rem;
+    z-index: 3;
+    padding: 3rem 1.5rem;
     width: 100%;
 }
 
 .countdown-title {
     font-family: 'Playfair Display', serif;
-    font-size: 2.1rem;
+    font-size: clamp(1.85rem, 5vw, 2.3rem);
+    font-weight: 700;
     margin-bottom: 1.8rem;
     color: #ffffff;
-    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.7);
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 0, 0, 0.5);
 }
 
 .countdown-circle {
     width: 220px;
     height: 220px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.18);
-    border: 4.5px solid rgba(255, 255, 255, 0.65);
+    background-color: rgba(255, 255, 255, 0.28);
+    border: 4.5px solid rgba(255, 255, 255, 0.9);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 0 35px rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(6px);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35), 0 0 25px rgba(255, 255, 255, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     padding: 20px;
     margin: 0 auto;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .countdown-circle:hover {
-    transform: scale(1.04);
+    transform: scale(1.05);
+    box-shadow: 0 14px 45px rgba(0, 0, 0, 0.45), 0 0 35px rgba(212, 175, 55, 0.5);
 }
 
 .countdown-time {
