@@ -73,3 +73,20 @@ class WebAndGestorTests(TestCase):
         self.assertNotContains(res, 'Margen Ganancia')
         self.assertNotContains(res, 'Gastos Directos Presupuestados')
         self.assertContains(res, 'Garantía de Servicio & Logística Eventos68')
+
+    def test_studio68_landing_renders_successfully(self):
+        """La página de Studio 68 debe responder 200 OK con catálogo y planes."""
+        res = self.client.get(reverse('web:studio68'))
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, 'Studio 68')
+        self.assertContains(res, 'Invitaciones Web')
+        self.assertContains(res, 'Plan Signature Interactivo')
+
+    def test_studio68_demo_boda_renders_successfully(self):
+        """La demo de la boda Maxwell & Zahilin debe responder 200 OK con datos nupciales."""
+        res = self.client.get(reverse('web:studio68_demo_boda'))
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, 'Maxwell &amp; Zahilin')
+        self.assertContains(res, 'Quinta el Portal')
+        self.assertContains(res, 'waze.com')
+        self.assertContains(res, '8524-1350')

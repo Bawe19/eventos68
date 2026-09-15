@@ -338,3 +338,33 @@ def gestor_detalle_cotizacion(request, cotizacion_id):
     cotizacion = get_object_or_404(Cotizacion, id=cotizacion_id)
     return render(request, 'web/gestor_detalle.html', {'cotizacion': cotizacion})
 
+
+def studio68_landing(request):
+    """
+    Landing page oficial de Studio 68 (División creativa de diseño y desarrollo digital para eventos).
+    """
+    return render(request, 'web/studio68_landing.html', {
+        'titulo': 'Studio 68 — Diseño & Desarrollo Digital de Eventos',
+    })
+
+
+def studio68_demo_boda(request):
+    """
+    Muestra interactiva en vivo de Invitación Digital de Boda (Maxwell & Zahilin),
+    modernizada con estándares y tendencias 2026.
+    """
+    return render(request, 'web/studio68_demo_boda.html', {
+        'titulo': 'Maxwell & Zahilin — Invitación de Boda Digital (Demo Studio 68)',
+        'pareja': 'Maxwell & Zahilin',
+        'fecha_evento': '2026-12-06T15:30:00',
+        'fecha_texto': 'Domingo 6 de Diciembre, 2026',
+        'hora_texto': '3:30 PM',
+        'lugar_nombre': 'Quinta el Portal',
+        'lugar_ciudad': 'San Rafael, Heredia, Costa Rica',
+        'waze_url': 'https://waze.com/ul/hd1u1nush2',
+        'maps_url': 'https://maps.app.goo.gl/wYyM3q8F7Q8G7uTCA',
+        'telefono_rsvp': '50685241350',
+        'sinpe_numero': '8524-1350',
+        'sinpe_titular': 'Maxwell C.',
+    })
+

@@ -11,6 +11,10 @@ urlpatterns = [
     path('cotizacion/<int:cotizacion_id>/pdf/', views.descargar_pdf, name='descargar_pdf'),
     path('cotizacion/<int:cotizacion_id>/enviar-correo/', views.enviar_correo_cotizacion, name='enviar_correo'),
     
+    # Studio 68 (Diseño y Desarrollo de Experiencias Digitales para Eventos)
+    path('studio68/', views.studio68_landing, name='studio68'),
+    path('studio68/demo-boda/', views.studio68_demo_boda, name='studio68_demo_boda'),
+    
     # Portal de Gestión (Admin amigable para el equipo)
     path('gestor/login/', views.gestor_login, name='gestor_login'),
     path('gestor/logout/', views.gestor_logout, name='gestor_logout'),

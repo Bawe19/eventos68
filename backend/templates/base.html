@@ -448,6 +448,11 @@
                             <i class="bi bi-calculator fs-5 me-2" style="color:var(--brand-gold);"></i>Cotizador
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom" href="{% url 'web:studio68' %}">
+                            <i class="bi bi-stars fs-5 me-2" style="color:var(--brand-gold);"></i>Studio 68 <span class="badge bg-warning text-dark ms-1" style="font-size: 0.65rem; vertical-align: middle;">Digital</span>
+                        </a>
+                    </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link nav-link-custom text-warning fw-bold" href="{% url 'web:gestor_dashboard' %}">
@@ -523,6 +528,10 @@
                 <div class="col-lg-3 col-md-6">
                     <h6 class="text-white fw-bold text-uppercase small mb-3" style="letter-spacing: 0.1em; color: var(--brand-gold) !important;">Canales Oficiales</h6>
                     <ul class="list-unstyled text-white-50 small mb-0">
+                        <li class="mb-2">
+                            <i class="bi bi-stars me-2" style="color:var(--brand-gold);"></i>
+                            <a href="{% url 'web:studio68' %}" class="text-white text-decoration-none">Studio 68 · Invitaciones Web</a>
+                        </li>
                         <li class="mb-2">
                             <i class="bi bi-globe me-2" style="color:var(--brand-gold);"></i>
                             <a href="{{ EMPRESA_DOMINIO_URL }}" target="_blank">{{ EMPRESA_DOMINIO }}</a>

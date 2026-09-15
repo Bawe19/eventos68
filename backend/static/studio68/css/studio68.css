@@ -1,0 +1,231 @@
+/* ==========================================================================
+   Studio 68 - Diseño & Desarrollo Digital para Eventos (Eventos68)
+   Estética 2026: Editorial Luxury, Glassmorphism, Micro-interacciones
+   ========================================================================== */
+
+:root {
+    --studio-gold: #c69f56;
+    --studio-gold-light: #f2e3c6;
+    --studio-gold-dark: #8c6a28;
+    --studio-dark: #1b1714;
+    --studio-charcoal: #2a241f;
+    --studio-cream: #faf6f0;
+    --studio-card-bg: rgba(254, 250, 244, 0.92);
+    --studio-glass-border: rgba(198, 159, 86, 0.25);
+    --studio-shadow: 0 16px 40px rgba(42, 36, 31, 0.08);
+}
+
+/* Badge Creativo */
+.badge-studio {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    background: linear-gradient(135deg, rgba(198, 159, 86, 0.15), rgba(140, 106, 40, 0.08));
+    border: 1px solid var(--studio-glass-border);
+    color: var(--studio-gold-dark);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* Hero Section */
+.studio-hero {
+    position: relative;
+    padding: 5rem 0 4rem;
+    background: radial-gradient(circle at 85% 20%, rgba(198, 159, 86, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 10% 80%, rgba(140, 106, 40, 0.06) 0%, transparent 40%);
+    overflow: hidden;
+}
+
+.studio-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.3rem, 4.5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--studio-dark);
+    margin-bottom: 1.5rem;
+}
+
+.studio-subtitle {
+    font-size: 1.18rem;
+    color: #554d45;
+    line-height: 1.68;
+    max-width: 620px;
+}
+
+/* Mockup de Celular Interactivo */
+.phone-mockup-wrapper {
+    position: relative;
+    display: inline-block;
+    perspective: 1000px;
+}
+
+.phone-mockup {
+    width: 320px;
+    height: 640px;
+    background: #000000;
+    border-radius: 46px;
+    padding: 12px;
+    box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.35),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+                0 0 35px rgba(198, 159, 86, 0.25);
+    position: relative;
+    margin: 0 auto;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.phone-mockup:hover {
+    transform: translateY(-8px) scale(1.01);
+}
+
+.phone-notch {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110px;
+    height: 22px;
+    background: #000;
+    border-radius: 12px;
+    z-index: 10;
+}
+
+.phone-screen {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 36px;
+    overflow: hidden;
+    position: relative;
+}
+
+.phone-screen iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Tarjetas de Servicio Studio 68 */
+.studio-card {
+    background: var(--studio-card-bg);
+    border: 1px solid var(--studio-glass-border);
+    border-radius: 20px;
+    padding: 2.2rem;
+    box-shadow: var(--studio-shadow);
+    transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.studio-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--studio-gold);
+    box-shadow: 0 22px 50px rgba(198, 159, 86, 0.16);
+}
+
+.studio-card-icon {
+    width: 62px;
+    height: 62px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 1.4rem;
+    background: linear-gradient(135deg, rgba(198, 159, 86, 0.2), rgba(140, 106, 40, 0.05));
+    border: 1px solid rgba(198, 159, 86, 0.3);
+    color: var(--studio-gold-dark);
+}
+
+/* Tarjetas de Planes */
+.pricing-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    border: 1.5px solid rgba(198, 159, 86, 0.2);
+    box-shadow: var(--studio-shadow);
+    position: relative;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.pricing-card.featured {
+    border-color: var(--studio-gold);
+    background: linear-gradient(180deg, #fffcf7 0%, #ffffff 100%);
+    box-shadow: 0 20px 50px rgba(198, 159, 86, 0.2);
+    transform: scale(1.03);
+}
+
+.pricing-card:hover {
+    transform: translateY(-8px);
+}
+
+.pricing-card.featured:hover {
+    transform: scale(1.03) translateY(-8px);
+}
+
+.pricing-badge-popular {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #c69f56, #8c6a28);
+    color: #ffffff;
+    padding: 0.35rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(140, 106, 40, 0.3);
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 2rem;
+}
+
+.feature-list li {
+    padding: 0.5rem 0;
+    font-size: 0.95rem;
+    color: #443c35;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.feature-list li i {
+    color: #25D366;
+    font-size: 1.15rem;
+}
+
+/* Floating Badges */
+.floating-feature-tag {
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(198, 159, 86, 0.3);
+    padding: 0.6rem 1.1rem;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--studio-charcoal);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: absolute;
+    z-index: 5;
+    animation: floatSlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes floatSlow {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-10px); }
+}

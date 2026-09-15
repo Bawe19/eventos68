@@ -1,0 +1,461 @@
+/* ==========================================================================
+   Invitación Digital de Boda - Maxwell & Zahilin (Demo Studio 68)
+   Diseño Web 2026: Editorial Luxury, Tipografía Fina, Microinteracciones
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Alex+Brush&display=swap');
+
+:root {
+    --inv-gold: #c5a059;
+    --inv-gold-dark: #916c27;
+    --inv-gold-light: #f5eedf;
+    --inv-dark: #221d19;
+    --inv-charcoal: #3c342d;
+    --inv-bg-cream: #fbf8f3;
+    --inv-card-bg: rgba(255, 255, 255, 0.96);
+    --inv-border-gold: rgba(197, 160, 89, 0.35);
+    --inv-shadow: 0 14px 35px rgba(60, 52, 45, 0.07);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f2ede4;
+    background-image: radial-gradient(#dfd6c8 1px, transparent 1px);
+    background-size: 24px 24px;
+    color: var(--inv-charcoal);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Barra superior de Studio 68 Demo */
+.demo-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1050;
+    background: rgba(27, 23, 20, 0.94);
+    backdrop-filter: blur(12px);
+    color: #ffffff;
+    padding: 0.65rem 1rem;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.35);
+}
+
+.demo-topbar a {
+    color: var(--inv-gold-light);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.demo-topbar a:hover {
+    color: #ffffff;
+}
+
+/* Contenedor central de la invitación (Paper stationery feel) */
+.invitation-wrapper {
+    max-width: 580px;
+    margin: 0 auto;
+    background: var(--inv-bg-cream);
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.12);
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+/* Hero Nupcial */
+.inv-hero {
+    position: relative;
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 3rem 2rem;
+    background: linear-gradient(180deg, rgba(34, 29, 25, 0.1) 0%, rgba(34, 29, 25, 0.85) 100%),
+                url('../img/portada.jpg') no-repeat center center;
+    background-size: cover;
+    color: #ffffff;
+    text-align: center;
+}
+
+.monogram {
+    font-family: 'Alex Brush', cursive;
+    font-size: 3.5rem;
+    color: var(--inv-gold-light);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+.inv-save-the-date {
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--inv-gold-light);
+    margin-bottom: 0.75rem;
+}
+
+.inv-couple-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 0.85rem;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.inv-date-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.5rem 1.4rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
+}
+
+/* Reproductor de Audio Flotante 2026 */
+.audio-floating-widget {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1040;
+    display: flex;
+    align-items: center;
+    background: rgba(27, 23, 20, 0.92);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid var(--inv-gold);
+    border-radius: 50px;
+    padding: 6px 14px 6px 6px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.audio-floating-widget:hover {
+    transform: scale(1.05) translateY(-3px);
+    box-shadow: 0 14px 35px rgba(197, 160, 89, 0.4);
+}
+
+.vinyl-disc {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #333 20%, #111 60%, #000 100%);
+    border: 2px solid var(--inv-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--inv-gold);
+    font-size: 1.1rem;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+.vinyl-disc.spinning {
+    animation: spinVinyl 3.5s linear infinite;
+}
+
+@keyframes spinVinyl {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.audio-text {
+    margin-left: 10px;
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+.audio-text small {
+    display: block;
+    color: var(--inv-gold);
+    font-size: 0.68rem;
+}
+
+/* Modal de Bienvenida Nupcial */
+.modal-luxury .modal-content {
+    background: #fbf8f3;
+    border: 2px solid var(--inv-gold);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(34, 29, 25, 0.3);
+    text-align: center;
+    padding: 2.5rem 1.8rem;
+}
+
+.modal-luxury-seal {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--inv-gold), var(--inv-gold-dark));
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    box-shadow: 0 8px 20px rgba(197, 160, 89, 0.4);
+}
+
+/* Secciones de Contenido */
+.inv-section {
+    padding: 3.5rem 1.8rem;
+    position: relative;
+}
+
+.inv-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--inv-dark);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.6rem;
+}
+
+.inv-section-subtitle {
+    text-align: center;
+    color: #7a6e63;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    font-weight: 400;
+}
+
+.inv-divider-gold {
+    width: 60px;
+    height: 2px;
+    background: var(--inv-gold);
+    margin: 0.8rem auto 1.8rem;
+    border-radius: 2px;
+}
+
+/* Cuenta Regresiva de Lujo */
+.countdown-container {
+    background: linear-gradient(180deg, rgba(34, 29, 25, 0.8) 0%, rgba(34, 29, 25, 0.95) 100%),
+                url('../img/besocontador.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 3.5rem 1.5rem;
+    border-radius: 24px;
+    color: #ffffff;
+    text-align: center;
+    box-shadow: var(--inv-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.countdown-box {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 1rem 0.4rem;
+    transition: transform 0.2s;
+}
+
+.countdown-box:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.countdown-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: 700;
+    color: var(--inv-gold-light);
+    line-height: 1;
+}
+
+.countdown-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 0.4rem;
+}
+
+/* Tarjeta Nupcial Estilizada */
+.inv-card {
+    background: var(--inv-card-bg);
+    border: 1px solid var(--inv-border-gold);
+    border-radius: 20px;
+    padding: 2rem 1.6rem;
+    box-shadow: var(--inv-shadow);
+    margin-bottom: 2rem;
+}
+
+/* Itinerario Cronológico Visual */
+.timeline-list {
+    position: relative;
+    padding-left: 2.2rem;
+    margin: 1.5rem 0;
+}
+
+.timeline-list::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 12px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--inv-gold) 0%, rgba(197, 160, 89, 0.2) 100%);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 1.8rem;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-icon-dot {
+    position: absolute;
+    left: -2.2rem;
+    top: 2px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--inv-gold);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    box-shadow: 0 0 0 4px var(--inv-bg-cream);
+}
+
+.timeline-time {
+    font-weight: 700;
+    color: var(--inv-gold-dark);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.timeline-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--inv-dark);
+    margin: 0.15rem 0 0.25rem;
+}
+
+/* Código de Vestimenta */
+.dresscode-palette {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 1.2rem 0;
+}
+
+.palette-swatch {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Botones Nupciales */
+.btn-inv-gold {
+    background: linear-gradient(135deg, var(--inv-gold), var(--inv-gold-dark));
+    color: #ffffff !important;
+    border: none;
+    border-radius: 50px;
+    padding: 0.85rem 1.8rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    box-shadow: 0 8px 20px rgba(197, 160, 89, 0.35);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-inv-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(197, 160, 89, 0.45);
+    color: #ffffff !important;
+}
+
+.btn-inv-outline {
+    background: transparent;
+    color: var(--inv-charcoal) !important;
+    border: 1.5px solid var(--inv-border-gold);
+    border-radius: 50px;
+    padding: 0.85rem 1.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-inv-outline:hover {
+    background: rgba(197, 160, 89, 0.1);
+    border-color: var(--inv-gold);
+    color: var(--inv-gold-dark) !important;
+}
+
+/* Galería / Carrusel */
+.inv-carousel {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--inv-shadow);
+    border: 1px solid var(--inv-border-gold);
+}
+
+.inv-carousel-img {
+    height: 380px;
+    object-fit: cover;
+    width: 100%;
+}
+
+/* Toast de Notificación */
+.toast-invitation {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(27, 23, 20, 0.95);
+    color: #ffffff;
+    border: 1px solid var(--inv-gold);
+    border-radius: 50px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    z-index: 1060;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toast-invitation.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(10px);
+}

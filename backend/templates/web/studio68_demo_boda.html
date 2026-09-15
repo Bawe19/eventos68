@@ -1,0 +1,387 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titulo }}</title>
+    
+    <!-- Bootstrap 5 CSS & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Estilos de Invitación de Lujo Studio 68 -->
+    <link rel="stylesheet" href="{% static 'studio68/css/invitacion_boda.css' %}">
+</head>
+<body>
+
+    <!-- Barra de demostración Studio 68 -->
+    <div class="demo-topbar">
+        <div class="d-flex align-items-center gap-2">
+            <span class="badge bg-warning text-dark fw-bold" style="font-size: 0.72rem;">STUDIO 68</span>
+            <span class="d-none d-sm-inline">Muestra Interactiva de Invitación Nupcial</span>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <a href="{% url 'web:studio68' %}" class="small">
+                <i class="bi bi-arrow-left me-1"></i>Volver a Studio 68
+            </a>
+            <a href="https://wa.me/{{ telefono_rsvp }}?text=Hola%20Studio68,%20quiero%20una%20invitacion%20como%20la%20demo%20de%20boda" target="_blank" class="btn btn-sm btn-warning text-dark fw-bold py-1 px-3 rounded-pill">
+                Cotizar Esta Invitación
+            </a>
+        </div>
+    </div>
+
+    <!-- Toast Flotante para notificaciones -->
+    <div id="invitationToast" class="toast-invitation"></div>
+
+    <!-- Reproductor de Audio Flotante 2026 -->
+    <div id="audioWidget" class="audio-floating-widget" title="Música Nupcial - Clic para pausar o reproducir">
+        <div id="vinylDisc" class="vinyl-disc">
+            <i class="bi bi-play-fill"></i>
+        </div>
+        <div class="audio-text" id="audioStateText">
+            Música nupcial
+            <small>Clic para escuchar</small>
+        </div>
+    </div>
+
+    <!-- Elemento de Audio Oculto -->
+    <audio id="weddingAudio" loop preload="auto">
+        <source src="{% static 'studio68/audio/cancion.mp3' %}" type="audio/mpeg">
+        Tu navegador no soporta reproducción de audio.
+    </audio>
+
+    <!-- Contenedor Central de Invitación (Estilo Editorial Stationery) -->
+    <main class="invitation-wrapper">
+
+        <!-- 1. Hero Nupcial -->
+        <section class="inv-hero">
+            <div class="monogram">M & Z</div>
+            <div class="inv-save-the-date">SAVE THE DATE</div>
+            <h1 class="inv-couple-title">{{ pareja }}</h1>
+            <p class="fst-italic opacity-90 mb-2">"El amor no se mira con los ojos, sino con el alma"</p>
+            <div>
+                <span class="inv-date-badge">
+                    <i class="bi bi-calendar3-event me-2 text-warning"></i>{{ fecha_texto }}
+                </span>
+            </div>
+        </section>
+
+        <!-- 2. Cuenta Regresiva & Dedicatoria -->
+        <section class="inv-section">
+            <div class="text-center mb-4">
+                <span class="text-uppercase small fw-bold" style="color: var(--inv-gold-dark); letter-spacing: 0.15em;">Nuestra Celebración</span>
+                <h2 class="inv-section-title">Faltan Muy Pocos Días</h2>
+                <div class="inv-divider-gold"></div>
+                <p class="text-muted small px-3">
+                    Cada instante nos acerca al momento en que uniremos nuestras vidas. Queremos contar cada segundo junto a las personas que más amamos.
+                </p>
+            </div>
+
+            <!-- Contador -->
+            <div class="countdown-container" id="weddingCountdown" data-date="{{ fecha_evento }}">
+                <div class="countdown-grid">
+                    <div class="countdown-box">
+                        <div class="countdown-number" id="countDays">00</div>
+                        <div class="countdown-label">Días</div>
+                    </div>
+                    <div class="countdown-box">
+                        <div class="countdown-number" id="countHours">00</div>
+                        <div class="countdown-label">Horas</div>
+                    </div>
+                    <div class="countdown-box">
+                        <div class="countdown-number" id="countMinutes">00</div>
+                        <div class="countdown-label">Minutos</div>
+                    </div>
+                    <div class="countdown-box">
+                        <div class="countdown-number" id="countSeconds">00</div>
+                        <div class="countdown-label">Segundos</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Galería / Nuestros Momentos -->
+        <section class="inv-section pt-0">
+            <div class="text-center mb-4">
+                <span class="text-uppercase small fw-bold" style="color: var(--inv-gold-dark); letter-spacing: 0.15em;">Galería de Recuerdos</span>
+                <h2 class="inv-section-title">Nuestros Momentos</h2>
+                <div class="inv-divider-gold"></div>
+            </div>
+
+            <div id="carouselFotosBoda" class="carousel slide inv-carousel" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselFotosBoda" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#carouselFotosBoda" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#carouselFotosBoda" data-bs-slide-to="2"></button>
+                    <button type="button" data-bs-target="#carouselFotosBoda" data-bs-slide-to="3"></button>
+                    <button type="button" data-bs-target="#carouselFotosBoda" data-bs-slide-to="4"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{% static 'studio68/img/miradanavidena.jpg' %}" class="inv-carousel-img" alt="Mirada Navideña">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'studio68/img/besonavideno.jpg' %}" class="inv-carousel-img" alt="Beso Navideño">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'studio68/img/vueltanavidena.jpg' %}" class="inv-carousel-img" alt="Vuelta Navideña">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'studio68/img/risanavidena.jpg' %}" class="inv-carousel-img" alt="Risa Navideña">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'studio68/img/bolitasnavidenas.jpg' %}" class="inv-carousel-img" alt="Bolitas Navideñas">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselFotosBoda" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselFotosBoda" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 4. Itinerario del Día Nupcial -->
+        <section class="inv-section pt-0">
+            <div class="inv-card">
+                <div class="text-center mb-3">
+                    <span class="text-uppercase small fw-bold" style="color: var(--inv-gold-dark); letter-spacing: 0.15em;">Cronograma</span>
+                    <h3 class="inv-section-title fs-3 mb-1">Itinerario del Día</h3>
+                    <div class="inv-divider-gold my-2"></div>
+                </div>
+
+                <div class="timeline-list">
+                    <div class="timeline-item">
+                        <div class="timeline-icon-dot"><i class="bi bi-heart-fill"></i></div>
+                        <div class="timeline-time">3:30 PM</div>
+                        <div class="timeline-title">Ceremonia Nupcial</div>
+                        <p class="text-muted small mb-0">Nuestra bendición y promesa de amor eterno frente al altar.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-icon-dot"><i class="bi bi-cup-straw"></i></div>
+                        <div class="timeline-time">5:00 PM</div>
+                        <div class="timeline-title">Coctel & Fotografías</div>
+                        <p class="text-muted small mb-0">Brindis de bienvenida, bocadillos artesanales y sesión de fotos con invitados.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-icon-dot"><i class="bi bi-cake2"></i></div>
+                        <div class="timeline-time">6:30 PM</div>
+                        <div class="timeline-title">Cena de Gala & Brindis</div>
+                        <p class="text-muted small mb-0">Experiencia gastronómica servida por Eventos68 y palabras de los padrinos.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-icon-dot"><i class="bi bi-disc"></i></div>
+                        <div class="timeline-time">8:00 PM</div>
+                        <div class="timeline-title">Primer Vals & Pista de Baile</div>
+                        <p class="text-muted small mb-0">¡Apertura de la fiesta con música en vivo y la playlist especial de los invitados!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Código de Vestimenta -->
+        <section class="inv-section pt-0">
+            <div class="inv-card text-center">
+                <div class="mb-3">
+                    <div class="modal-luxury-seal mb-3" style="width: 54px; height: 54px; font-size: 1.5rem;">
+                        <i class="bi bi-person-standing-dress"></i>
+                    </div>
+                    <span class="text-uppercase small fw-bold" style="color: var(--inv-gold-dark); letter-spacing: 0.15em;">Dress Code</span>
+                    <h3 class="inv-section-title fs-3 mb-1">Formal / Rigurosa Etiqueta</h3>
+                    <div class="inv-divider-gold my-2"></div>
+                    <p class="text-muted small">
+                        Agradecemos vestir atuendo formal para lucir increíbles en las fotos del recuerdo.
+                    </p>
+                </div>
+
+                <div class="dresscode-palette">
+                    <div class="palette-swatch" style="background: #1a2a3a;" title="Azul Marino"></div>
+                    <div class="palette-swatch" style="background: #234d3a;" title="Verde Esmeralda"></div>
+                    <div class="palette-swatch" style="background: #5a2a38;" title="Borgoña"></div>
+                    <div class="palette-swatch" style="background: #c5a059;" title="Champaña / Dorado"></div>
+                    <div class="palette-swatch" style="background: #2b2b2b;" title="Negro Clásico"></div>
+                </div>
+                <small class="text-muted fst-italic d-block">
+                    * El color blanco y tonalidades marfil están reservados con mucho cariño exclusivamente para la novia.
+                </small>
+            </div>
+        </section>
+
+        <!-- 6. Ubicación & Navegación (Waze y Google Maps) -->
+        <section class="inv-section pt-0">
+            <div class="inv-card">
+                <div class="text-center mb-3">
+                    <span class="text-uppercase small fw-bold" style="color: var(--inv-gold-dark); letter-spacing: 0.15em;">¿Cómo Llegar?</span>
+                    <h3 class="inv-section-title fs-3 mb-1">Ubicación del Recinto</h3>
+                    <div class="inv-divider-gold my-2"></div>
+                    <h5 class="fw-bold mb-1" style="color: var(--inv-dark);">{{ lugar_nombre }}</h5>
+                    <p class="text-muted small mb-3">{{ lugar_ciudad }}</p>
+                </div>
+
+                <!-- Mapa embebido -->
+                <div class="ratio ratio-16x9 rounded-4 overflow-hidden shadow-sm mb-3 border">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.715282053925!2d-84.08588892501994!3d10.06388818911457!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa0dff8a2c1fe3f%3A0x5a1b12e3b6e3b1e!2sQuinta%20el%20Portal%2C%20San%20Rafael%2C%20Heredia!5e0!3m2!1ses!2scr!4v1710000000000!5m2!1ses!2scr" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+
+                <!-- Botones de navegación instantánea -->
+                <div class="d-grid gap-2">
+                    <a href="{{ waze_url }}" target="_blank" class="btn btn-inv-gold w-100">
+                        <i class="bi bi-navigation-fill"></i> Abrir Dirección en Waze
+                    </a>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <a href="{{ maps_url }}" target="_blank" class="btn btn-inv-outline w-100 py-2 small">
+                                <i class="bi bi-geo-alt-fill text-danger"></i> Google Maps
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-inv-outline w-100 py-2 small" onclick="copiarDireccion('Quinta el Portal, San Rafael, Heredia')">
+                                <i class="bi bi-clipboard"></i> Copiar Lugar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Sugerir Canción para el DJ -->
+        <section class="inv-section pt-0">
+            <div class="inv-card">
+                <div class="text-center mb-3">
+                    <div class="modal-luxury-seal mb-3" style="width: 50px; height: 50px; font-size: 1.4rem;">
+                        <i class="bi bi-music-note-beamed"></i>
+                    </div>
+                    <span class="text-uppercase small fw-bold" style="color: var(--inv-gold-dark); letter-spacing: 0.15em;">Playlist Nupcial</span>
+                    <h3 class="inv-section-title fs-3 mb-1">Sugiere una Canción al DJ</h3>
+                    <div class="inv-divider-gold my-2"></div>
+                    <p class="text-muted small">
+                        ¿Qué canción no puede faltar en la fiesta para verte bailar? ¡Dínosla y la sumaremos a la lista!
+                    </p>
+                </div>
+
+                <form id="formCancionDJ">
+                    <div class="mb-3">
+                        <label for="invitadoNombre" class="form-label small fw-bold">Tu Nombre y Apellido</label>
+                        <input type="text" class="form-control rounded-pill px-3 py-2" id="invitadoNombre" placeholder="Ej: Carlos Gómez" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="invitadoCancion" class="form-label small fw-bold">Nombre de la Canción y Artista</label>
+                        <input type="text" class="form-control rounded-pill px-3 py-2" id="invitadoCancion" placeholder="Ej: Vivir Mi Vida - Marc Anthony" required>
+                    </div>
+                    <button type="submit" class="btn btn-inv-gold w-100">
+                        <i class="bi bi-disc"></i> Guardar mi Canción para la Boda
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 8. Confirmación de Asistencia (RSVP) -->
+        <section class="inv-section pt-0" id="seccionRSVP">
+            <div class="inv-card text-center">
+                <span class="text-uppercase small fw-bold" style="color: var(--inv-gold-dark); letter-spacing: 0.15em;">Confirmación</span>
+                <h3 class="inv-section-title fs-3 mb-1">Confirma tu Asistencia</h3>
+                <div class="inv-divider-gold my-2"></div>
+                <p class="text-muted small mb-3">
+                    Tu presencia es fundamental para nosotros. Por favor haznos saber si podrás acompañarnos en este día tan significativo.
+                </p>
+
+                <!-- Badge de sugerencia musical activa -->
+                <div id="badgeSugerenciaGuardada" class="d-none"></div>
+
+                <div class="d-grid gap-3">
+                    <button type="button" class="btn btn-inv-gold py-3 fs-6 shadow" onclick="confirmarAsistenciaWhatsApp('{{ telefono_rsvp }}')">
+                        <i class="bi bi-whatsapp fs-5 me-2"></i> ¡Sí, confirmo mi asistencia con alegría!
+                    </button>
+                    <button type="button" class="btn btn-inv-outline py-2 small" onclick="declinarAsistenciaWhatsApp('{{ telefono_rsvp }}')">
+                        <i class="bi bi-x-circle me-1"></i> No podré asistir en esta ocasión
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Lluvia de Sobres / Sinpe Móvil -->
+        <section class="inv-section pt-0">
+            <div class="inv-card text-center">
+                <div class="modal-luxury-seal mb-3" style="width: 50px; height: 50px; font-size: 1.4rem;">
+                    <i class="bi bi-gift-fill"></i>
+                </div>
+                <span class="text-uppercase small fw-bold" style="color: var(--inv-gold-dark); letter-spacing: 0.15em;">Mesa de Regalos</span>
+                <h3 class="inv-section-title fs-3 mb-1">Lluvia de Sobres</h3>
+                <div class="inv-divider-gold my-2"></div>
+                <p class="text-muted small mb-3">
+                    Para nosotros el mayor regalo es tu grata presencia. Si deseas tener un detalle en efectivo para nuestro nuevo hogar:
+                </p>
+
+                <div class="p-3 bg-light rounded-4 border mb-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="text-start">
+                            <span class="badge bg-danger text-white mb-1">SINPE MÓVIL</span>
+                            <div class="fw-bold fs-5 text-dark">{{ sinpe_numero }}</div>
+                            <small class="text-muted">A nombre de: {{ sinpe_titular }}</small>
+                        </div>
+                        <button type="button" class="btn btn-outline-dark rounded-pill px-3 py-2 btn-sm" onclick="copiarSinpe('{{ sinpe_numero }}')">
+                            <i class="bi bi-clipboard me-1"></i> Copiar
+                        </button>
+                    </div>
+                </div>
+                <small class="text-muted fst-italic">También dispondremos de buzón para sobres el día del evento.</small>
+            </div>
+        </section>
+
+        <!-- 10. Cierre Emotivo & Foto Final -->
+        <section class="text-center py-5" style="background: linear-gradient(180deg, rgba(27,23,20,0.85) 0%, rgba(27,23,20,0.98) 100%), url('{% static 'studio68/img/cierredepagina.jpg' %}') no-repeat center center; background-size: cover; color: #ffffff;">
+            <div class="container px-4">
+                <div class="monogram" style="font-size: 4rem;">M & Z</div>
+                <h2 class="serif fw-bold mb-3">¡Te Esperamos con Mucho Amor!</h2>
+                <p class="fst-italic opacity-75 max-w-500 mx-auto mb-4">
+                    "Dos almas con un mismo pensamiento, dos corazones que laten al unísono."
+                </p>
+                <div class="pt-3 border-top border-secondary border-opacity-25">
+                    <small class="text-muted d-block">
+                        Diseño & Desarrollo Digital por <strong style="color: var(--inv-gold-light);">Studio 68</strong> · Eventos68
+                    </small>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal de Bienvenida Nupcial (Activador de Audio) -->
+    <div class="modal fade modal-luxury" id="welcomeWeddingModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 440px;">
+            <div class="modal-content">
+                <div class="modal-luxury-seal">
+                    <i class="bi bi-envelope-heart-fill"></i>
+                </div>
+                <h4 class="serif fw-bold mb-2">¡Hola, bienvenid@!</h4>
+                <p class="small text-muted mb-4">
+                    "Este es el comienzo de nuestro: <em>vivieron felices por siempre</em> porque nuestras vidas pronto serán una sola. Comparte la emoción con nosotros y gracias por acompañarnos."
+                </p>
+                <div class="d-grid gap-2">
+                    <button type="button" class="btn btn-inv-gold py-3 shadow" id="btnEnterMusic">
+                        <i class="bi bi-music-note-beamed fs-5 me-2"></i> ¡Enciende la Emoción con Música!
+                    </button>
+                    <button type="button" class="btn btn-link text-muted small text-decoration-none" id="btnEnterQuiet">
+                        Entrar sin música
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Script Interactivo de Invitación -->
+    <script src="{% static 'studio68/js/invitacion_boda.js' %}"></script>
+</body>
+</html>
