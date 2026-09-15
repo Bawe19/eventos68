@@ -54,9 +54,23 @@
     <!-- Contenedor Central de Invitación (Estilo Editorial Stationery) -->
     <main class="invitation-wrapper">
 
-        <!-- 1. Hero Nupcial (Imagen Original Limpia sin repetición de textos) -->
+        <!-- 1. Hero Nupcial (Imagen Original con Tour Interactivo) -->
         <section class="inv-hero">
             <img src="{% static 'studio68/img/portada.jpg' %}" alt="{{ pareja }}" class="inv-hero-img">
+            
+            <!-- Caja de Bienvenida al Tour (en el espacio inferior de portada) -->
+            <div class="inv-hero-tour-box">
+                <div class="tour-badge">
+                    <i class="bi bi-stars text-warning"></i> STUDIO 68 · EXPERIENCIAS DIGITALES
+                </div>
+                <h3 class="tour-title">¡Bienvenido a este Tour!</h3>
+                <p class="tour-desc">
+                    Explora las posibilidades de cómo armamos una invitación personalizada. ¡Compártenos tu idea!
+                </p>
+                <a href="#seccionCotizar" class="btn-tour-cta">
+                    <i class="bi bi-arrow-down-circle-fill me-2"></i> Cotizar mi Invitación
+                </a>
+            </div>
         </section>
 
         <!-- 2. Cuenta Regresiva Circular (Encuadrada en la bolita navideña) -->
@@ -323,7 +337,7 @@
                 <div class="inv-divider-gold my-4"></div>
 
                 <!-- Tarjeta Amplia y Destacada de Cotización Studio 68 -->
-                <div class="studio68-cta-card p-4 p-md-5 mx-auto">
+                <div id="seccionCotizar" class="studio68-cta-card p-4 p-md-5 mx-auto">
                     <div class="d-inline-flex align-items-center gap-2 mb-3 px-3 py-1 rounded-pill" style="background: rgba(198, 159, 86, 0.15); color: #8c6a28; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em;">
                         <i class="bi bi-stars"></i> STUDIO 68 · EXPERIENCIAS DIGITALES
                     </div>
