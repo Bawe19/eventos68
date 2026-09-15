@@ -62,9 +62,6 @@
         <!-- 2. Cuenta Regresiva Circular (Encuadrada en la bolita navideña) -->
         <section id="cuenta-regresiva" class="section-countdown" data-date="{{ fecha_evento }}">
             <div class="countdown-bg"></div>
-            <div class="countdown-blend-top"></div>
-            <div class="countdown-blend-bottom"></div>
-            <div class="countdown-overlay"></div>
             <div class="countdown-content">
                 <h2 class="countdown-title">Nuestro primer aniversario</h2>
                 <div class="countdown-circle">
@@ -314,20 +311,28 @@
             </div>
         </section>
 
-        <!-- 10. Despedida & Cierre Elegante (Sin imagen repetitiva de cuentas) -->
+        <!-- 10. Despedida & Cierre Elegante (Con el color de fondo de Studio 68) -->
         <section class="inv-farewell-section">
-            <div class="container px-4">
-                <div class="monogram" style="font-family: 'Alex Brush', cursive; font-size: 3.8rem; color: var(--inv-gold-light);">M & Z</div>
-                <h2 class="serif fw-bold mb-2 text-white">¡Te Esperamos con Mucho Amor!</h2>
-                <p class="fst-italic text-white-50 max-w-500 mx-auto mb-4" style="font-size: 0.95rem;">
-                    "Dos caminos que se unieron para caminar juntos por siempre."
+            <div class="container px-3">
+                <div class="monogram mb-2" style="font-family: 'Alex Brush', cursive; font-size: 4.2rem; color: var(--inv-gold-dark);">M & Z</div>
+                <h2 class="serif fw-bold mb-3" style="color: var(--inv-dark); font-size: 2.1rem;">¡Te Esperamos con Mucho Amor!</h2>
+                <p class="fst-italic text-muted max-w-500 mx-auto mb-4" style="font-size: 1.05rem; line-height: 1.7;">
+                    "Dos caminos que se unieron para caminar juntos por siempre. Gracias por ser parte de nuestra historia y acompañarnos en este momento tan especial."
                 </p>
 
-                <!-- CTA Sutil para Cotizar con Studio 68 -->
-                <div class="pt-3 border-top border-secondary border-opacity-25">
-                    <a href="https://wa.me/{{ telefono_cotizar }}?text=Hola%20Studio68,%20vi%20la%20muestra%20de%20boda%20y%20me%20gustaría%20cotizar%20una%20invitación%20digital%20para%20mi%20evento" target="_blank" class="inv-subtle-cta">
-                        <i class="bi bi-stars text-warning"></i>
-                        <span>Diseñado por <strong>Studio 68</strong> · ¿Quieres una invitación web así? <u>Cotiza aquí</u></span>
+                <div class="inv-divider-gold my-4"></div>
+
+                <!-- Tarjeta Amplia y Destacada de Cotización Studio 68 -->
+                <div class="studio68-cta-card p-4 p-md-5 mx-auto">
+                    <div class="d-inline-flex align-items-center gap-2 mb-3 px-3 py-1 rounded-pill" style="background: rgba(198, 159, 86, 0.15); color: #8c6a28; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em;">
+                        <i class="bi bi-stars"></i> STUDIO 68 · EXPERIENCIAS DIGITALES
+                    </div>
+                    <h3 class="serif fw-bold mb-2" style="color: var(--inv-dark); font-size: 1.55rem;">¿Deseas una Invitación Interactiva para tu Evento?</h3>
+                    <p class="text-muted small mb-4" style="line-height: 1.7;">
+                        Diseñamos y desarrollamos sitios web e invitaciones interactivas para bodas, 15 años, baby showers y eventos de gala: con música de bienvenida, confirmación por WhatsApp, itinerario en vivo y rutas a Waze.
+                    </p>
+                    <a href="https://wa.me/{{ telefono_cotizar }}?text=Hola%20Studio68,%20vi%20la%20muestra%20de%20boda%20y%20me%20gustaría%20cotizar%20una%20invitación%20digital%20para%20mi%20evento" target="_blank" class="btn btn-brand-gold btn-lg w-100 py-3 rounded-pill fw-bold shadow">
+                        <i class="bi bi-whatsapp fs-5 me-2 text-white"></i> Cotizar mi Invitación por WhatsApp
                     </a>
                 </div>
             </div>

@@ -200,11 +200,12 @@ body {
 .section-countdown {
     position: relative;
     overflow: hidden;
-    min-height: 540px;
+    min-height: 640px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    background-color: var(--inv-bg-cream);
 }
 
 .countdown-bg {
@@ -215,48 +216,14 @@ body {
     height: 100%;
     background-image: url('../img/besocontador.jpg');
     background-size: cover;
-    background-position: center 30%;
-    filter: brightness(1.1) contrast(1.05) saturate(1.15);
+    background-position: center top;
     z-index: 0;
-}
-
-/* Difuminado suave para eliminar el corte brusco con la imagen superior e inferior */
-.countdown-blend-top {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 75px;
-    background: linear-gradient(to bottom, #fbf8f3 0%, rgba(251, 248, 243, 0.65) 45%, transparent 100%);
-    z-index: 2;
-    pointer-events: none;
-}
-
-.countdown-blend-bottom {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 75px;
-    background: linear-gradient(to top, #fbf8f3 0%, rgba(251, 248, 243, 0.65) 45%, transparent 100%);
-    z-index: 2;
-    pointer-events: none;
-}
-
-.countdown-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, rgba(25, 20, 15, 0.12) 100%);
-    z-index: 1;
 }
 
 .countdown-content {
     position: relative;
-    z-index: 3;
-    padding: 3rem 1.5rem;
+    z-index: 2;
+    padding: 3.5rem 1.5rem 2.5rem;
     width: 100%;
 }
 
@@ -264,32 +231,31 @@ body {
     font-family: 'Playfair Display', serif;
     font-size: clamp(1.85rem, 5vw, 2.3rem);
     font-weight: 700;
-    margin-bottom: 1.8rem;
-    color: #ffffff;
-    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 0, 0, 0.5);
+    margin-bottom: 2rem;
+    color: #2A241F;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
 }
 
 .countdown-circle {
     width: 220px;
     height: 220px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.28);
-    border: 4.5px solid rgba(255, 255, 255, 0.9);
+    background-color: rgba(30, 24, 20, 0.42);
+    border: 3.5px solid rgba(255, 255, 255, 0.9);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35), 0 0 25px rgba(255, 255, 255, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
     padding: 20px;
     margin: 0 auto;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 .countdown-circle:hover {
-    transform: scale(1.05);
-    box-shadow: 0 14px 45px rgba(0, 0, 0, 0.45), 0 0 35px rgba(212, 175, 55, 0.5);
+    transform: scale(1.04);
 }
 
 .countdown-time {
@@ -461,34 +427,32 @@ body {
     color: var(--inv-gold-dark) !important;
 }
 
-/* Sección de Cierre Limpia y Elegante */
+/* Sección de Cierre Amplia con el Color de Fondo de Studio 68 */
 .inv-farewell-section {
-    background: linear-gradient(180deg, #221d19 0%, #151210 100%);
-    color: #ffffff;
-    padding: 4.5rem 1.8rem 3rem;
+    background-color: var(--inv-bg-cream);
+    background-image: radial-gradient(#dfd6c8 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: var(--inv-charcoal);
+    padding: 6rem 1.8rem 5rem;
     text-align: center;
+    border-top: 1.5px solid var(--inv-border-gold);
+    position: relative;
 }
 
-.inv-subtle-cta {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(197, 160, 89, 0.3);
-    border-radius: 50px;
-    padding: 0.75rem 1.5rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-    color: var(--inv-gold-light);
-    text-decoration: none;
-    transition: all 0.25s ease;
-    margin-top: 2rem;
+.studio68-cta-card {
+    background: #ffffff;
+    border: 1.5px solid var(--inv-border-gold);
+    border-radius: 24px;
+    box-shadow: 0 16px 40px rgba(60, 52, 45, 0.08);
+    max-width: 480px;
+    margin: 2rem auto 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.inv-subtle-cta:hover {
-    background: rgba(197, 160, 89, 0.2);
-    color: #ffffff;
+.studio68-cta-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 50px rgba(198, 159, 86, 0.2);
     border-color: var(--inv-gold);
-    transform: translateY(-2px);
 }
 
 /* Toast de Notificación */
