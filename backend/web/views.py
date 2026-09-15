@@ -363,8 +363,10 @@ def studio68_demo_boda(request):
         'lugar_ciudad': 'San Rafael, Heredia, Costa Rica',
         'waze_url': 'https://waze.com/ul/hd1u1nush2',
         'maps_url': 'https://maps.app.goo.gl/wYyM3q8F7Q8G7uTCA',
-        'telefono_rsvp': '50685241350',
-        'sinpe_numero': '8524-1350',
+        'telefono_rsvp': '50672010362',
+        'telefono_cotizar': '50672010362',
+        'sinpe_numero': '7201-0362',
+        'sinpe_raw': '72010362',
         'sinpe_titular': 'Maxwell C.',
     })
 

@@ -25,7 +25,7 @@
             <a href="{% url 'web:studio68' %}" class="small">
                 <i class="bi bi-arrow-left me-1"></i>Volver a Studio 68
             </a>
-            <a href="https://wa.me/{{ telefono_rsvp }}?text=Hola%20Studio68,%20quiero%20una%20invitacion%20como%20la%20demo%20de%20boda" target="_blank" class="btn btn-sm btn-warning text-dark fw-bold py-1 px-3 rounded-pill">
+            <a href="https://wa.me/{{ telefono_cotizar }}?text=Hola%20Studio68,%20quiero%20una%20invitacion%20como%20la%20demo%20de%20boda" target="_blank" class="btn btn-sm btn-warning text-dark fw-bold py-1 px-3 rounded-pill">
                 Cotizar Esta Invitación
             </a>
         </div>
@@ -54,55 +54,26 @@
     <!-- Contenedor Central de Invitación (Estilo Editorial Stationery) -->
     <main class="invitation-wrapper">
 
-        <!-- 1. Hero Nupcial -->
+        <!-- 1. Hero Nupcial (Imagen Original Limpia sin repetición de textos) -->
         <section class="inv-hero">
-            <div class="monogram">M & Z</div>
-            <div class="inv-save-the-date">SAVE THE DATE</div>
-            <h1 class="inv-couple-title">{{ pareja }}</h1>
-            <p class="fst-italic opacity-90 mb-2">"El amor no se mira con los ojos, sino con el alma"</p>
-            <div>
-                <span class="inv-date-badge">
-                    <i class="bi bi-calendar3-event me-2 text-warning"></i>{{ fecha_texto }}
-                </span>
-            </div>
+            <img src="{% static 'studio68/img/portada.jpg' %}" alt="{{ pareja }}" class="inv-hero-img">
         </section>
 
-        <!-- 2. Cuenta Regresiva & Dedicatoria -->
-        <section class="inv-section">
-            <div class="text-center mb-4">
-                <span class="text-uppercase small fw-bold" style="color: var(--inv-gold-dark); letter-spacing: 0.15em;">Nuestra Celebración</span>
-                <h2 class="inv-section-title">Faltan Muy Pocos Días</h2>
-                <div class="inv-divider-gold"></div>
-                <p class="text-muted small px-3">
-                    Cada instante nos acerca al momento en que uniremos nuestras vidas. Queremos contar cada segundo junto a las personas que más amamos.
-                </p>
-            </div>
-
-            <!-- Contador -->
-            <div class="countdown-container" id="weddingCountdown" data-date="{{ fecha_evento }}">
-                <div class="countdown-grid">
-                    <div class="countdown-box">
-                        <div class="countdown-number" id="countDays">00</div>
-                        <div class="countdown-label">Días</div>
-                    </div>
-                    <div class="countdown-box">
-                        <div class="countdown-number" id="countHours">00</div>
-                        <div class="countdown-label">Horas</div>
-                    </div>
-                    <div class="countdown-box">
-                        <div class="countdown-number" id="countMinutes">00</div>
-                        <div class="countdown-label">Minutos</div>
-                    </div>
-                    <div class="countdown-box">
-                        <div class="countdown-number" id="countSeconds">00</div>
-                        <div class="countdown-label">Segundos</div>
-                    </div>
+        <!-- 2. Cuenta Regresiva Circular (Encuadrada en la bolita navideña) -->
+        <section id="cuenta-regresiva" class="section-countdown" data-date="{{ fecha_evento }}">
+            <div class="countdown-bg"></div>
+            <div class="countdown-overlay"></div>
+            <div class="countdown-content">
+                <h2 class="countdown-title">Nuestro primer aniversario</h2>
+                <div class="countdown-circle">
+                    <div id="countdown" class="countdown-time">00 : 00 : 00 : 00</div>
+                    <div class="countdown-label">D : H : M : S</div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. Galería / Nuestros Momentos -->
-        <section class="inv-section pt-0">
+        <!-- 3. Galería / Nuestros Momentos (Carrusel Alargado sin cortes de imagen) -->
+        <section class="inv-section">
             <div class="text-center mb-4">
                 <span class="text-uppercase small fw-bold" style="color: var(--inv-gold-dark); letter-spacing: 0.15em;">Galería de Recuerdos</span>
                 <h2 class="inv-section-title">Nuestros Momentos</h2>
@@ -178,7 +149,7 @@
                         <div class="timeline-icon-dot"><i class="bi bi-disc"></i></div>
                         <div class="timeline-time">8:00 PM</div>
                         <div class="timeline-title">Primer Vals & Pista de Baile</div>
-                        <p class="text-muted small mb-0">¡Apertura de la fiesta con música en vivo y la playlist especial de los invitados!</p>
+                        <p class="text-muted small mb-0">¡Apertura de la fiesta con música en vivo y la playlist de los invitados!</p>
                     </div>
                 </div>
             </div>
@@ -195,7 +166,7 @@
                     <h3 class="inv-section-title fs-3 mb-1">Formal / Rigurosa Etiqueta</h3>
                     <div class="inv-divider-gold my-2"></div>
                     <p class="text-muted small">
-                        Agradecemos vestir atuendo formal para lucir increíbles en las fotos del recuerdo.
+                        Agradecemos vestir atuendo formal para acompañarnos en esta noche tan especial.
                     </p>
                 </div>
 
@@ -279,23 +250,55 @@
                         <input type="text" class="form-control rounded-pill px-3 py-2" id="invitadoCancion" placeholder="Ej: Vivir Mi Vida - Marc Anthony" required>
                     </div>
                     <button type="submit" class="btn btn-inv-gold w-100">
-                        <i class="bi bi-disc"></i> Guardar mi Canción para la Boda
+                        <i class="bi bi-disc"></i> Guardar Canción para la Fiesta
                     </button>
                 </form>
             </div>
         </section>
 
-        <!-- 8. Confirmación de Asistencia (RSVP) -->
-        <section class="inv-section pt-0" id="seccionRSVP">
+        <!-- 8. Lluvia de Sobres / Sinpe Móvil -->
+        <section class="inv-section pt-0">
             <div class="inv-card text-center">
-                <span class="text-uppercase small fw-bold" style="color: var(--inv-gold-dark); letter-spacing: 0.15em;">Confirmación</span>
+                <div class="modal-luxury-seal mb-3" style="width: 50px; height: 50px; font-size: 1.4rem;">
+                    <i class="bi bi-gift-fill"></i>
+                </div>
+                <span class="text-uppercase small fw-bold" style="color: var(--inv-gold-dark); letter-spacing: 0.15em;">Mesa de Regalos</span>
+                <h3 class="inv-section-title fs-3 mb-1">Lluvia de Sobres</h3>
+                <div class="inv-divider-gold my-2"></div>
+                <p class="text-muted small mb-3">
+                    Para nosotros el mayor regalo es tu grata presencia. Si deseas tener un detalle en efectivo con nosotros:
+                </p>
+
+                <div class="p-3 bg-light rounded-4 border mb-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="text-start">
+                            <span class="badge bg-danger text-white mb-1">SINPE MÓVIL</span>
+                            <div class="fw-bold fs-5 text-dark">{{ sinpe_numero }}</div>
+                            <small class="text-muted">A nombre de: {{ sinpe_titular }}</small>
+                        </div>
+                        <button type="button" class="btn btn-outline-dark rounded-pill px-3 py-2 btn-sm" onclick="copiarSinpe('{{ sinpe_raw }}')">
+                            <i class="bi bi-clipboard me-1"></i> Copiar
+                        </button>
+                    </div>
+                </div>
+                <small class="text-muted fst-italic">También dispondremos de un buzón especial para sobres el día del evento.</small>
+            </div>
+        </section>
+
+        <!-- 9. Confirmación de Asistencia (RSVP) — ÚLTIMO PASO INTERACTIVO -->
+        <section class="inv-section pt-0" id="seccionRSVP">
+            <div class="inv-card text-center" style="border: 2px solid var(--inv-gold); background: #ffffff;">
+                <div class="modal-luxury-seal mb-3" style="width: 54px; height: 54px; font-size: 1.5rem;">
+                    <i class="bi bi-check2-circle"></i>
+                </div>
+                <span class="text-uppercase small fw-bold" style="color: var(--inv-gold-dark); letter-spacing: 0.15em;">Confirmación Obligatoria</span>
                 <h3 class="inv-section-title fs-3 mb-1">Confirma tu Asistencia</h3>
                 <div class="inv-divider-gold my-2"></div>
                 <p class="text-muted small mb-3">
-                    Tu presencia es fundamental para nosotros. Por favor haznos saber si podrás acompañarnos en este día tan significativo.
+                    Tu presencia es fundamental para nosotros. Por favor confirma tu lugar para contar con tu plato y copa de honor.
                 </p>
 
-                <!-- Badge de sugerencia musical activa -->
+                <!-- Badge dinámico de canción guardada -->
                 <div id="badgeSugerenciaGuardada" class="d-none"></div>
 
                 <div class="d-grid gap-3">
@@ -309,47 +312,21 @@
             </div>
         </section>
 
-        <!-- 9. Lluvia de Sobres / Sinpe Móvil -->
-        <section class="inv-section pt-0">
-            <div class="inv-card text-center">
-                <div class="modal-luxury-seal mb-3" style="width: 50px; height: 50px; font-size: 1.4rem;">
-                    <i class="bi bi-gift-fill"></i>
-                </div>
-                <span class="text-uppercase small fw-bold" style="color: var(--inv-gold-dark); letter-spacing: 0.15em;">Mesa de Regalos</span>
-                <h3 class="inv-section-title fs-3 mb-1">Lluvia de Sobres</h3>
-                <div class="inv-divider-gold my-2"></div>
-                <p class="text-muted small mb-3">
-                    Para nosotros el mayor regalo es tu grata presencia. Si deseas tener un detalle en efectivo para nuestro nuevo hogar:
-                </p>
-
-                <div class="p-3 bg-light rounded-4 border mb-3">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="text-start">
-                            <span class="badge bg-danger text-white mb-1">SINPE MÓVIL</span>
-                            <div class="fw-bold fs-5 text-dark">{{ sinpe_numero }}</div>
-                            <small class="text-muted">A nombre de: {{ sinpe_titular }}</small>
-                        </div>
-                        <button type="button" class="btn btn-outline-dark rounded-pill px-3 py-2 btn-sm" onclick="copiarSinpe('{{ sinpe_numero }}')">
-                            <i class="bi bi-clipboard me-1"></i> Copiar
-                        </button>
-                    </div>
-                </div>
-                <small class="text-muted fst-italic">También dispondremos de buzón para sobres el día del evento.</small>
-            </div>
-        </section>
-
-        <!-- 10. Cierre Emotivo & Foto Final -->
-        <section class="text-center py-5" style="background: linear-gradient(180deg, rgba(27,23,20,0.85) 0%, rgba(27,23,20,0.98) 100%), url('{% static 'studio68/img/cierredepagina.jpg' %}') no-repeat center center; background-size: cover; color: #ffffff;">
+        <!-- 10. Despedida & Cierre Elegante (Sin imagen repetitiva de cuentas) -->
+        <section class="inv-farewell-section">
             <div class="container px-4">
-                <div class="monogram" style="font-size: 4rem;">M & Z</div>
-                <h2 class="serif fw-bold mb-3">¡Te Esperamos con Mucho Amor!</h2>
-                <p class="fst-italic opacity-75 max-w-500 mx-auto mb-4">
-                    "Dos almas con un mismo pensamiento, dos corazones que laten al unísono."
+                <div class="monogram" style="font-family: 'Alex Brush', cursive; font-size: 3.8rem; color: var(--inv-gold-light);">M & Z</div>
+                <h2 class="serif fw-bold mb-2 text-white">¡Te Esperamos con Mucho Amor!</h2>
+                <p class="fst-italic text-white-50 max-w-500 mx-auto mb-4" style="font-size: 0.95rem;">
+                    "Dos caminos que se unieron para caminar juntos por siempre."
                 </p>
+
+                <!-- CTA Sutil para Cotizar con Studio 68 -->
                 <div class="pt-3 border-top border-secondary border-opacity-25">
-                    <small class="text-muted d-block">
-                        Diseño & Desarrollo Digital por <strong style="color: var(--inv-gold-light);">Studio 68</strong> · Eventos68
-                    </small>
+                    <a href="https://wa.me/{{ telefono_cotizar }}?text=Hola%20Studio68,%20vi%20la%20muestra%20de%20boda%20y%20me%20gustaría%20cotizar%20una%20invitación%20digital%20para%20mi%20evento" target="_blank" class="inv-subtle-cta">
+                        <i class="bi bi-stars text-warning"></i>
+                        <span>Diseñado por <strong>Studio 68</strong> · ¿Quieres una invitación web así? <u>Cotiza aquí</u></span>
+                    </a>
                 </div>
             </div>
         </section>

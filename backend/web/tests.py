@@ -89,4 +89,4 @@ class WebAndGestorTests(TestCase):
         self.assertContains(res, 'Maxwell &amp; Zahilin')
         self.assertContains(res, 'Quinta el Portal')
         self.assertContains(res, 'waze.com')
-        self.assertContains(res, '8524-1350')
+        self.assertContains(res, '7201-0362')

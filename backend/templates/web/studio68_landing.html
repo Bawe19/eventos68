@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Studio 68 — Diseño & Desarrollo Digital de Eventos | {{ EMPRESA_NOMBRE }}{% endblock %}
+{% block title %}Studio 68 — Soluciones Web, Diseño & Experiencias Digitales | {{ EMPRESA_NOMBRE }}{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'studio68/css/studio68.css' %}">
@@ -17,47 +17,43 @@
                     <i class="bi bi-stars"></i> División Creativa Digital · Eventos68
                 </div>
                 <h1 class="studio-title">
-                    Invitaciones Web <span style="color: var(--brand-gold);">Interactivas</span> & Experiencias Digitales
+                    Soluciones Web, Diseño & <span style="color: var(--brand-gold);">Experiencias Digitales</span>
                 </h1>
                 <p class="studio-subtitle mb-4">
-                    Dejamos atrás las tarjetas de papel estáticas. En <strong>Studio 68</strong> diseñamos y desarrollamos sitios web e invitaciones interactivas para bodas, quinceañeras y eventos exclusivos: con música ambiental, confirmación RSVP por WhatsApp, rutas directas a Waze y diseño editorial de alta costura.
+                    En <strong>Studio 68</strong> somos un estudio web y de diseño versátil. Desarrollamos desde sitios y soluciones web profesionales para negocios, hasta menús interactivos, papelería digital personalizada e invitaciones web para todo tipo de celebración: <strong>Bodas, Baby Showers, Revelaciones de Sexo, 15 Años, Graduaciones y Eventos Corporativos</strong>.
                 </p>
                 <div class="d-flex flex-wrap gap-3 align-items-center mb-4">
                     <a href="{% url 'web:studio68_demo_boda' %}" class="btn btn-brand-gold btn-lg px-4 py-3 shadow">
-                        <i class="bi bi-eye-fill me-2"></i>Ver Demo en Vivo (Boda)
+                        <i class="bi bi-eye-fill me-2"></i>Ver Muestra de Invitación (Boda)
                     </a>
-                    <a href="{{ EMPRESA_WHATSAPP_LINK }}?text=Hola%20Studio68,%20quiero%20información%20sobre%20el%20diseño%20de%20una%20invitación%20web" target="_blank" class="btn-whatsapp-pill btn-lg px-4 py-3">
+                    <a href="https://wa.me/50672010362?text=Hola%20Studio68,%20quiero%20información%20sobre%20sus%20servicios%20de%20diseño%20y%20desarrollo%20web" target="_blank" class="btn-whatsapp-pill btn-lg px-4 py-3">
                         <i class="bi bi-whatsapp fs-5 me-2 text-success"></i><span>Cotizar por WhatsApp</span>
                     </a>
                 </div>
-                <div class="d-flex align-items-center gap-4 pt-2 text-muted small">
-                    <div><i class="bi bi-check2-circle text-success me-1"></i> Sin costos de impresión</div>
-                    <div><i class="bi bi-check2-circle text-success me-1"></i> Envíos ilimitados por WhatsApp</div>
-                    <div><i class="bi bi-check2-circle text-success me-1"></i> Actualizaciones en tiempo real</div>
+                <div class="d-flex flex-wrap align-items-center gap-4 pt-2 text-muted small">
+                    <div><i class="bi bi-check2-circle text-success me-1"></i> Páginas y soluciones para negocios</div>
+                    <div><i class="bi bi-check2-circle text-success me-1"></i> Invitaciones interactivas multimedia</div>
+                    <div><i class="bi bi-check2-circle text-success me-1"></i> Menús y papelería personalizada</div>
                 </div>
             </div>
 
-            <!-- Mockup Celular con la Demo Real de Maxwell & Zahilin -->
+            <!-- Cajón de Identidad Studio 68 (Preparado para logostudio68) -->
             <div class="col-lg-5 text-center">
-                <div class="phone-mockup-wrapper">
-                    <!-- Floating tags -->
-                    <div class="floating-feature-tag" style="top: 15%; left: -30px;">
-                        <i class="bi bi-music-note-beamed text-warning"></i> Música nupcial
+                <div class="studio-brand-box">
+                    <div class="studio-logo-frame">
+                        <img src="{% static 'images/logos/logostudio68.png' %}" 
+                             alt="Logo Studio 68" 
+                             class="studio-logo-img"
+                             onerror="this.onerror=null; this.src='{% static 'images/logos/logo_transparente_blanco.png' %}';">
                     </div>
-                    <div class="floating-feature-tag" style="bottom: 25%; right: -25px; animation-delay: -2s;">
-                        <i class="bi bi-geo-alt-fill text-danger"></i> Waze & Maps en 1 clic
-                    </div>
-
-                    <div class="phone-mockup">
-                        <div class="phone-notch"></div>
-                        <div class="phone-screen">
-                            <iframe src="{% url 'web:studio68_demo_boda' %}" title="Demo Invitación Maxwell & Zahilin"></iframe>
-                        </div>
-                    </div>
-
-                    <div class="mt-3">
-                        <a href="{% url 'web:studio68_demo_boda' %}" class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1">
-                            <i class="bi bi-arrows-fullscreen me-1"></i> Abrir en Pantalla Completa
+                    <h3 class="serif fw-bold text-white mb-1 tracking-wide">STUDIO 68</h3>
+                    <div class="badge bg-warning text-dark fw-bold mb-3" style="font-size: 0.75rem; letter-spacing: 0.08em;">DISEÑO & DESARROLLO DIGITAL</div>
+                    <p class="text-white-50 small mb-4 px-3">
+                        Tecnología, diseño editorial y soluciones interactivas creadas para impactar y perdurar.
+                    </p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="{% url 'web:studio68_demo_boda' %}" class="btn btn-brand-gold btn-sm rounded-pill px-4 py-2 shadow">
+                            <i class="bi bi-play-circle-fill me-1"></i> Explorar Demo de Boda
                         </a>
                     </div>
                 </div>
@@ -66,133 +62,90 @@
     </div>
 </section>
 
-<!-- Ventajas del Formato Digital -->
+<!-- Catálogo de Servicios Versátiles Studio 68 -->
 <section class="py-5 bg-white border-top border-bottom" style="border-color: rgba(198, 159, 86, 0.2) !important;">
     <div class="container py-3">
         <div class="text-center max-w-700 mx-auto mb-5">
-            <span class="badge-luxury mb-2">Evolución & Vanguardia</span>
-            <h2 class="display-6 fw-bold serif" style="color: var(--brand-charcoal);">¿Por qué elegir una Invitación Web?</h2>
-            <p class="text-muted">Las invitaciones físicas se extravían o deterioran; una experiencia web interactiva enamora a tus invitados desde el primer momento.</p>
+            <span class="badge-luxury mb-2">Nuestro Enfoque</span>
+            <h2 class="display-6 fw-bold serif" style="color: var(--brand-charcoal);">Servicios Digitales & Creativos</h2>
+            <p class="text-muted">Desarrollo web a la medida y producción gráfica orientada a resultados y elegancia.</p>
         </div>
 
         <div class="row g-4">
-            <div class="col-md-4">
+            <!-- 1. Soluciones Web de Negocios -->
+            <div class="col-lg-4 col-md-6">
+                <div class="studio-card">
+                    <div class="studio-card-icon">
+                        <i class="bi bi-laptop"></i>
+                    </div>
+                    <h4 class="serif fw-bold mb-2">Páginas & Soluciones Web de Negocios</h4>
+                    <p class="text-muted small mb-0">
+                        Sitios web profesionales, landing pages comerciales y portales corporativos responsivos, rápidos y optimizados para captar clientes y fortalecer tu presencia digital.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 2. Invitaciones Web para Todo Evento -->
+            <div class="col-lg-4 col-md-6">
+                <div class="studio-card">
+                    <div class="studio-card-icon">
+                        <i class="bi bi-envelope-heart"></i>
+                    </div>
+                    <h4 class="serif fw-bold mb-2">Invitaciones Web Interactivas</h4>
+                    <p class="text-muted small mb-0">
+                        Experiencias digitales para <strong>Bodas, Baby Showers, Revelaciones de Sexo, 15 Años y Graduaciones</strong>. Con música de fondo, itinerario, ubicación en Waze/Maps y confirmación instantánea.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 3. Menús Digitales Interactivos -->
+            <div class="col-lg-4 col-md-6">
+                <div class="studio-card">
+                    <div class="studio-card-icon">
+                        <i class="bi bi-qr-code-scan"></i>
+                    </div>
+                    <h4 class="serif fw-bold mb-2">Menús Digitales Interactivos</h4>
+                    <p class="text-muted small mb-0">
+                        Menús con acceso mediante código QR ideales para recepciones, banquetes de gala y presentación de tiempos gastronómicos con diseño editorial de alto nivel.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 4. Papelería Digital & Diseños Personalizados -->
+            <div class="col-lg-4 col-md-6">
+                <div class="studio-card">
+                    <div class="studio-card-icon">
+                        <i class="bi bi-brush"></i>
+                    </div>
+                    <h4 class="serif fw-bold mb-2">Papelería Digital & Diseños Personalizados</h4>
+                    <p class="text-muted small mb-0">
+                        Monogramas, sellos visuales, cronogramas por horas, paletas de código de vestimenta, tarjetas de agradecimiento y piezas gráficas temáticas a la medida.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 5. RSVP & Confirmación por WhatsApp -->
+            <div class="col-lg-4 col-md-6">
                 <div class="studio-card">
                     <div class="studio-card-icon">
                         <i class="bi bi-whatsapp"></i>
                     </div>
-                    <h4 class="serif fw-bold mb-2">RSVP Dinámico e Instantáneo</h4>
+                    <h4 class="serif fw-bold mb-2">Sistemas RSVP Inteligentes</h4>
                     <p class="text-muted small mb-0">
-                        Los invitados confirman con un solo clic directamente a tu WhatsApp, adjuntando además su canción favorita para la fiesta y número de comensales.
+                        Control de comensales automatizado directo a tu WhatsApp, con opción para que los invitados sugieran canciones a la playlist del DJ y confirmen acompañantes.
                     </p>
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <!-- 6. Mesas de Regalos & Sinpe Móvil -->
+            <div class="col-lg-4 col-md-6">
                 <div class="studio-card">
-                    <div class="studio-card-icon">
-                        <i class="bi bi-signpost-2"></i>
-                    </div>
-                    <h4 class="serif fw-bold mb-2">Cero Invitados Perdidos</h4>
-                    <p class="text-muted small mb-0">
-                        Con botones de apertura inmediata a Waze y Google Maps. Tus invitados llegan exactamente a la puerta del recinto sin contratiempos.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="studio-card">
-                    <div class="studio-card-icon">
-                        <i class="bi bi-disc"></i>
-                    </div>
-                    <h4 class="serif fw-bold mb-2">Emoción Sonora & Galería</h4>
-                    <p class="text-muted small mb-0">
-                        Música ambiental elegida por ti, cronómetro regresivo en vivo, itinerario cronológico del evento y código de vestimenta visual interactivo.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Catálogo de Servicios Studio 68 -->
-<section class="py-5" style="background: var(--studio-cream);">
-    <div class="container py-4">
-        <div class="text-center max-w-700 mx-auto mb-5">
-            <span class="badge-luxury mb-2">Servicios Digitales</span>
-            <h2 class="display-6 fw-bold serif" style="color: var(--brand-charcoal);">Soluciones Creativas a tu Medida</h2>
-            <p class="text-muted">Diseño y desarrollo tecnológico para complementar la producción y catering de Eventos68.</p>
-        </div>
-
-        <div class="row g-4">
-            <div class="col-lg-4 col-md-6">
-                <div class="studio-card bg-white">
-                    <div class="studio-card-icon">
-                        <i class="bi bi-heart-pulse"></i>
-                    </div>
-                    <h5 class="serif fw-bold">Invitaciones de Boda & Aniversarios</h5>
-                    <p class="text-muted small">
-                        Diseño editorial de alta costura, galería romántica de fotos, historia de la pareja, música personalizada y confirmación con sugerencia de canciones para el DJ.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="studio-card bg-white">
-                    <div class="studio-card-icon">
-                        <i class="bi bi-gem"></i>
-                    </div>
-                    <h5 class="serif fw-bold">Quinceañeras & Fiestas Temáticas</h5>
-                    <p class="text-muted small">
-                        Sitios temáticos con paleta de color personalizada, filtros, cronograma de sorpresas y valses, y confirmación de grupo juvenil.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="studio-card bg-white">
-                    <div class="studio-card-icon">
-                        <i class="bi bi-briefcase"></i>
-                    </div>
-                    <h5 class="serif fw-bold">Eventos Corporativos & Lanzamientos</h5>
-                    <p class="text-muted small">
-                        Páginas de registro institucional, agenda de conferencias, perfiles de conferencistas, código de etiqueta corporativa y descarga de gafetes digitales.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="studio-card bg-white">
-                    <div class="studio-card-icon">
-                        <i class="bi bi-qr-code-scan"></i>
-                    </div>
-                    <h5 class="serif fw-bold">Menús Digitales QR para Mesas</h5>
-                    <p class="text-muted small">
-                        Tarjetas con código QR en cada mesa para que los comensales exploren los tiempos del banquete de Eventos68, maridaje y cócteles desde su smartphone.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="studio-card bg-white">
                     <div class="studio-card-icon">
                         <i class="bi bi-wallet2"></i>
                     </div>
-                    <h5 class="serif fw-bold">Mesa de Regalos & Sinpe Móvil</h5>
-                    <p class="text-muted small">
-                        Módulo elegante de lluvia de sobres con botones para copiar números Sinpe Móvil y cuentas IBAN en un toque, facilitando los obsequios de tus invitados.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="studio-card bg-white">
-                    <div class="studio-card-icon">
-                        <i class="bi bi-cloud-arrow-up"></i>
-                    </div>
-                    <h5 class="serif fw-bold">Álbum Colaborativo Post-Evento</h5>
-                    <p class="text-muted small">
-                        Espacio web donde los invitados pueden subir y descargar las fotos tomadas durante la fiesta para crear un recuerdo eterno.
+                    <h4 class="serif fw-bold mb-2">Mesas de Regalo & Sinpe Móvil</h4>
+                    <p class="text-muted small mb-0">
+                        Lluvia de sobres virtual con botones de copiado rápido al portapapeles para números de Sinpe Móvil y cuentas bancarias IBAN en un solo clic.
                     </p>
                 </div>
             </div>
@@ -200,13 +153,13 @@
     </div>
 </section>
 
-<!-- Planes y Paquetes -->
-<section class="py-5 bg-white">
+<!-- Planes y Niveles de Servicio -->
+<section class="py-5" style="background: var(--studio-cream);">
     <div class="container py-4">
         <div class="text-center max-w-700 mx-auto mb-5">
-            <span class="badge-luxury mb-2">Inversión Transparente</span>
-            <h2 class="display-6 fw-bold serif" style="color: var(--brand-charcoal);">Planes de Invitación Digital</h2>
-            <p class="text-muted">Elige el nivel de interactividad perfecto para tu celebración.</p>
+            <span class="badge-luxury mb-2">Paquetes Disponibles</span>
+            <h2 class="display-6 fw-bold serif" style="color: var(--brand-charcoal);">Planes de Diseño & Desarrollo</h2>
+            <p class="text-muted">Soluciones transparentes adaptadas a cada necesidad y presupuesto.</p>
         </div>
 
         <div class="row g-4 align-items-stretch">
@@ -214,61 +167,59 @@
             <div class="col-lg-4">
                 <div class="pricing-card">
                     <h4 class="serif fw-bold mb-1">Plan Esencial</h4>
-                    <p class="text-muted small">Ideal para eventos íntimos y reuniones familiares.</p>
+                    <p class="text-muted small">Invitación o página web básica para eventos familiares o presentación inicial.</p>
                     <hr class="my-3 opacity-25">
                     <ul class="feature-list flex-grow-1">
                         <li><i class="bi bi-check-circle-fill"></i> Diseño móvil responsivo</li>
                         <li><i class="bi bi-check-circle-fill"></i> Cuenta regresiva en vivo</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Botones de Waze y Google Maps</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Botones directos de Waze y Maps</li>
                         <li><i class="bi bi-check-circle-fill"></i> Confirmación directa a WhatsApp</li>
                         <li><i class="bi bi-check-circle-fill"></i> Código de vestimenta sugerido</li>
                         <li class="text-muted opacity-50"><i class="bi bi-x-circle text-muted"></i> Música ambiental personalizada</li>
-                        <li class="text-muted opacity-50"><i class="bi bi-x-circle text-muted"></i> Sugerencia de playlist para DJ</li>
                     </ul>
-                    <a href="{{ EMPRESA_WHATSAPP_LINK }}?text=Hola,%20me%20interesa%20el%20Plan%20Esencial%20de%20Studio68" target="_blank" class="btn btn-outline-dark rounded-pill py-2 w-100">
+                    <a href="https://wa.me/50672010362?text=Hola,%20me%20interesa%20el%20Plan%20Esencial%20de%20Studio68" target="_blank" class="btn btn-outline-dark rounded-pill py-2 w-100">
                         Consultar Plan Esencial
                     </a>
                 </div>
             </div>
 
-            <!-- Plan Signature Interactivo (Destacado) -->
+            <!-- Plan Signature Interactivo -->
             <div class="col-lg-4">
                 <div class="pricing-card featured">
                     <div class="pricing-badge-popular">Más Solicitado</div>
                     <h4 class="serif fw-bold mb-1" style="color: var(--studio-dark);">Plan Signature Interactivo</h4>
-                    <p class="text-muted small">La experiencia nupcial completa como la demo en vivo.</p>
+                    <p class="text-muted small">La experiencia nupcial o social completa, idéntica a nuestra muestra en vivo.</p>
                     <hr class="my-3 opacity-25">
                     <ul class="feature-list flex-grow-1">
                         <li><i class="bi bi-check-circle-fill"></i> <strong>Todo lo del Plan Esencial</strong></li>
                         <li><i class="bi bi-check-circle-fill"></i> <strong>Música ambiental con widget de vinilo</strong></li>
-                        <li><i class="bi bi-check-circle-fill"></i> <strong>Formulario para que el invitado sugiera canción al DJ</strong></li>
-                        <li><i class="bi bi-check-circle-fill"></i> Galería fotográfica interactiva de la pareja</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Itinerario cronológico visual por horas</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Sugerencia de canciones para el DJ integrada</strong></li>
+                        <li><i class="bi bi-check-circle-fill"></i> Galería fotográfica en carrusel vertical</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Itinerario cronológico del día por horas</li>
                         <li><i class="bi bi-check-circle-fill"></i> Paleta visual del código de vestimenta</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Mesa de Regalos / Sinpe con copiado en 1 clic</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Mesa de Regalos / Sinpe con copiado en 1 toque</li>
                     </ul>
-                    <a href="{% url 'web:solicitar' %}" class="btn btn-brand-gold py-3 w-100 shadow">
+                    <a href="https://wa.me/50672010362?text=Hola,%20quiero%20cotizar%20el%20Plan%20Signature%20Interactivo%20en%20Studio68" target="_blank" class="btn btn-brand-gold py-3 w-100 shadow">
                         <i class="bi bi-stars me-2"></i>Cotizar Plan Signature
                     </a>
                 </div>
             </div>
 
-            <!-- Plan Luxury Custom -->
+            <!-- Plan Luxury / Negocios Bespoke -->
             <div class="col-lg-4">
                 <div class="pricing-card">
-                    <h4 class="serif fw-bold mb-1">Plan Luxury Bespoke</h4>
-                    <p class="text-muted small">Para bodas monumentales y eventos corporativos de gran escala.</p>
+                    <h4 class="serif fw-bold mb-1">Plan Solución Bespoke</h4>
+                    <p class="text-muted small">Páginas web para negocios, marcas o eventos con requerimientos personalizados.</p>
                     <hr class="my-3 opacity-25">
                     <ul class="feature-list flex-grow-1">
-                        <li><i class="bi bi-check-circle-fill"></i> <strong>Todo lo del Plan Signature</strong></li>
-                        <li><i class="bi bi-check-circle-fill"></i> Dominio propio personalizado (ej: losnovios.com)</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Diseño editorial y tipográfico 100% exclusivo</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Menú gastronómico interactivo con filtros</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Álbum colaborativo para subir fotos del evento</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Soporte técnico prioritario durante el evento</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Desarrollo web a la medida</strong></li>
+                        <li><i class="bi bi-check-circle-fill"></i> Dominio propio personalizado (.com / .lat)</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Menús QR dinámicos para banquetes</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Branding gráfico y papelería digital</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Soporte y optimización continua</li>
                     </ul>
-                    <a href="{{ EMPRESA_WHATSAPP_LINK }}?text=Hola,%20me%20gustaría%20cotizar%20un%20sitio%20Luxury%20Bespoke%20con%20Studio68" target="_blank" class="btn btn-outline-dark rounded-pill py-2 w-100">
-                        Consultar Plan Bespoke
+                    <a href="https://wa.me/50672010362?text=Hola,%20quiero%20cotizar%20un%20proyecto%20web%20a%20la%20medida%20con%20Studio68" target="_blank" class="btn btn-outline-dark rounded-pill py-2 w-100">
+                        Consultar Proyecto a Medida
                     </a>
                 </div>
             </div>
@@ -276,15 +227,15 @@
     </div>
 </section>
 
-<!-- Banner de Muestra Real (Maxwell & Zahilin) -->
+<!-- Banner de Muestra Real de Invitación -->
 <section class="py-5" style="background: linear-gradient(135deg, #1b1714 0%, #2f251d 100%); color: #ffffff;">
     <div class="container py-3">
         <div class="row align-items-center g-4">
             <div class="col-lg-8">
-                <span class="badge bg-warning text-dark fw-bold mb-2">Caso de Éxito Real</span>
-                <h2 class="display-6 fw-bold serif text-white mb-2">Boda Maxwell & Zahilin</h2>
+                <span class="badge bg-warning text-dark fw-bold mb-2">Demostración en Vivo</span>
+                <h2 class="display-6 fw-bold serif text-white mb-2">Invitación Nupcial: Maxwell & Zahilin</h2>
                 <p class="text-white-50 mb-0">
-                    Explora la invitación digital interactiva completa creada para la boda en <strong>Quinta el Portal, San Rafael de Heredia</strong>. Incluye reproductor musical, cronómetro en tiempo real, itinerario y confirmación WhatsApp.
+                    Comprueba en tiempo real la experiencia que recibirán tus invitados: reproductor musical, contador de aniversario circular, itinerario detallado, ubicación Waze y confirmación RSVP.
                 </p>
             </div>
             <div class="col-lg-4 text-lg-end">

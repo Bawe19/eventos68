@@ -1,7 +1,7 @@
 /**
  * Lógica interactiva de la Invitación Digital de Boda - Maxwell & Zahilin
  * Tendencias 2026: Audio respetuoso con autoplay, RSVP dinámico por WhatsApp,
- * cronómetro en tiempo real y copiado rápido de Sinpe Móvil.
+ * cronómetro circular en tiempo real y copiado rápido de Sinpe Móvil.
  */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (audio) {
                     audio.play().then(() => {
                         updateAudioUI(true);
-                        showToast('¡Bienvenidos a nuestra celebración!');
+                        showToast('¡Bienvenidos a nuestro primer aniversario!');
                     }).catch(err => {
                         console.log('Autoplay bloqueado:', err);
                     });
@@ -86,26 +86,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // --- 3. CUENTA REGRESIVA PRECISA ---
-    const targetDateStr = document.getElementById('weddingCountdown')?.dataset?.date || '2026-12-06T15:30:00';
+    // --- 3. CUENTA REGRESIVA CIRCULAR PRECISA ---
+    const targetDateStr = document.getElementById('cuenta-regresiva')?.dataset?.date || '2026-12-06T15:30:00';
     const countdownDate = new Date(targetDateStr).getTime();
 
     function updateCountdown() {
         const now = new Date().getTime();
         const difference = countdownDate - now;
+        const countdownEl = document.getElementById('countdown');
 
-        const daysEl = document.getElementById('countDays');
-        const hoursEl = document.getElementById('countHours');
-        const minutesEl = document.getElementById('countMinutes');
-        const secondsEl = document.getElementById('countSeconds');
-
-        if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+        if (!countdownEl) return;
 
         if (difference <= 0) {
-            daysEl.innerText = '00';
-            hoursEl.innerText = '00';
-            minutesEl.innerText = '00';
-            secondsEl.innerText = '00';
+            countdownEl.innerText = '00 : 00 : 00 : 00';
             return;
         }
 
@@ -114,10 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-        daysEl.innerText = days < 10 ? '0' + days : days;
-        hoursEl.innerText = hours < 10 ? '0' + hours : hours;
-        minutesEl.innerText = minutes < 10 ? '0' + minutes : minutes;
-        secondsEl.innerText = seconds < 10 ? '0' + seconds : seconds;
+        const formatTime = (time) => time < 10 ? '0' + time : time;
+        countdownEl.innerText = `${formatTime(days)} : ${formatTime(hours)} : ${formatTime(minutes)} : ${formatTime(seconds)}`;
     }
 
     setInterval(updateCountdown, 1000);
@@ -131,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!badgeSugerencia) return;
         if (sugerenciaActual) {
             badgeSugerencia.innerHTML = `
-                <div class="alert alert-warning py-2 px-3 small border-0 rounded-pill d-inline-flex align-items-center mb-3">
+                <div class="alert alert-warning py-2 px-3 small border-0 rounded-pill d-inline-flex align-items-center mb-3 shadow-sm">
                     <i class="bi bi-disc-fill me-2 text-dark"></i>
                     Canción para el DJ: <strong>${sugerenciaActual.cancion}</strong> (de ${sugerenciaActual.nombre})
                 </div>
@@ -155,9 +146,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             formCancion.reset();
             actualizarBadgeSugerencia();
-            showToast('¡Canción guardada! La incluiremos al confirmar tu asistencia.');
+            showToast('¡Canción guardada! La incluiremos en tu confirmación al final de la página.');
 
-            // Scroll suave a la sección de RSVP
+            // Scroll suave hacia la confirmación al final
             const rsvpSection = document.getElementById('seccionRSVP');
             if (rsvpSection) {
                 setTimeout(() => {
@@ -169,20 +160,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     actualizarBadgeSugerencia();
 
-    // --- 5. CONFIRMACIÓN RSVP POR WHATSAPP ---
+    // --- 5. CONFIRMACIÓN RSVP POR WHATSAPP (Última sección) ---
     window.confirmarAsistenciaWhatsApp = function(telefono) {
-        let texto = '¡Hola Maxwell y Zahilin! ✨ Confirmo con mucha alegría mi asistencia a su boda el 6 de Diciembre 2026.';
+        let texto = '¡Hola Maxwell y Zahilin! ✨ Confirmo con mucha alegría mi asistencia a su celebración el 6 de Diciembre.';
         if (sugerenciaActual) {
             texto += ` Además, me encantaría escuchar en la fiesta: "${sugerenciaActual.cancion}" (de parte de ${sugerenciaActual.nombre}).`;
         }
-        texto += ' ¡Nos vemos pronto para celebrar juntos!';
+        texto += ' ¡Nos vemos pronto!';
 
         const url = `https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`;
         window.open(url, '_blank');
     };
 
     window.declinarAsistenciaWhatsApp = function(telefono) {
-        let texto = '¡Hola Maxwell y Zahilin! Lamentablemente no podré acompañarlos físicamente en su boda el 6 de Diciembre, pero les deseo el mayor de los éxitos y bendiciones en esta hermosa etapa. ¡Muchas felicidades!';
+        let texto = '¡Hola Maxwell y Zahilin! Lamentablemente no podré acompañarlos físicamente en esta ocasión, pero les deseo el mayor de los éxitos y bendiciones en su primer aniversario. ¡Muchas felicidades!';
         const url = `https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`;
         window.open(url, '_blank');
     };
