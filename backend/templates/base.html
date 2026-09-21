@@ -453,24 +453,6 @@
                             <i class="bi bi-stars fs-5 me-2" style="color:var(--brand-gold);"></i>Studio 68 <span class="badge bg-warning text-dark ms-1" style="font-size: 0.65rem; vertical-align: middle;">Digital</span>
                         </a>
                     </li>
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-custom text-warning fw-bold" href="{% url 'web:gestor_dashboard' %}">
-                            <i class="bi bi-speedometer2 fs-5 me-2"></i>Panel Gestor
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-custom text-muted small" href="{% url 'web:gestor_logout' %}" title="Cerrar sesión">
-                            <i class="bi bi-box-arrow-right fs-5 me-1"></i>Salir ({{ user.username }})
-                        </a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-custom" href="{% url 'web:gestor_login' %}">
-                            <i class="bi bi-shield-lock-fill fs-5 me-2" style="color:var(--brand-gold);"></i>Panel Gestor
-                        </a>
-                    </li>
-                    {% endif %}
                 </ul>
                 <div class="d-flex align-items-center gap-3">
                     <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank" class="btn-whatsapp-pill d-none d-sm-inline-flex" title="Contactar por WhatsApp">
@@ -564,12 +546,27 @@
                 </div>
             </div>
             <hr class="border-secondary border-opacity-25 my-4">
-            <div class="d-flex flex-wrap justify-content-between align-items-center text-white-50 small">
+            <div class="d-flex flex-wrap justify-content-between align-items-center text-white-50 small gap-2">
                 <div>
                     &copy; {% now "Y" %} <b>{{ EMPRESA_NOMBRE }}</b>. Todos los derechos reservados.
                 </div>
-                <div>
-                    Sitio web oficial: <a href="{{ EMPRESA_DOMINIO_URL }}" target="_blank" style="color:var(--brand-gold);">{{ EMPRESA_DOMINIO }}</a>
+                <div class="d-flex align-items-center gap-3">
+                    <span>Sitio web oficial: <a href="{{ EMPRESA_DOMINIO_URL }}" target="_blank" style="color:var(--brand-gold);">{{ EMPRESA_DOMINIO }}</a></span>
+                    <!-- Acceso discreto administrativo (esquina imperceptible para clientes) -->
+                    {% if user.is_authenticated %}
+                    <span class="opacity-25">|</span>
+                    <a href="{% url 'web:gestor_dashboard' %}" class="text-white-50 text-decoration-none d-inline-flex align-items-center gap-1" style="font-size: 0.72rem; opacity: 0.35;" title="Panel Gestor" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='0.35'">
+                        <i class="bi bi-shield-check"></i> Gestor
+                    </a>
+                    <a href="{% url 'web:gestor_logout' %}" class="text-white-50 text-decoration-none" style="font-size: 0.72rem; opacity: 0.35;" title="Cerrar sesión" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='0.35'">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </a>
+                    {% else %}
+                    <span class="opacity-25">|</span>
+                    <a href="{% url 'web:gestor_login' %}" class="text-white-50 text-decoration-none" style="font-size: 0.72rem; opacity: 0.22;" title="Acceso Interno" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='0.22'">
+                        <i class="bi bi-lock-fill"></i>
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

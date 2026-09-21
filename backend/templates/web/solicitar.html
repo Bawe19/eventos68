@@ -17,6 +17,12 @@
     <form method="POST" action="{% url 'web:solicitar' %}" enctype="multipart/form-data">
         {% csrf_token %}
 
+        <!-- Campo trampa anti-spam bots (invisible para humanos, protege el servidor) -->
+        <div style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;" aria-hidden="true">
+            <label for="web_site_hp">Control de seguridad (no llenar):</label>
+            <input type="text" name="web_site_hp" id="web_site_hp" tabindex="-1" autocomplete="off">
+        </div>
+
         <!-- 1. DATOS DE CONTACTO -->
         <div class="card card-custom mb-4">
             <div class="card-header bg-white py-3 border-bottom">
