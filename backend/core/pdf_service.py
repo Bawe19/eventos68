@@ -153,7 +153,8 @@ def generar_pdf_cotizacion(cotizacion) -> bytes:
                 f"<b>Fecha del Evento:</b> {cotizacion.fecha_evento.strftime('%d/%m/%Y')}<br/>"
                 f"<b>Cantidad de Personas:</b> {cotizacion.cantidad_personas} invitados<br/>"
                 f"<b>Modalidad:</b> {cotizacion.get_modalidad_servicio_display()}<br/>"
-                f"<b>Ubicación:</b> {cotizacion.direccion_evento or 'Por definir'}",
+                f"<b>Ubicación:</b> {cotizacion.direccion_evento or 'Por definir'}<br/>"
+                f"<b>Alergias / Restricciones:</b> {getattr(cotizacion, 'alergias_restricciones', 'No presenta / No aplica')}",
                 cell_style
             )
         ]

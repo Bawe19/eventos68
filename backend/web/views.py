@@ -146,6 +146,12 @@ def solicitar_cotizacion(request):
                     messages.error(request, error_msg)
                     return redirect('web:solicitar')
 
+            # 3.1 Alergias y restricciones alimentarias
+            tiene_alergias = request.POST.get('tieneAlergias', 'no') == 'si'
+            detalle_alergias = strip_tags(request.POST.get('detalleAlergias', ''))[:400].strip() if tiene_alergias else 'No presenta / No aplica'
+            if tiene_alergias and not detalle_alergias:
+                detalle_alergias = 'Presenta restricciones alimentarias (especificar en seguimiento)'
+
             # 4. Extraer checkboxes de componentes seleccionados de forma controlada
             items_seleccionados = []
             for key, val in request.POST.items():
@@ -176,7 +182,8 @@ def solicitar_cotizacion(request):
                 incluir_mobiliario=incluir_mobiliario,
                 tipo_mobiliario=tipo_mobiliario,
                 incluir_vajilla=incluir_vajilla,
-                kilometros_transporte=km_transporte
+                kilometros_transporte=km_transporte,
+                alergias_restricciones=detalle_alergias
             )
 
             return redirect('web:solicitud_enviada', cotizacion_id=cotizacion.id)

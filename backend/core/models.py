@@ -157,6 +157,7 @@ class Cotizacion(models.Model):
     estado = models.CharField('Estado', max_length=20, choices=ESTADO_CHOICES, default='Solicitud', db_index=True)
     modalidad_servicio = models.CharField('Modalidad', max_length=20, choices=MODALIDAD_CHOICES, default='Bufete')
     fecha_registro = models.DateTimeField('Fecha de Registro', auto_now_add=True)
+    alergias_restricciones = models.TextField('Alergias o Restricciones Alimentarias', blank=True, default='No presenta / No aplica')
     notas_adicionales = models.TextField('Notas Adicionales', blank=True, default='')
 
     # Campos financieros calculados y persistidos

@@ -43,7 +43,14 @@
                 <p class="mb-1"><b>Fecha Programada:</b> <span class="badge bg-warning text-dark fs-6">{{ cotizacion.fecha_evento|date:"l, d/m/Y" }}</span></p>
                 <p class="mb-1"><b>Invitados:</b> {{ cotizacion.cantidad_personas }} personas</p>
                 <p class="mb-1"><b>Modalidad:</b> {{ cotizacion.get_modalidad_servicio_display }}</p>
-                <p class="mb-0"><b>Lugar del Evento:</b> {{ cotizacion.direccion_evento }}</p>
+                <p class="mb-1"><b>Lugar del Evento:</b> {{ cotizacion.direccion_evento }}</p>
+                <p class="mb-0"><b>Alergias / Restricciones:</b> 
+                    {% if cotizacion.alergias_restricciones and cotizacion.alergias_restricciones != 'No presenta / No aplica' %}
+                    <span class="badge bg-danger-subtle text-danger border border-danger fw-semibold"><i class="bi bi-exclamation-triangle-fill me-1"></i>{{ cotizacion.alergias_restricciones }}</span>
+                    {% else %}
+                    <span class="text-muted"><i class="bi bi-check-circle text-success me-1"></i>No presenta / No aplica</span>
+                    {% endif %}
+                </p>
             </div>
         </div>
     </div>

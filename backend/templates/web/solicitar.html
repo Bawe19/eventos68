@@ -122,6 +122,39 @@
                     </div>
                 </div>
 
+                <!-- Pregunta de Alergias y Restricciones Dietéticas -->
+                <div class="p-3 mb-4 rounded border" style="background: rgba(254, 248, 238, 0.9); border-color: rgba(200, 134, 10, 0.35) !important;">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <i class="bi bi-shield-exclamation text-warning fs-5"></i>
+                        <label class="form-label fw-bold mb-0 text-dark">¿Existen Alergias o Restricciones Alimentarias?</label>
+                    </div>
+                    <small class="text-muted d-block mb-3">Indícanos si tú o tus invitados presentan celiaquía (sin gluten), intolerancias, alergias a mariscos/frutos secos o preferencias veganas/vegetarianas.</small>
+
+                    <div class="d-flex flex-wrap gap-4 mb-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="tieneAlergias" id="alergiaNo" value="no" checked onchange="toggleAlergias(false)">
+                            <label class="form-check-label fw-semibold text-dark" for="alergiaNo">
+                                <i class="bi bi-check-circle-fill text-success me-1"></i>No aplica / No tenemos alergias
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="tieneAlergias" id="alergiaSi" value="si" onchange="toggleAlergias(true)">
+                            <label class="form-check-label fw-semibold text-danger" for="alergiaSi">
+                                <i class="bi bi-exclamation-triangle-fill me-1"></i>Sí, tenemos alergias o restricciones
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Cuadro condicional que se abre solo si selecciona Sí -->
+                    <div id="cajaDetalleAlergias" class="mt-3 pt-3 border-top" style="display: none; border-color: rgba(200, 134, 10, 0.25) !important;">
+                        <label class="form-label fw-semibold small text-dark">
+                            <i class="bi bi-pencil-square text-warning me-1"></i>Detalla a qué ingredientes son alérgicos y cuántas personas aproximadamente:
+                        </label>
+                        <textarea name="detalleAlergias" id="detalleAlergiasInput" class="form-control" rows="2" placeholder="Ej: 2 personas celíacas (sin gluten), 1 alérgica severa a mariscos, 3 vegetarianas..."></textarea>
+                        <small class="text-muted">Nuestro equipo de cocina preparará y aislará alternativas seguras para garantizar el bienestar de tus invitados.</small>
+                    </div>
+                </div>
+
                 <!-- BLOQUE A: CATERING TRADICIONAL & BANQUETES -->
                 <div class="p-3 mb-4 rounded border" style="background: rgba(254, 250, 244, 0.75);">
                     <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
@@ -358,6 +391,18 @@
 function seleccionarSalon(select) {
     if (select.value) {
         document.getElementById('direccionEvento').value = select.value;
+    }
+}
+
+function toggleAlergias(mostrar) {
+    const caja = document.getElementById('cajaDetalleAlergias');
+    const input = document.getElementById('detalleAlergiasInput');
+    if (mostrar) {
+        caja.style.display = 'block';
+        input.focus();
+    } else {
+        caja.style.display = 'none';
+        input.value = '';
     }
 }
 </script>

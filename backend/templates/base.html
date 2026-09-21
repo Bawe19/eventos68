@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{{ EMPRESA_NOMBRE }}{% endblock %} | Catering Service Gourmet & Parrilladas Costa Rica</title>
+    <title>{% block title %}{{ EMPRESA_NOMBRE }}{% endblock %} | Producción y Planificación de Eventos Costa Rica</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Eventos68: Catering service premium y parrilladas gourmet a la leña en Costa Rica. Especialistas en bodas, celebraciones familiares y eventos corporativos con menaje de gala y exclusividad de 1 evento por día.">
+    <meta name="description" content="Eventos68: Producción, planificación y logística integral de eventos en Costa Rica. Especialistas en bodas, celebraciones familiares y eventos corporativos con ambientación, menaje de gala y catering de autor con exclusividad de 1 evento por día.">
     <meta name="keywords" content="catering service costa rica, parrilladas a domicilio, catering eventos san jose, organizacion de bodas costa rica, parrillada de ron, eventos68, banquetes y recepciones, alquiler de manteleria y mobiliario costa rica, catering empresarial">
     <meta name="author" content="Eventos68 Catering Service">
     <meta name="robots" content="index, follow, max-image-preview:large">
@@ -484,7 +484,7 @@
     </main>
 
     <!-- Footer -->
-    <footer>
+    <footer class="position-relative" style="padding-bottom: 5rem;">
         <div class="container position-relative">
             <div class="row g-4 mb-4">
                 <div class="col-lg-5">
@@ -493,7 +493,7 @@
                         <h4 class="text-white fw-bold serif mb-0">{{ EMPRESA_NOMBRE }}</h4>
                     </div>
                     <p class="mb-4 text-white-50" style="max-width: 420px; font-size: 0.92rem;">
-                        {{ EMPRESA_SLOGAN }}. Especialistas en catering tradicional gourmet, banquetes de gala, barras interactivas típicas, carritos de fast food & snacks en tendencia y estaciones saludables para bodas, eventos familiares y corporativos.
+                        {{ EMPRESA_SLOGAN }}. Producción, planificación y dirección integral de eventos. Coordinación logística, ambientación temática, menaje de gala y catering gourmet para bodas, celebraciones familiares y eventos corporativos.
                     </p>
                     <div class="d-flex gap-2">
                         <a href="{{ EMPRESA_INSTAGRAM_LINK }}" target="_blank" class="social-link-btn" title="Instagram {{ EMPRESA_INSTAGRAM }}">
@@ -546,15 +546,13 @@
                 </div>
             </div>
             <hr class="border-secondary border-opacity-25 my-4">
-            <div class="d-flex flex-wrap justify-content-between align-items-center text-white-50 small gap-2">
-                <div>
-                    &copy; {% now "Y" %} <b>{{ EMPRESA_NOMBRE }}</b>. Todos los derechos reservados.
-                </div>
-                <div class="d-flex align-items-center gap-3">
-                    <span>Sitio web oficial: <a href="{{ EMPRESA_DOMINIO_URL }}" target="_blank" style="color:var(--brand-gold);">{{ EMPRESA_DOMINIO }}</a></span>
-                    <!-- Acceso discreto administrativo (esquina imperceptible para clientes) -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center text-white-50 small gap-3">
+                <div class="d-flex align-items-center flex-wrap gap-2">
+                    <span>&copy; {% now "Y" %} <b>{{ EMPRESA_NOMBRE }}</b>. Todos los derechos reservados.</span>
+                    
+                    <!-- Enlace de acceso al gestor situado en la izquierda (lejos del botón flotante de WhatsApp) -->
                     {% if user.is_authenticated %}
-                    <span class="opacity-25">|</span>
+                    <span class="opacity-25">·</span>
                     <a href="{% url 'web:gestor_dashboard' %}" class="text-white-50 text-decoration-none d-inline-flex align-items-center gap-1" style="font-size: 0.72rem; opacity: 0.35;" title="Panel Gestor" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='0.35'">
                         <i class="bi bi-shield-check"></i> Gestor
                     </a>
@@ -562,11 +560,14 @@
                         <i class="bi bi-box-arrow-right"></i>
                     </a>
                     {% else %}
-                    <span class="opacity-25">|</span>
+                    <span class="opacity-25">·</span>
                     <a href="{% url 'web:gestor_login' %}" class="text-white-50 text-decoration-none" style="font-size: 0.72rem; opacity: 0.22;" title="Acceso Interno" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='0.22'">
                         <i class="bi bi-lock-fill"></i>
                     </a>
                     {% endif %}
+                </div>
+                <div class="pe-md-5 me-md-5">
+                    <span>Sitio web oficial: <a href="{{ EMPRESA_DOMINIO_URL }}" target="_blank" style="color:var(--brand-gold);">{{ EMPRESA_DOMINIO }}</a></span>
                 </div>
             </div>
         </div>
