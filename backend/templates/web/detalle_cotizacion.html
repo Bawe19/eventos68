@@ -44,13 +44,22 @@
                 <p class="mb-1"><b>Invitados:</b> {{ cotizacion.cantidad_personas }} personas</p>
                 <p class="mb-1"><b>Modalidad:</b> {{ cotizacion.get_modalidad_servicio_display }}</p>
                 <p class="mb-1"><b>Lugar del Evento:</b> {{ cotizacion.direccion_evento }}</p>
-                <p class="mb-0"><b>Alergias / Restricciones:</b> 
+                {% if cotizacion.punto_salida %}
+                <p class="mb-1"><b>Punto de Salida / Referencia:</b> {{ cotizacion.punto_salida }} <small class="text-muted">(Lugar definitivo coordinable en seguimiento)</small></p>
+                {% endif %}
+                <p class="mb-1"><b>Alergias / Restricciones:</b> 
                     {% if cotizacion.alergias_restricciones and cotizacion.alergias_restricciones != 'No presenta / No aplica' %}
                     <span class="badge bg-danger-subtle text-danger border border-danger fw-semibold"><i class="bi bi-exclamation-triangle-fill me-1"></i>{{ cotizacion.alergias_restricciones }}</span>
                     {% else %}
                     <span class="text-muted"><i class="bi bi-check-circle text-success me-1"></i>No presenta / No aplica</span>
                     {% endif %}
                 </p>
+                {% if cotizacion.detalles_preparacion %}
+                <div class="mt-2 p-2 rounded bg-light border">
+                    <small class="fw-bold text-dark d-block"><i class="bi bi-chat-heart-fill text-warning me-1"></i>Personalización de Menú & Salsas:</small>
+                    <span class="text-secondary small">{{ cotizacion.detalles_preparacion }}</span>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -126,8 +135,8 @@
                         <div class="d-flex align-items-start gap-2">
                             <i class="bi bi-check-circle-fill text-success fs-5"></i>
                             <div>
-                                <h6 class="fw-bold mb-0">Sabor a las Brasas</h6>
-                                <small class="text-muted">Parrilladas y cortes al carbón preparados en el lugar con recetas artesanales de la casa.</small>
+                                <h6 class="fw-bold mb-0">Gastronomía de Autor</h6>
+                                <small class="text-muted">Catering de gala y estaciones preparadas al momento con ingredientes frescos e impecable presentación.</small>
                             </div>
                         </div>
                     </div>

@@ -74,13 +74,22 @@
                 <p class="mb-1"><b>Fecha Programada:</b> <span class="badge bg-dark text-white fs-6">{{ cotizacion.fecha_evento|date:"l, d/m/Y" }}</span></p>
                 <p class="mb-1"><b>Cantidad de Personas:</b> {{ cotizacion.cantidad_personas }} invitados</p>
                 <p class="mb-1"><b>Lugar del Evento:</b> {{ cotizacion.direccion_evento }}</p>
-                <p class="mb-0"><b>Alergias / Restricciones:</b> 
+                {% if cotizacion.punto_salida %}
+                <p class="mb-1"><b>Punto de Salida / Referencia:</b> {{ cotizacion.punto_salida }} <small class="text-muted">(Lugar por cerrar en cotización)</small></p>
+                {% endif %}
+                <p class="mb-1"><b>Alergias / Restricciones:</b> 
                     {% if cotizacion.alergias_restricciones and cotizacion.alergias_restricciones != 'No presenta / No aplica' %}
                     <span class="badge bg-danger text-white fs-6"><i class="bi bi-exclamation-triangle-fill me-1"></i>{{ cotizacion.alergias_restricciones }}</span>
                     {% else %}
                     <span class="text-muted"><i class="bi bi-check-circle text-success me-1"></i>No presenta / No aplica</span>
                     {% endif %}
                 </p>
+                {% if cotizacion.detalles_preparacion %}
+                <div class="mt-2 p-2 rounded bg-light border">
+                    <small class="fw-bold text-dark d-block"><i class="bi bi-chat-heart-fill text-warning me-1"></i>Personalización Solicitada (Menú & Salsas):</small>
+                    <span class="text-secondary small">{{ cotizacion.detalles_preparacion }}</span>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -25,10 +25,11 @@ class CotizacionService:
                         imagen_decoracion=None, detalle_otros_alimentacion: str = '',
                         incluir_mobiliario: bool = True, tipo_mobiliario: str = 'Redondas',
                         incluir_vajilla: bool = True, kilometros_transporte: int = 1,
-                        alergias_restricciones: str = 'No presenta / No aplica') -> Cotizacion:
+                        alergias_restricciones: str = 'No presenta / No aplica',
+                        punto_salida: str = '', detalles_preparacion: str = '') -> Cotizacion:
         """
         Crea una solicitud pública de cotización con todas las automatizaciones inteligentes
-        de vajilla, cristalería, mantelería, mobiliario, transporte y registro de alergias alimentarias.
+        de vajilla, cristalería, mantelería, mobiliario, transporte, punto de salida y preferencias gastronómicas.
         """
         if cantidad_personas <= 0:
             raise ValidationError('La cantidad de personas debe ser mayor a cero.')
@@ -55,6 +56,8 @@ class CotizacionService:
             fecha_evento=fecha_evento,
             cantidad_personas=cantidad_personas,
             direccion_evento=direccion_evento,
+            punto_salida=punto_salida.strip(),
+            detalles_preparacion=detalles_preparacion.strip(),
             estado='Solicitud',
             modalidad_servicio=modalidad_servicio,
             alergias_restricciones=alergias_restricciones or 'No presenta / No aplica',

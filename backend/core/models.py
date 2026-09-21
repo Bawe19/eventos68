@@ -62,6 +62,7 @@ class DetalleServicio(models.Model):
         ('Fast_Food', 'Carrito Fast Food'),
         ('Snack', 'Carrito de Snacks & Dulces'),
         ('Saludable', 'Estación Saludable'),
+        ('Manualidades', 'Estación de Manualidades & Creatividad'),
         ('Mesa', 'Mesa'),
         ('Silla', 'Silla'),
         ('Mantel', 'Mantel'),
@@ -154,10 +155,12 @@ class Cotizacion(models.Model):
     fecha_evento = models.DateField('Fecha del Evento')
     cantidad_personas = models.PositiveIntegerField('Cantidad de Personas / Invitados')
     direccion_evento = models.TextField('Dirección Exacta del Evento', blank=True, default='')
+    punto_salida = models.CharField('Punto o Dirección de Salida / Origen', max_length=255, blank=True, default='')
     estado = models.CharField('Estado', max_length=20, choices=ESTADO_CHOICES, default='Solicitud', db_index=True)
     modalidad_servicio = models.CharField('Modalidad', max_length=20, choices=MODALIDAD_CHOICES, default='Bufete')
     fecha_registro = models.DateTimeField('Fecha de Registro', auto_now_add=True)
     alergias_restricciones = models.TextField('Alergias o Restricciones Alimentarias', blank=True, default='No presenta / No aplica')
+    detalles_preparacion = models.TextField('Preferencias de Preparación, Salsas y Guarniciones', blank=True, default='')
     notas_adicionales = models.TextField('Notas Adicionales', blank=True, default='')
 
     # Campos financieros calculados y persistidos

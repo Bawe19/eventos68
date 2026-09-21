@@ -90,7 +90,8 @@
                             <option value="Quinta El Mirador, San Antonio de Escazú, 500m oeste del mirador, San José">Quinta El Mirador (Convenio - Escazú)</option>
                         </select>
                         <label class="form-label fw-semibold">Dirección Exacta del Evento *</label>
-                        <input type="text" name="direccionEvento" id="direccionEvento" class="form-control" required placeholder="Lugar exacto donde se llevará a cabo el evento">
+                        <input type="text" name="direccionEvento" id="direccionEvento" class="form-control" required placeholder="Lugar exacto o zona donde se proyecta el evento">
+                        <small class="text-muted"><i class="bi bi-geo-alt me-1 text-warning"></i>Si aún estás cotizando o no has cerrado el salón definitivo, puedes indicar "Por definir" o tu zona tentativa.</small>
                     </div>
                 </div>
             </div>
@@ -155,24 +156,29 @@
                     </div>
                 </div>
 
-                <!-- BLOQUE A: CATERING TRADICIONAL & BANQUETES -->
+                <!-- BLOQUE A: CATERING TRADICIONAL & BANQUETES (PERSONALIZADO A TU MEDIDA) -->
                 <div class="p-3 mb-4 rounded border" style="background: rgba(254, 250, 244, 0.75);">
                     <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
-                        <h6 class="fw-bold mb-0 text-dark">
-                            <i class="bi bi-award-fill me-2 text-warning"></i>Catering Tradicional & Banquetes de Gala
-                        </h6>
-                        <span class="badge bg-dark text-warning small">Opción Clásica</span>
+                        <div>
+                            <h6 class="fw-bold mb-0 text-dark">
+                                <i class="bi bi-award-fill me-2 text-warning"></i>Catering Tradicional & Banquetes de Gala
+                            </h6>
+                            <small class="text-muted">Tú tienes el control: selecciona las bases de tu menú y dinos exactamente cómo te gustaría su preparación.</small>
+                        </div>
+                        <span class="badge bg-dark text-warning small">A tu Gusto</span>
                     </div>
 
-                    <!-- Proteínas -->
-                    <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">Platos Fuertes & Proteínas:</p>
+                    <!-- Proteínas Principales -->
+                    <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">
+                        <i class="bi bi-check2-circle text-warning me-1"></i>Platos Fuertes & Proteínas (Opciones Versátiles):
+                    </p>
                     <div class="row g-2 mb-3">
                         {% for p in proteinas %}
                         <div class="col-md-6">
                             <div class="form-check p-2 border rounded bg-white h-100">
                                 <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}">
                                 <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ p.id }}">
-                                    <span class="fw-medium">{{ p.nombre_detalle }}</span>
+                                    <span class="fw-medium text-dark">{{ p.nombre_detalle }}</span>
                                     <span class="badge bg-light text-dark border small">Proteína</span>
                                 </label>
                             </div>
@@ -180,11 +186,23 @@
                         {% endfor %}
                     </div>
 
-                    <!-- Guarniciones -->
-                    <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">Guarniciones & Acompañamientos:</p>
+                    <!-- Caja de Texto Interactiva: Preparación y Salsas de las Proteínas -->
+                    <div class="p-3 mb-4 rounded border shadow-sm" style="background: #ffffff; border-left: 4px solid var(--brand-gold) !important;">
+                        <label class="form-label fw-bold text-dark mb-1 d-flex align-items-center gap-2">
+                            <i class="bi bi-chat-heart-fill text-warning fs-5"></i>
+                            <span>¿Cómo te gustaría la preparación de tus proteínas y tus salsas preferidas?</span>
+                        </label>
+                        <textarea name="detallesPreparacion" class="form-control" rows="2" placeholder="Ej: Pollo a la plancha con salsa cremosa de champiñones, costillas de cerdo caramelizadas en salsa BBQ dulce, salmón al ajillo con limón y finas hierbas, salsa chimichurri artesanal, término de la carne de res 3/4..."></textarea>
+                        <small class="text-muted"><i class="bi bi-magic text-warning me-1"></i>¡Tú tienes el control! Nuestro chef adaptará la receta, salsa y técnica al gusto exacto de tus invitados.</small>
+                    </div>
+
+                    <!-- Guarniciones & Acompañamientos -->
+                    <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">
+                        <i class="bi bi-check2-circle text-warning me-1"></i>Guarniciones & Acompañamientos:
+                    </p>
                     <div class="row g-2 mb-3">
                         {% for g in guarniciones %}
-                        <div class="col-md-6">
+                        <div class="col-md-4 col-sm-6">
                             <div class="form-check p-2 border rounded bg-white h-100">
                                 <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ g.id }}" id="item_{{ g.id }}">
                                 <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ g.id }}">
@@ -196,10 +214,12 @@
                         {% endfor %}
                     </div>
 
-                    <!-- Ensaladas y Postres -->
+                    <!-- Ensaladas Frescas y Postres de Gala -->
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">Ensaladas Frescas:</p>
+                            <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">
+                                <i class="bi bi-check2-circle text-warning me-1"></i>Ensaladas Frescas:
+                            </p>
                             {% for e in ensaladas %}
                             <div class="form-check p-2 border rounded bg-white mb-2">
                                 <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ e.id }}" id="item_{{ e.id }}">
@@ -211,7 +231,9 @@
                             {% endfor %}
                         </div>
                         <div class="col-md-6">
-                            <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">Postres de Gala:</p>
+                            <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">
+                                <i class="bi bi-check2-circle text-warning me-1"></i>Postres de Gala:
+                            </p>
                             {% for pos in postres %}
                             <div class="form-check p-2 border rounded bg-white mb-2">
                                 <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ pos.id }}" id="item_{{ pos.id }}">
@@ -225,82 +247,96 @@
                     </div>
                 </div>
 
-                <!-- BLOQUE B: BARRAS FUERTES Y TÍPICAS EN TENDENCIA -->
+                <!-- BLOQUE B: BARRAS DULCES & SALADAS (RECOPILACIÓN EN TENDENCIA) -->
                 <div class="p-3 mb-4 rounded border" style="background: rgba(254, 250, 244, 0.75);">
                     <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
-                        <h6 class="fw-bold mb-0 text-dark">
-                            <i class="bi bi-fire me-2 text-danger"></i>Barras Fuertes & Típicas en Tendencia
-                        </h6>
+                        <div>
+                            <h6 class="fw-bold mb-0 text-dark">
+                                <i class="bi bi-stars me-2 text-warning"></i>Barras Dulces & Saladas (Recopilación Interactiva)
+                            </h6>
+                            <small class="text-muted">Estaciones gastronómicas y carritos móviles para deleitar a tus comensales de manera dinámica.</small>
+                        </div>
                         <span class="badge bg-danger text-white small">En Tendencia</span>
                     </div>
-                    <div class="row g-2">
-                        {% for bf in barras_fuertes %}
-                        <div class="col-12">
-                            <div class="form-check p-3 border rounded bg-white">
+
+                    <div class="row g-3">
+                        <!-- Sub-columna: Barras y Carritos Salados -->
+                        <div class="col-lg-6">
+                            <p class="fw-bold text-dark small mb-2 text-uppercase" style="letter-spacing: 0.05em;">
+                                <i class="bi bi-fire text-danger me-1"></i>Estaciones y Antojos Salados:
+                            </p>
+                            {% for bf in barras_fuertes %}
+                            <div class="form-check p-3 border rounded bg-white mb-2">
                                 <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ bf.id }}" id="item_{{ bf.id }}">
                                 <label class="form-check-label pe-2 w-100" for="item_{{ bf.id }}">
                                     <span class="fw-bold text-dark d-block mb-1">{{ bf.nombre_detalle }}</span>
-                                    <small class="text-muted"><i class="bi bi-check-circle-fill text-success me-1"></i>Montaje completo con ingredientes y complementos servidos al momento.</small>
+                                    <small class="text-muted"><i class="bi bi-check-circle-fill text-success me-1"></i>Montaje con toppings y complementos servidos al momento.</small>
                                 </label>
                             </div>
+                            {% endfor %}
+
+                            {% for ff in fast_food %}
+                            <div class="form-check p-3 border rounded bg-white mb-2">
+                                <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ ff.id }}" id="item_{{ ff.id }}">
+                                <label class="form-check-label pe-2 w-100" for="item_{{ ff.id }}">
+                                    <span class="fw-bold text-dark d-block mb-1">{{ ff.nombre_detalle }}</span>
+                                    <small class="text-muted"><i class="bi bi-cart3 text-primary me-1"></i>Carrito móvil interactivo con salsas y atención guiada.</small>
+                                </label>
+                            </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
-                    </div>
-                </div>
 
-                <!-- BLOQUE C: CARRITOS DE FAST FOOD & SNACKS -->
-                <div class="p-3 mb-4 rounded border" style="background: rgba(254, 250, 244, 0.75);">
-                    <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
-                        <h6 class="fw-bold mb-0 text-dark">
-                            <i class="bi bi-cart3 me-2 text-primary"></i>Carritos de Fast Food, Snacks & Antojos
-                        </h6>
-                        <span class="badge bg-primary text-white small">Móviles & Divertidos</span>
-                    </div>
-
-                    <!-- Fast Food -->
-                    {% for ff in fast_food %}
-                    <div class="form-check p-3 border rounded bg-white mb-3">
-                        <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ ff.id }}" id="item_{{ ff.id }}">
-                        <label class="form-check-label pe-2 w-100" for="item_{{ ff.id }}">
-                            <span class="fw-bold text-dark d-block mb-1">{{ ff.nombre_detalle }}</span>
-                            <small class="text-muted"><i class="bi bi-check-circle-fill text-success me-1"></i>Carrito móvil interactivo con toppings gourmet y atención personalizada.</small>
-                        </label>
-                    </div>
-                    {% endfor %}
-
-                    <!-- Snacks & Golosinas -->
-                    <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">Estaciones y Carritos de Snacks:</p>
-                    <div class="row g-2">
-                        {% for sn in snacks %}
-                        <div class="col-md-6">
-                            <div class="form-check p-2 border rounded bg-white h-100">
+                        <!-- Sub-columna: Barras y Carritos Dulces & Saludables -->
+                        <div class="col-lg-6">
+                            <p class="fw-bold text-dark small mb-2 text-uppercase" style="letter-spacing: 0.05em;">
+                                <i class="bi bi-cup-hot-fill text-warning me-1"></i>Estaciones Dulces, Snacks & Saludables:
+                            </p>
+                            {% for sn in snacks %}
+                            <div class="form-check p-2 border rounded bg-white mb-2">
                                 <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ sn.id }}" id="item_{{ sn.id }}">
                                 <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ sn.id }}">
                                     <span class="fw-medium">{{ sn.nombre_detalle }}</span>
                                     <span class="badge bg-light text-primary border small">Snack</span>
                                 </label>
                             </div>
+                            {% endfor %}
+
+                            {% for sal in saludable %}
+                            <div class="form-check p-2 border rounded bg-white mb-2">
+                                <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ sal.id }}" id="item_{{ sal.id }}">
+                                <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ sal.id }}">
+                                    <span class="fw-medium">{{ sal.nombre_detalle }}</span>
+                                    <span class="badge bg-light text-success border small">Wellness</span>
+                                </label>
+                            </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
                     </div>
                 </div>
 
-                <!-- BLOQUE D: ESTACIONES SALUDABLES -->
+                <!-- BLOQUE C: ESTACIONES DE MANUALIDADES & CREATIVIDAD -->
                 <div class="p-3 mb-4 rounded border" style="background: rgba(254, 250, 244, 0.75);">
                     <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
-                        <h6 class="fw-bold mb-0 text-dark">
-                            <i class="bi bi-heart-pulse-fill me-2 text-success"></i>Estaciones Saludables & Wellness
-                        </h6>
-                        <span class="badge bg-success text-white small">100% Fresco & Nutritivo</span>
+                        <div>
+                            <h6 class="fw-bold mb-0 text-dark">
+                                <i class="bi bi-palette-fill me-2 text-warning"></i>Estaciones de Manualidades & Creatividad
+                            </h6>
+                            <p class="fw-semibold text-dark mb-0 mt-1" style="font-size: 0.95rem;">
+                                ¡Entretén a tus invitados o equipos, desarrolla su creatividad!
+                            </p>
+                        </div>
+                        <span class="badge bg-warning text-dark small fw-bold">Interactiva</span>
                     </div>
+                    <small class="text-muted d-block mb-3">Rincones artísticos y talleres guiados ideales para cumpleaños infantiles, celebraciones familiares o dinámicas de integración (team building corporativo).</small>
+
                     <div class="row g-2">
-                        {% for sal in saludable %}
-                        <div class="col-12">
-                            <div class="form-check p-3 border rounded bg-white">
-                                <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ sal.id }}" id="item_{{ sal.id }}">
-                                <label class="form-check-label pe-2 w-100" for="item_{{ sal.id }}">
-                                    <span class="fw-bold text-dark d-block mb-1">{{ sal.nombre_detalle }}</span>
-                                    <small class="text-muted"><i class="bi bi-check-circle-fill text-success me-1"></i>Montaje fresco con ingredientes seleccionados para un concepto equilibrado.</small>
+                        {% for man in manualidades %}
+                        <div class="col-md-6">
+                            <div class="form-check p-3 border rounded bg-white h-100">
+                                <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ man.id }}" id="item_{{ man.id }}">
+                                <label class="form-check-label pe-2 w-100" for="item_{{ man.id }}">
+                                    <span class="fw-bold text-dark d-block mb-1">{{ man.nombre_detalle }}</span>
+                                    <small class="text-muted"><i class="bi bi-brush-fill text-warning me-1"></i>Incluye materiales completos, asesoría presencial y recuerdos creativos.</small>
                                 </label>
                             </div>
                         </div>
@@ -310,8 +346,8 @@
 
                 <!-- Requerimientos Especiales -->
                 <div class="mt-4">
-                    <label class="form-label fw-bold">Menú o solicitud especial de alimentos:</label>
-                    <textarea name="DetalleOtrosAlimentacion" class="form-control" rows="2" placeholder="Ej: Opciones vegetarianas o veganas, libre de gluten, especificaciones para niños o adultos mayores, etc."></textarea>
+                    <label class="form-label fw-bold">Otras especificaciones o menú especial de alimentos:</label>
+                    <textarea name="DetalleOtrosAlimentacion" class="form-control" rows="2" placeholder="Ej: Especificaciones para niños, adultos mayores, o preferencias culinarias adicionales..."></textarea>
                 </div>
             </div>
         </div>
@@ -319,7 +355,7 @@
         <!-- 4. MENAJE, VAJILLA Y MOBILIARIO (AUTOMATIZADOS) -->
         <div class="card card-custom mb-4">
             <div class="card-header bg-white py-3 border-bottom">
-                <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-box-seam-fill text-warning me-2"></i>4. Mobiliario, Mantelería y Vajilla</h5>
+                <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-box-seam-fill text-warning me-2"></i>4. Mobiliario, Mantelería, Vajilla y Logística</h5>
             </div>
             <div class="card-body p-4">
                 <!-- Mobiliario -->
@@ -354,19 +390,33 @@
                     <small class="text-muted d-block ms-4">Si no marcas esta casilla, se incluirán automáticamente platos base, cubiertos, servilletas, vasos y copas para todos tus invitados.</small>
                 </div>
 
-                <!-- Transporte -->
-                <div class="row g-3 align-items-center mt-2">
-                    <div class="col-md-4">
-                        <label class="form-label fw-semibold">Distancia aproximada de traslado:</label>
-                        <div class="input-group">
-                            <input type="number" name="kilometrosTransporte" class="form-control" value="10" min="1">
-                            <span class="input-group-text">Kilómetros (km)</span>
-                        </div>
+                <!-- Transporte & Logística con Dirección de Salida -->
+                <div class="p-3 border rounded bg-light mb-3">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <i class="bi bi-truck text-warning fs-5"></i>
+                        <h6 class="fw-bold mb-0 text-dark">Logística de Transporte y Traslado</h6>
                     </div>
-                    <div class="col-md-8">
-                        <label class="form-label fw-semibold">Imagen de Referencia de Decoración (Opcional):</label>
-                        <input type="file" name="imagenDecoracion" class="form-control" accept="image/*">
-                        <small class="text-muted">Sube una foto de referencia de flores, centros de mesa o temáticas deseadas.</small>
+                    <div class="row g-3">
+                        <div class="col-md-7">
+                            <label class="form-label fw-semibold">Punto o Dirección de Salida / Origen:</label>
+                            <input type="text" name="direccionSalida" id="direccionSalida" class="form-control" placeholder="Ej: San José centro, Alajuela, Heredia, Moravia, etc.">
+                            <div class="form-text text-muted small mt-1">
+                                <i class="bi bi-info-circle-fill text-primary me-1"></i><strong>Nota:</strong> Si aún falta cerrar o definir el lugar exacto del evento, puedes indicarnos la dirección o punto de salida de referencia. Luego coordinaremos y cerraremos el lugar definitivo en el seguimiento final de la cotización.
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label fw-semibold">Distancia aproximada de traslado:</label>
+                            <div class="input-group">
+                                <input type="number" name="kilometrosTransporte" class="form-control" value="10" min="1">
+                                <span class="input-group-text">Kilómetros (km)</span>
+                            </div>
+                            <small class="text-muted">Calculamos la tarifa logística según el kilometraje aproximado de traslado.</small>
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <label class="form-label fw-semibold">Imagen de Referencia de Decoración (Opcional):</label>
+                            <input type="file" name="imagenDecoracion" class="form-control" accept="image/*">
+                            <small class="text-muted">Sube una foto de referencia de flores, centros de mesa o temáticas deseadas.</small>
+                        </div>
                     </div>
                 </div>
             </div>

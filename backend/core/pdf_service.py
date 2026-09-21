@@ -113,7 +113,7 @@ def generar_pdf_cotizacion(cotizacion) -> bytes:
     header_data = [
         [
             logo_cell if logo_cell else Paragraph("<b>E68</b>", title_style),
-            Paragraph("<b>EVENTOS68</b><br/><font size=8 color='#C8860A'>CATERING SERVICE & LOGÍSTICA</font><br/><font size=7 color='#736E67'>San José, Costa Rica • Tel: +506 6168-0639</font>", title_style),
+            Paragraph("<b>EVENTOS68</b><br/><font size=8 color='#C8860A'>PRODUCCIÓN Y PLANIFICACIÓN DE EVENTOS</font><br/><font size=7 color='#736E67'>San José, Costa Rica • Tel: +506 6168-0639</font>", title_style),
             Paragraph(
                 "<b>PRESUPUESTO FORMAL</b><br/>"
                 f"<b>Cotización #:</b> EV68-{cotizacion.id:04d}<br/>"
@@ -135,6 +135,9 @@ def generar_pdf_cotizacion(cotizacion) -> bytes:
 
     # 2. Client & Event Information Grid
     cliente = cotizacion.cliente
+    salida_html = f"<br/><b>Punto de Salida / Ref:</b> {cotizacion.punto_salida} <font size=6.5 color='#736E67'>(Por cerrar lugar)</font>" if getattr(cotizacion, 'punto_salida', '') else ""
+    prep_html = f"<br/><b>Personalización Menú:</b> {cotizacion.detalles_preparacion}" if getattr(cotizacion, 'detalles_preparacion', '') else ""
+
     info_data = [
         [
             Paragraph("<b>DATOS DEL CLIENTE</b>", cell_bold),
@@ -153,8 +156,10 @@ def generar_pdf_cotizacion(cotizacion) -> bytes:
                 f"<b>Fecha del Evento:</b> {cotizacion.fecha_evento.strftime('%d/%m/%Y')}<br/>"
                 f"<b>Cantidad de Personas:</b> {cotizacion.cantidad_personas} invitados<br/>"
                 f"<b>Modalidad:</b> {cotizacion.get_modalidad_servicio_display()}<br/>"
-                f"<b>Ubicación:</b> {cotizacion.direccion_evento or 'Por definir'}<br/>"
-                f"<b>Alergias / Restricciones:</b> {getattr(cotizacion, 'alergias_restricciones', 'No presenta / No aplica')}",
+                f"<b>Ubicación:</b> {cotizacion.direccion_evento or 'Por definir'}"
+                f"{salida_html}"
+                f"<br/><b>Alergias / Restricciones:</b> {getattr(cotizacion, 'alergias_restricciones', 'No presenta / No aplica')}"
+                f"{prep_html}",
                 cell_style
             )
         ]

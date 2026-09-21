@@ -268,15 +268,15 @@
             <div class="col-6 col-md-3">
                 <div class="stat-item">
                     <i class="bi bi-diagram-3-fill fs-1 text-warning mb-2 d-block"></i>
-                    <div class="stat-number">100<span>%</span></div>
+                    <div class="stat-number">360<span>°</span></div>
                     <small class="text-muted fw-semibold text-uppercase" style="font-size: 0.78rem; letter-spacing: 0.05em;">Logística Integral & Montaje</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="stat-item">
                     <i class="bi bi-sliders fs-1 text-warning mb-2 d-block"></i>
-                    <div class="stat-number">100<span>%</span></div>
-                    <small class="text-muted fw-semibold text-uppercase" style="font-size: 0.78rem; letter-spacing: 0.05em;">Planificación y Diseño a tu Medida</small>
+                    <div class="stat-number">A Medida<span></span></div>
+                    <small class="text-muted fw-semibold text-uppercase" style="font-size: 0.78rem; letter-spacing: 0.05em;">Planificación y Diseño Exclusivo</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
@@ -368,26 +368,22 @@
                     <span class="badge bg-warning text-dark fw-bold mb-2">Nuevo Servicio Digital · Studio 68</span>
                     <h3 class="serif fw-bold text-white mb-2">Invitaciones Web Interactivas & Confirmación RSVP</h3>
                     <p class="text-white-50 mb-3" style="max-width: 650px;">
-                        Moderniza tu evento con sitios web interactivos: música de bienvenida, cuenta regresiva, confirmación de asistencia por WhatsApp con sugerencia de canciones para el DJ, y rutas directas a Waze y Google Maps.
+                        Moderniza tu evento con una experiencia digital premium: diseño a medida para móviles, música de fondo, itinerario en tiempo real, mapa interactivo Waze/Google Maps y confirmación directa por WhatsApp.
                     </p>
-                    <div class="d-flex flex-wrap gap-2 text-white-50 small">
-                        <span><i class="bi bi-check2-circle text-warning me-1"></i>Música integrada</span>
-                        <span class="mx-2 d-none d-md-inline">·</span>
-                        <span><i class="bi bi-check2-circle text-warning me-1"></i>Waze en 1 clic</span>
-                        <span class="mx-2 d-none d-md-inline">·</span>
-                        <span><i class="bi bi-check2-circle text-warning me-1"></i>RSVP a WhatsApp</span>
-                        <span class="mx-2 d-none d-md-inline">·</span>
-                        <span><i class="bi bi-check2-circle text-warning me-1"></i>Lluvia de Sobres / Sinpe</span>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="{% url 'web:studio68' %}" class="btn btn-brand-gold btn-sm px-4 py-2">
+                            <i class="bi bi-stars me-1"></i>Ver Catálogo Studio 68
+                        </a>
+                        <a href="{% url 'web:studio68_demo_boda' %}" target="_blank" class="btn btn-outline-light btn-sm px-4 py-2">
+                            <i class="bi bi-eye-fill me-1"></i>Probar Demo de Boda en Vivo
+                        </a>
                     </div>
                 </div>
-                <div class="col-lg-4 text-lg-end">
-                    <div class="d-grid d-sm-flex justify-content-lg-end gap-2">
-                        <a href="{% url 'web:studio68' %}" class="btn btn-brand-gold px-4 py-3 shadow">
-                            <i class="bi bi-stars me-2"></i>Conoce Studio 68
-                        </a>
-                        <a href="{% url 'web:studio68_demo_boda' %}" class="btn btn-outline-light rounded-pill px-4 py-3">
-                            <i class="bi bi-eye me-1"></i>Ver Demo Boda
-                        </a>
+                <div class="col-lg-4 text-center">
+                    <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-secondary border-opacity-50">
+                        <i class="bi bi-phone-vibrate display-4 text-warning mb-2 d-block"></i>
+                        <h6 class="fw-bold text-white mb-1">Experiencia Móvil 2026</h6>
+                        <small class="text-white-50">Tus invitados confirmarán asistencia desde su celular con un solo toque.</small>
                     </div>
                 </div>
             </div>
@@ -395,13 +391,13 @@
     </div>
 </section>
 
-<!-- SECCIÓN 4: PROPUESTAS GASTRONÓMICAS & SOLUCIONES INTEGRALES -->
-<section class="py-5">
+<!-- SECCIÓN 4: EXPERIENCIAS GASTRONÓMICAS & ESTACIONES INTERACTIVAS -->
+<section class="py-5" style="background: rgba(254, 250, 244, 0.65);">
     <div class="container py-4">
         <div class="text-center max-w-700 mx-auto mb-5">
-            <span class="badge-luxury mb-2">Gastronomía & Tendencias</span>
-            <h2 class="display-6 fw-bold serif" style="color: var(--brand-charcoal);">Nuestras Experiencias Gastronómicas</h2>
-            <p class="text-muted">Catering tradicional de gala, barras interactivas y estaciones modernas diseñadas para sorprender.</p>
+            <span class="badge-luxury mb-2">Gastronomía & Entretenimiento</span>
+            <h2 class="display-6 fw-bold serif" style="color: var(--brand-charcoal);">Nuestras Experiencias & Estaciones Interactivas</h2>
+            <p class="text-muted">Catering tradicional, barras gourmet dulces y saladas, y estaciones creativas pensadas para sorprender.</p>
         </div>
 
         <div class="row g-4 mb-5">
@@ -413,38 +409,38 @@
                     </div>
                     <div class="p-3 d-flex flex-column flex-grow-1">
                         <h5 class="fw-bold mb-2 serif" style="color: var(--brand-charcoal);">Catering Tradicional</h5>
-                        <p class="text-muted small mb-3 flex-grow-1">Banquetes de gala con suprema de pollo en hongos, medallones de lomo en ciruela, roast beef al vino y guarniciones gratinadas.</p>
+                        <p class="text-muted small mb-3 flex-grow-1">Banquetes de gala con preparaciones finas de pollo, cerdo, res y salmón, acompañados de guarniciones gratinadas y ensaladas frescas.</p>
                         <span class="fw-semibold small" style="color: var(--brand-gold);"><i class="bi bi-award me-1"></i>Servicio a la mesa o bufete</span>
                     </div>
                 </div>
             </div>
 
-            <!-- 2. Barras Fuertes Típicas -->
+            <!-- 2. Barras Gourmet Dulces & Saladas (Recopilación Interactiva) -->
             <div class="col-lg-3 col-md-6">
                 <div class="card-service-img">
                     <div class="overflow-hidden position-relative">
-                        <img src="{% static 'images/cumpleanos.jpg' %}" alt="Barras Típicas en Tendencia" class="card-service-img-top">
-                        <span class="badge bg-danger position-absolute top-0 end-0 m-3 shadow-sm">Tendencia</span>
+                        <img src="{% static 'images/cumpleanos.jpg' %}" alt="Barras Gourmet Dulces & Saladas" class="card-service-img-top">
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-3 shadow-sm">Recopilación</span>
                     </div>
                     <div class="p-3 d-flex flex-column flex-grow-1">
-                        <h5 class="fw-bold mb-2 serif" style="color: var(--brand-charcoal);">Barras Fuertes & Típicas</h5>
-                        <p class="text-muted small mb-3 flex-grow-1">Barra interactiva de Chifrijo con chicharrón crujiente, sopa azteca con tiritas de maíz y barras de desayunos típicos completos.</p>
-                        <span class="fw-semibold small" style="color: var(--brand-gold);"><i class="bi bi-fire me-1"></i>Autoservicio dinámico</span>
+                        <h5 class="fw-bold mb-2 serif" style="color: var(--brand-charcoal);">Barras Dulces & Saladas</h5>
+                        <p class="text-muted small mb-3 flex-grow-1">Experiencia interactiva con barra de Chifrijo artesanal, sopa azteca, carritos de perros calientes gourmet, palomitas de maíz, churros crujientes y waffles belgas.</p>
+                        <span class="fw-semibold small" style="color: var(--brand-gold);"><i class="bi bi-fire me-1"></i>Estaciones dinámicas</span>
                     </div>
                 </div>
             </div>
 
-            <!-- 3. Carritos Fast Food & Snacks -->
+            <!-- 3. Estaciones de Manualidades & Creatividad -->
             <div class="col-lg-3 col-md-6">
                 <div class="card-service-img">
                     <div class="overflow-hidden position-relative">
-                        <img src="{% static 'images/bautizo.jpg' %}" alt="Carritos de Fast Food & Snacks" class="card-service-img-top">
-                        <span class="badge bg-primary position-absolute top-0 end-0 m-3 shadow-sm">Móvil</span>
+                        <img src="{% static 'images/bautizo.jpg' %}" alt="Estaciones de Manualidades y Dinámicas" class="card-service-img-top">
+                        <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-3 shadow-sm">Creatividad</span>
                     </div>
                     <div class="p-3 d-flex flex-column flex-grow-1">
-                        <h5 class="fw-bold mb-2 serif" style="color: var(--brand-charcoal);">Carritos & Snacks</h5>
-                        <p class="text-muted small mb-3 flex-grow-1">Carritos móviles de perros calientes con salsas gourmet, palomitas de maíz vintage, churros recién hechos, galletas suizas y waffles.</p>
-                        <span class="fw-semibold small" style="color: var(--brand-gold);"><i class="bi bi-cart3 me-1"></i>Estaciones divertidas</span>
+                        <h5 class="fw-bold mb-2 serif" style="color: var(--brand-charcoal);">Estaciones de Manualidades</h5>
+                        <p class="text-muted small mb-3 flex-grow-1">¡Entretén a tus invitados o equipos, desarrolla su creatividad! Rincones de arte, pintura y manualidades guiadas para eventos familiares o team building corporativo.</p>
+                        <span class="fw-semibold small" style="color: var(--brand-gold);"><i class="bi bi-palette-fill me-1"></i>Diversión e integración</span>
                     </div>
                 </div>
             </div>

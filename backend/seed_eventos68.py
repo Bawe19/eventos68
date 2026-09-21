@@ -53,6 +53,7 @@ def seed():
         ('Barras y Estaciones Típicas', 'Estaciones gastronómicas interactivas para autoservicio guiado (Chifrijo, Sopa Azteca, Desayunos típicos).', False),
         ('Carritos de Fast Food & Snacks', 'Carritos temáticos en tendencia de perros calientes, palomitas, churros, waffles, galletas suizas y esquites.', False),
         ('Estaciones Saludables', 'Barras frescas de bowls de ensaladas personalizables y estaciones de yogurt griego con granola y frutas.', False),
+        ('Estaciones de Manualidades y Creatividad', '¡Entretén a tus invitados o equipos, desarrolla su creatividad! Talleres interactivos de arte, pintura y manualidades guiadas.', False),
         ('Servicio de Decoración', 'Montaje temático, centros de mesa, telas y arreglos florales.', False),
         ('Vajilla Básica', 'Platería, platos de porcelana, cubertería de acero inoxidable y servilletas de tela.', False),
         ('Cristalería Básica', 'Copas de brindis y vasos de cristal para bebidas.', False),
@@ -87,30 +88,26 @@ def seed():
 
     # 5. Componentes y Detalles de Servicios
     detalles = [
-        # --- CATERING TRADICIONAL: PROTEÍNAS ---
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Suprema de pollo en salsa de champiñones', Decimal('3600.00'), 'Porción', 'Proteina'),
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Medallones de lomo de cerdo en reducción de ciruela', Decimal('4200.00'), 'Porción', 'Proteina'),
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Roast beef clásico en salsa gravy al vino tinto', Decimal('4500.00'), 'Porción', 'Proteina'),
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Filete de pescado a la mantequilla de finas hierbas', Decimal('3900.00'), 'Porción', 'Proteina'),
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Pechuga de pollo cordon bleu con jamón y queso', Decimal('3800.00'), 'Porción', 'Proteina'),
+        # --- CATERING TRADICIONAL: PROTEÍNAS (Opciones Generales y Versátiles) ---
+        (servicios_dict['Catering Tradicional y Banquetes'], 'Pollo: A la plancha marinada, al horno finas hierbas o fajitas salteadas', Decimal('3600.00'), 'Porción', 'Proteina'),
+        (servicios_dict['Catering Tradicional y Banquetes'], 'Cerdo: Costilla tierna caramelizada/BBQ, medallones de lomo o chicharrón colombiano crocante', Decimal('4200.00'), 'Porción', 'Proteina'),
+        (servicios_dict['Catering Tradicional y Banquetes'], 'Res: Corte selecto a la parrilla, fajitas mixtas salteadas o medallones en salsa vino tinto', Decimal('4500.00'), 'Porción', 'Proteina'),
+        (servicios_dict['Catering Tradicional y Banquetes'], 'Pescado o Salmón: Filete al ajillo / finas hierbas o salmón glaseado', Decimal('4200.00'), 'Porción', 'Proteina'),
 
-        # --- CATERING TRADICIONAL: GUARNICIONES ---
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Arroz con palmito tradicional gratinado', Decimal('950.00'), 'Porción', 'Guarnicion'),
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Arroz aromático con almendras y pasas', Decimal('850.00'), 'Porción', 'Guarnicion'),
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Puré de papa rústico gratinado con parmesano', Decimal('800.00'), 'Porción', 'Guarnicion'),
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Pastel de papa tradicional horneado', Decimal('900.00'), 'Porción', 'Guarnicion'),
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Vegetales salteados en mantequilla clarificada', Decimal('800.00'), 'Porción', 'Guarnicion'),
+        # --- CATERING TRADICIONAL: GUARNICIONES (Opciones Generales) ---
+        (servicios_dict['Catering Tradicional y Banquetes'], 'Arroz: Con palmito gratinado, aromático con almendras y pasas, o tradicional finas hierbas', Decimal('950.00'), 'Porción', 'Guarnicion'),
+        (servicios_dict['Catering Tradicional y Banquetes'], 'Papas: Puré rústico gratinado con parmesano, pastel horneado o papitas al romero', Decimal('850.00'), 'Porción', 'Guarnicion'),
+        (servicios_dict['Catering Tradicional y Banquetes'], 'Vegetales: Salteados en mantequilla clarificada o al vapor gourmet', Decimal('800.00'), 'Porción', 'Guarnicion'),
 
         # --- CATERING TRADICIONAL: ENSALADAS ---
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Ensalada verde gourmet con vinagreta de maracuyá', Decimal('800.00'), 'Porción', 'Ensalada'),
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Ensalada César tradicional con crutones y parmesano', Decimal('850.00'), 'Porción', 'Ensalada'),
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Ensalada Waldorf clásica con manzana, apio y nueces', Decimal('900.00'), 'Porción', 'Ensalada'),
+        (servicios_dict['Catering Tradicional y Banquetes'], 'Ensalada Verde Gourmet: Mix hidropónico, espinaca, cherry y vinagreta maracuyá', Decimal('800.00'), 'Porción', 'Ensalada'),
+        (servicios_dict['Catering Tradicional y Banquetes'], 'Ensalada César Clásica: Lechuga romana, aderezo césar artesanal, crutones y parmesano', Decimal('850.00'), 'Porción', 'Ensalada'),
+        (servicios_dict['Catering Tradicional y Banquetes'], 'Ensalada Waldorf o Tropical: Manzana, apio, nueces o toques frutales con aderezo fino', Decimal('900.00'), 'Porción', 'Ensalada'),
 
         # --- CATERING TRADICIONAL: POSTRES ---
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Tres leches tradicional costarricense', Decimal('1200.00'), 'Porción', 'Postre'),
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Cheesecake artesanal con coulis de frutos del bosque', Decimal('1400.00'), 'Porción', 'Postre'),
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Mousse ligero de maracuyá con crumble', Decimal('1200.00'), 'Porción', 'Postre'),
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Tarta húmeda de chocolate con ganache artesanal', Decimal('1300.00'), 'Porción', 'Postre'),
+        (servicios_dict['Catering Tradicional y Banquetes'], 'Postre Tradicional: Tres leches costarricense con merengue flameado', Decimal('1200.00'), 'Porción', 'Postre'),
+        (servicios_dict['Catering Tradicional y Banquetes'], 'Cheesecake Artesanal: Coulis de frutos del bosque o reducción de maracuyá', Decimal('1400.00'), 'Porción', 'Postre'),
+        (servicios_dict['Catering Tradicional y Banquetes'], 'Tarta Húmeda de Chocolate o Mousse Ligero de la Casa', Decimal('1250.00'), 'Porción', 'Postre'),
 
         # --- CATERING TRADICIONAL: BEBIDAS Y SALSAS ---
         (servicios_dict['Catering Tradicional y Banquetes'], 'Té frío natural con infusión de limón y hierbabuena', Decimal('500.00'), 'Vaso', 'Bebida'),
@@ -136,6 +133,12 @@ def seed():
         # --- ESTACIONES SALUDABLES ---
         (servicios_dict['Estaciones Saludables'], 'Barra de Bowls de Ensaladas Gourmet (Mix de lechugas hidropónicas, espinacas, quinua, cherry, queso feta, frutos secos y vinagretas)', Decimal('2600.00'), 'Por persona', 'Saludable'),
         (servicios_dict['Estaciones Saludables'], 'Barra de Yogurt Griego, Granola & Frutas (Yogurt natural griego cremoso, granola artesanal horneada con miel, fresas, arándanos, kiwi y chía)', Decimal('2400.00'), 'Por persona', 'Saludable'),
+
+        # --- ESTACIONES DE MANUALIDADES Y CREATIVIDAD (¡Entretén a tus invitados o equipos!) ---
+        (servicios_dict['Estaciones de Manualidades y Creatividad'], 'Taller Creativo de Pintura & Mini Caballetes (Pintura guiada sobre lienzos, acrílicos y pinceles)', Decimal('2800.00'), 'Por persona', 'Manualidades'),
+        (servicios_dict['Estaciones de Manualidades y Creatividad'], 'Taller de Slime & Arte Sensorial para Niños (Materiales seguros, brillos y accesorios)', Decimal('2200.00'), 'Por persona', 'Manualidades'),
+        (servicios_dict['Estaciones de Manualidades y Creatividad'], 'Estación de Bisutería, Pulseras & Llaveros Artesanales (Cuentas temáticas y dijes)', Decimal('2400.00'), 'Por persona', 'Manualidades'),
+        (servicios_dict['Estaciones de Manualidades y Creatividad'], 'Dinámica de Arte & Team Building Corporativo (Mural colaborativo e integración para equipos)', Decimal('35000.00'), 'Servicio', 'Manualidades'),
 
         # --- DECORACIÓN ---
         (servicios_dict['Servicio de Decoración'], 'Decoración Temática Floral de Mesas', Decimal('25000.00'), 'Servicio', 'Otro'),
@@ -186,3 +189,4 @@ def seed():
 
 if __name__ == '__main__':
     seed()
+

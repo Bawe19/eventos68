@@ -152,6 +152,10 @@ def solicitar_cotizacion(request):
             if tiene_alergias and not detalle_alergias:
                 detalle_alergias = 'Presenta restricciones alimentarias (especificar en seguimiento)'
 
+            # 3.2 Dirección de salida tentativa (si el lugar no está cerrado) y notas de preparación
+            punto_salida = strip_tags(request.POST.get('direccionSalida', ''))[:250].strip()
+            detalles_preparacion = strip_tags(request.POST.get('detallesPreparacion', ''))[:800].strip()
+
             # 4. Extraer checkboxes de componentes seleccionados de forma controlada
             items_seleccionados = []
             for key, val in request.POST.items():
@@ -183,7 +187,9 @@ def solicitar_cotizacion(request):
                 tipo_mobiliario=tipo_mobiliario,
                 incluir_vajilla=incluir_vajilla,
                 kilometros_transporte=km_transporte,
-                alergias_restricciones=detalle_alergias
+                alergias_restricciones=detalle_alergias,
+                punto_salida=punto_salida,
+                detalles_preparacion=detalles_preparacion
             )
 
             return redirect('web:solicitud_enviada', cotizacion_id=cotizacion.id)
@@ -212,6 +218,7 @@ def solicitar_cotizacion(request):
         'fast_food': detalles_comida.filter(categoria='Fast_Food'),
         'snacks': detalles_comida.filter(categoria='Snack'),
         'saludable': detalles_comida.filter(categoria='Saludable'),
+        'manualidades': detalles_comida.filter(categoria='Manualidades'),
     }
     return render(request, 'web/solicitar.html', context)
 
