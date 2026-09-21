@@ -163,33 +163,36 @@
                             <h6 class="fw-bold mb-0 text-dark">
                                 <i class="bi bi-award-fill me-2 text-warning"></i>Catering Tradicional & Banquetes de Gala
                             </h6>
-                            <small class="text-muted">Elige tus preparaciones favoritas o despliega "Ver más" para combinar varias opciones.</small>
+                            <small class="text-muted">Elige tus preparaciones favoritas o pulsa "Ver opciones" para seleccionar a tu gusto.</small>
                         </div>
                         <span class="badge bg-dark text-warning small">Personalizable</span>
                     </div>
 
-                    <!-- 1. SELECTORES DE PROTEÍNAS (Pollo, Res, Cerdo, Salmón) -->
+                    <!-- 1. SELECCIÓN DE PROTEÍNAS (Pollo, Res, Cerdo, Salmón) -->
                     <div class="row g-3 mb-3">
                         <!-- Pollo -->
                         <div class="col-lg-3 col-md-6">
-                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <h6 class="fw-bold text-dark mb-0">🍗 Pollo</h6>
-                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasPollo" role="button">
-                                        Ver más <i class="bi bi-chevron-down small"></i>
-                                    </a>
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm category-card">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="icon-gold-badge">
+                                            <i class="bi bi-egg-fried"></i>
+                                        </span>
+                                        <div>
+                                            <h6 class="fw-bold text-dark mb-0">Pollo</h6>
+                                            <small class="text-muted" id="count_label_pollo">{{ proteinas_pollo|length }} opciones</small>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-gold px-2 py-1 fw-semibold d-flex align-items-center gap-1" data-bs-toggle="collapse" data-bs-target="#opcionesPollo" aria-expanded="false" aria-controls="opcionesPollo">
+                                        <span>Ver opciones</span>
+                                        <i class="bi bi-chevron-down small chevron-icon"></i>
+                                    </button>
                                 </div>
-                                <select class="form-select form-select-sm mb-2" id="select_pollo" onchange="sincronizarSelector(this, 'pollo')">
-                                    <option value="">-- Elige opción de Pollo --</option>
-                                    {% for p in proteinas_pollo %}
-                                    <option value="{{ p.id }}">{{ p.nombre_detalle }}</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="collapse pt-2 border-top" id="verMasPollo">
-                                    <small class="text-muted d-block mb-1">Opciones disponibles:</small>
+                                <div class="collapse pt-3 mt-2 border-top" id="opcionesPollo">
+                                    <small class="text-muted d-block mb-2 fw-semibold">Selecciona tus opciones:</small>
                                     {% for p in proteinas_pollo %}
                                     <div class="form-check py-1">
-                                        <input class="form-check-input check-pollo" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}" onchange="actualizarDropdown('pollo')">
+                                        <input class="form-check-input check-cat check-pollo" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}" data-grupo="pollo" data-total="{{ proteinas_pollo|length }}">
                                         <label class="form-check-label small fw-medium text-dark" for="item_{{ p.id }}">{{ p.nombre_detalle }}</label>
                                     </div>
                                     {% endfor %}
@@ -199,24 +202,27 @@
 
                         <!-- Res -->
                         <div class="col-lg-3 col-md-6">
-                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <h6 class="fw-bold text-dark mb-0">🥩 Res</h6>
-                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasRes" role="button">
-                                        Ver más <i class="bi bi-chevron-down small"></i>
-                                    </a>
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm category-card">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="icon-gold-badge">
+                                            <i class="bi bi-fire"></i>
+                                        </span>
+                                        <div>
+                                            <h6 class="fw-bold text-dark mb-0">Res</h6>
+                                            <small class="text-muted" id="count_label_res">{{ proteinas_res|length }} opciones</small>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-gold px-2 py-1 fw-semibold d-flex align-items-center gap-1" data-bs-toggle="collapse" data-bs-target="#opcionesRes" aria-expanded="false" aria-controls="opcionesRes">
+                                        <span>Ver opciones</span>
+                                        <i class="bi bi-chevron-down small chevron-icon"></i>
+                                    </button>
                                 </div>
-                                <select class="form-select form-select-sm mb-2" id="select_res" onchange="sincronizarSelector(this, 'res')">
-                                    <option value="">-- Elige opción de Res --</option>
-                                    {% for p in proteinas_res %}
-                                    <option value="{{ p.id }}">{{ p.nombre_detalle }}</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="collapse pt-2 border-top" id="verMasRes">
-                                    <small class="text-muted d-block mb-1">Opciones disponibles:</small>
+                                <div class="collapse pt-3 mt-2 border-top" id="opcionesRes">
+                                    <small class="text-muted d-block mb-2 fw-semibold">Selecciona tus opciones:</small>
                                     {% for p in proteinas_res %}
                                     <div class="form-check py-1">
-                                        <input class="form-check-input check-res" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}" onchange="actualizarDropdown('res')">
+                                        <input class="form-check-input check-cat check-res" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}" data-grupo="res" data-total="{{ proteinas_res|length }}">
                                         <label class="form-check-label small fw-medium text-dark" for="item_{{ p.id }}">{{ p.nombre_detalle }}</label>
                                     </div>
                                     {% endfor %}
@@ -226,24 +232,27 @@
 
                         <!-- Cerdo -->
                         <div class="col-lg-3 col-md-6">
-                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <h6 class="fw-bold text-dark mb-0">🍖 Cerdo</h6>
-                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasCerdo" role="button">
-                                        Ver más <i class="bi bi-chevron-down small"></i>
-                                    </a>
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm category-card">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="icon-gold-badge">
+                                            <i class="bi bi-award-fill"></i>
+                                        </span>
+                                        <div>
+                                            <h6 class="fw-bold text-dark mb-0">Cerdo</h6>
+                                            <small class="text-muted" id="count_label_cerdo">{{ proteinas_cerdo|length }} opciones</small>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-gold px-2 py-1 fw-semibold d-flex align-items-center gap-1" data-bs-toggle="collapse" data-bs-target="#opcionesCerdo" aria-expanded="false" aria-controls="opcionesCerdo">
+                                        <span>Ver opciones</span>
+                                        <i class="bi bi-chevron-down small chevron-icon"></i>
+                                    </button>
                                 </div>
-                                <select class="form-select form-select-sm mb-2" id="select_cerdo" onchange="sincronizarSelector(this, 'cerdo')">
-                                    <option value="">-- Elige opción de Cerdo --</option>
-                                    {% for p in proteinas_cerdo %}
-                                    <option value="{{ p.id }}">{{ p.nombre_detalle }}</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="collapse pt-2 border-top" id="verMasCerdo">
-                                    <small class="text-muted d-block mb-1">Opciones disponibles:</small>
+                                <div class="collapse pt-3 mt-2 border-top" id="opcionesCerdo">
+                                    <small class="text-muted d-block mb-2 fw-semibold">Selecciona tus opciones:</small>
                                     {% for p in proteinas_cerdo %}
                                     <div class="form-check py-1">
-                                        <input class="form-check-input check-cerdo" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}" onchange="actualizarDropdown('cerdo')">
+                                        <input class="form-check-input check-cat check-cerdo" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}" data-grupo="cerdo" data-total="{{ proteinas_cerdo|length }}">
                                         <label class="form-check-label small fw-medium text-dark" for="item_{{ p.id }}">{{ p.nombre_detalle }}</label>
                                     </div>
                                     {% endfor %}
@@ -253,24 +262,27 @@
 
                         <!-- Pescado / Salmón -->
                         <div class="col-lg-3 col-md-6">
-                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <h6 class="fw-bold text-dark mb-0">🐟 Pescado / Salmón</h6>
-                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasPescado" role="button">
-                                        Ver más <i class="bi bi-chevron-down small"></i>
-                                    </a>
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm category-card">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="icon-gold-badge">
+                                            <i class="bi bi-water"></i>
+                                        </span>
+                                        <div>
+                                            <h6 class="fw-bold text-dark mb-0">Pescado / Salmón</h6>
+                                            <small class="text-muted" id="count_label_pescado">{{ proteinas_pescado|length }} opciones</small>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-gold px-2 py-1 fw-semibold d-flex align-items-center gap-1" data-bs-toggle="collapse" data-bs-target="#opcionesPescado" aria-expanded="false" aria-controls="opcionesPescado">
+                                        <span>Ver opciones</span>
+                                        <i class="bi bi-chevron-down small chevron-icon"></i>
+                                    </button>
                                 </div>
-                                <select class="form-select form-select-sm mb-2" id="select_pescado" onchange="sincronizarSelector(this, 'pescado')">
-                                    <option value="">-- Elige Pescado o Salmón --</option>
-                                    {% for p in proteinas_pescado %}
-                                    <option value="{{ p.id }}">{{ p.nombre_detalle }}</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="collapse pt-2 border-top" id="verMasPescado">
-                                    <small class="text-muted d-block mb-1">Opciones disponibles:</small>
+                                <div class="collapse pt-3 mt-2 border-top" id="opcionesPescado">
+                                    <small class="text-muted d-block mb-2 fw-semibold">Selecciona tus opciones:</small>
                                     {% for p in proteinas_pescado %}
                                     <div class="form-check py-1">
-                                        <input class="form-check-input check-pescado" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}" onchange="actualizarDropdown('pescado')">
+                                        <input class="form-check-input check-cat check-pescado" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}" data-grupo="pescado" data-total="{{ proteinas_pescado|length }}">
                                         <label class="form-check-label small fw-medium text-dark" for="item_{{ p.id }}">{{ p.nombre_detalle }}</label>
                                     </div>
                                     {% endfor %}
@@ -289,27 +301,31 @@
                         <small class="text-muted"><i class="bi bi-magic text-warning me-1"></i>Indícanos salsas, términos o aderezos para que nuestro equipo lo adapte a tu gusto.</small>
                     </div>
 
-                    <!-- 2. SELECTORES DE GUARNICIONES (Arroz, Papas, Vegetales) -->
+                    <!-- 2. SELECCIÓN DE GUARNICIONES (Arroz, Papas, Vegetales) -->
                     <div class="row g-3 mb-4">
                         <!-- Arroz -->
                         <div class="col-md-4">
-                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <h6 class="fw-bold text-dark mb-0"><i class="bi bi-circle-fill text-warning me-1" style="font-size: 0.6rem;"></i>Arroz</h6>
-                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasArroz" role="button">
-                                        Ver más <i class="bi bi-chevron-down small"></i>
-                                    </a>
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm category-card">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="icon-gold-badge">
+                                            <i class="bi bi-brightness-high-fill"></i>
+                                        </span>
+                                        <div>
+                                            <h6 class="fw-bold text-dark mb-0">Arroz</h6>
+                                            <small class="text-muted" id="count_label_arroz">{{ guarniciones_arroz|length }} opciones</small>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-gold px-2 py-1 fw-semibold d-flex align-items-center gap-1" data-bs-toggle="collapse" data-bs-target="#opcionesArroz" aria-expanded="false" aria-controls="opcionesArroz">
+                                        <span>Ver opciones</span>
+                                        <i class="bi bi-chevron-down small chevron-icon"></i>
+                                    </button>
                                 </div>
-                                <select class="form-select form-select-sm mb-2" id="select_arroz" onchange="sincronizarSelector(this, 'arroz')">
-                                    <option value="">-- Elige opción de Arroz --</option>
-                                    {% for g in guarniciones_arroz %}
-                                    <option value="{{ g.id }}">{{ g.nombre_detalle }}</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="collapse pt-2 border-top" id="verMasArroz">
+                                <div class="collapse pt-3 mt-2 border-top" id="opcionesArroz">
+                                    <small class="text-muted d-block mb-2 fw-semibold">Selecciona tus opciones:</small>
                                     {% for g in guarniciones_arroz %}
                                     <div class="form-check py-1">
-                                        <input class="form-check-input check-arroz" type="checkbox" name="item_sel_{{ g.id }}" id="item_{{ g.id }}" onchange="actualizarDropdown('arroz')">
+                                        <input class="form-check-input check-cat check-arroz" type="checkbox" name="item_sel_{{ g.id }}" id="item_{{ g.id }}" data-grupo="arroz" data-total="{{ guarniciones_arroz|length }}">
                                         <label class="form-check-label small fw-medium text-dark" for="item_{{ g.id }}">{{ g.nombre_detalle }}</label>
                                     </div>
                                     {% endfor %}
@@ -319,23 +335,27 @@
 
                         <!-- Papas -->
                         <div class="col-md-4">
-                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <h6 class="fw-bold text-dark mb-0"><i class="bi bi-circle-fill text-warning me-1" style="font-size: 0.6rem;"></i>Papas</h6>
-                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasPapas" role="button">
-                                        Ver más <i class="bi bi-chevron-down small"></i>
-                                    </a>
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm category-card">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="icon-gold-badge">
+                                            <i class="bi bi-layers-fill"></i>
+                                        </span>
+                                        <div>
+                                            <h6 class="fw-bold text-dark mb-0">Papas</h6>
+                                            <small class="text-muted" id="count_label_papas">{{ guarniciones_papas|length }} opciones</small>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-gold px-2 py-1 fw-semibold d-flex align-items-center gap-1" data-bs-toggle="collapse" data-bs-target="#opcionesPapas" aria-expanded="false" aria-controls="opcionesPapas">
+                                        <span>Ver opciones</span>
+                                        <i class="bi bi-chevron-down small chevron-icon"></i>
+                                    </button>
                                 </div>
-                                <select class="form-select form-select-sm mb-2" id="select_papas" onchange="sincronizarSelector(this, 'papas')">
-                                    <option value="">-- Elige opción de Papas --</option>
-                                    {% for g in guarniciones_papas %}
-                                    <option value="{{ g.id }}">{{ g.nombre_detalle }}</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="collapse pt-2 border-top" id="verMasPapas">
+                                <div class="collapse pt-3 mt-2 border-top" id="opcionesPapas">
+                                    <small class="text-muted d-block mb-2 fw-semibold">Selecciona tus opciones:</small>
                                     {% for g in guarniciones_papas %}
                                     <div class="form-check py-1">
-                                        <input class="form-check-input check-papas" type="checkbox" name="item_sel_{{ g.id }}" id="item_{{ g.id }}" onchange="actualizarDropdown('papas')">
+                                        <input class="form-check-input check-cat check-papas" type="checkbox" name="item_sel_{{ g.id }}" id="item_{{ g.id }}" data-grupo="papas" data-total="{{ guarniciones_papas|length }}">
                                         <label class="form-check-label small fw-medium text-dark" for="item_{{ g.id }}">{{ g.nombre_detalle }}</label>
                                     </div>
                                     {% endfor %}
@@ -345,23 +365,27 @@
 
                         <!-- Vegetales -->
                         <div class="col-md-4">
-                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <h6 class="fw-bold text-dark mb-0"><i class="bi bi-circle-fill text-warning me-1" style="font-size: 0.6rem;"></i>Vegetales</h6>
-                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasVegetales" role="button">
-                                        Ver más <i class="bi bi-chevron-down small"></i>
-                                    </a>
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm category-card">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="icon-gold-badge">
+                                            <i class="bi bi-flower1"></i>
+                                        </span>
+                                        <div>
+                                            <h6 class="fw-bold text-dark mb-0">Vegetales</h6>
+                                            <small class="text-muted" id="count_label_vegetales">{{ guarniciones_vegetales|length }} opciones</small>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-gold px-2 py-1 fw-semibold d-flex align-items-center gap-1" data-bs-toggle="collapse" data-bs-target="#opcionesVegetales" aria-expanded="false" aria-controls="opcionesVegetales">
+                                        <span>Ver opciones</span>
+                                        <i class="bi bi-chevron-down small chevron-icon"></i>
+                                    </button>
                                 </div>
-                                <select class="form-select form-select-sm mb-2" id="select_vegetales" onchange="sincronizarSelector(this, 'vegetales')">
-                                    <option value="">-- Elige opción de Vegetales --</option>
-                                    {% for g in guarniciones_vegetales %}
-                                    <option value="{{ g.id }}">{{ g.nombre_detalle }}</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="collapse pt-2 border-top" id="verMasVegetales">
+                                <div class="collapse pt-3 mt-2 border-top" id="opcionesVegetales">
+                                    <small class="text-muted d-block mb-2 fw-semibold">Selecciona tus opciones:</small>
                                     {% for g in guarniciones_vegetales %}
                                     <div class="form-check py-1">
-                                        <input class="form-check-input check-vegetales" type="checkbox" name="item_sel_{{ g.id }}" id="item_{{ g.id }}" onchange="actualizarDropdown('vegetales')">
+                                        <input class="form-check-input check-cat check-vegetales" type="checkbox" name="item_sel_{{ g.id }}" id="item_{{ g.id }}" data-grupo="vegetales" data-total="{{ guarniciones_vegetales|length }}">
                                         <label class="form-check-label small fw-medium text-dark" for="item_{{ g.id }}">{{ g.nombre_detalle }}</label>
                                     </div>
                                     {% endfor %}
@@ -370,27 +394,31 @@
                         </div>
                     </div>
 
-                    <!-- 3. SELECTORES DE ENSALADAS Y POSTRES -->
+                    <!-- 3. SELECCIÓN DE ENSALADAS Y POSTRES -->
                     <div class="row g-3">
                         <!-- Ensaladas -->
                         <div class="col-md-6">
-                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <h6 class="fw-bold text-dark mb-0">🥗 Ensaladas Frescas</h6>
-                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasEnsaladas" role="button">
-                                        Ver más <i class="bi bi-chevron-down small"></i>
-                                    </a>
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm category-card">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="icon-gold-badge">
+                                            <i class="bi bi-leaf-fill"></i>
+                                        </span>
+                                        <div>
+                                            <h6 class="fw-bold text-dark mb-0">Ensaladas Frescas</h6>
+                                            <small class="text-muted" id="count_label_ensaladas">{{ ensaladas|length }} opciones</small>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-gold px-2 py-1 fw-semibold d-flex align-items-center gap-1" data-bs-toggle="collapse" data-bs-target="#opcionesEnsaladas" aria-expanded="false" aria-controls="opcionesEnsaladas">
+                                        <span>Ver opciones</span>
+                                        <i class="bi bi-chevron-down small chevron-icon"></i>
+                                    </button>
                                 </div>
-                                <select class="form-select form-select-sm mb-2" id="select_ensaladas" onchange="sincronizarSelector(this, 'ensaladas')">
-                                    <option value="">-- Elige tu Ensalada --</option>
-                                    {% for e in ensaladas %}
-                                    <option value="{{ e.id }}">{{ e.nombre_detalle }}</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="collapse pt-2 border-top" id="verMasEnsaladas">
+                                <div class="collapse pt-3 mt-2 border-top" id="opcionesEnsaladas">
+                                    <small class="text-muted d-block mb-2 fw-semibold">Selecciona tus opciones:</small>
                                     {% for e in ensaladas %}
                                     <div class="form-check py-1">
-                                        <input class="form-check-input check-ensaladas" type="checkbox" name="item_sel_{{ e.id }}" id="item_{{ e.id }}" onchange="actualizarDropdown('ensaladas')">
+                                        <input class="form-check-input check-cat check-ensaladas" type="checkbox" name="item_sel_{{ e.id }}" id="item_{{ e.id }}" data-grupo="ensaladas" data-total="{{ ensaladas|length }}">
                                         <label class="form-check-label small fw-medium text-dark" for="item_{{ e.id }}">{{ e.nombre_detalle }}</label>
                                     </div>
                                     {% endfor %}
@@ -400,23 +428,27 @@
 
                         <!-- Postres -->
                         <div class="col-md-6">
-                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <h6 class="fw-bold text-dark mb-0">🍰 Postres</h6>
-                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasPostres" role="button">
-                                        Ver más <i class="bi bi-chevron-down small"></i>
-                                    </a>
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm category-card">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="icon-gold-badge">
+                                            <i class="bi bi-cake2-fill"></i>
+                                        </span>
+                                        <div>
+                                            <h6 class="fw-bold text-dark mb-0">Postres</h6>
+                                            <small class="text-muted" id="count_label_postres">{{ postres|length }} opciones</small>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-gold px-2 py-1 fw-semibold d-flex align-items-center gap-1" data-bs-toggle="collapse" data-bs-target="#opcionesPostres" aria-expanded="false" aria-controls="opcionesPostres">
+                                        <span>Ver opciones</span>
+                                        <i class="bi bi-chevron-down small chevron-icon"></i>
+                                    </button>
                                 </div>
-                                <select class="form-select form-select-sm mb-2" id="select_postres" onchange="sincronizarSelector(this, 'postres')">
-                                    <option value="">-- Elige tu Postre --</option>
-                                    {% for pos in postres %}
-                                    <option value="{{ pos.id }}">{{ pos.nombre_detalle }}</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="collapse pt-2 border-top" id="verMasPostres">
+                                <div class="collapse pt-3 mt-2 border-top" id="opcionesPostres">
+                                    <small class="text-muted d-block mb-2 fw-semibold">Selecciona tus opciones:</small>
                                     {% for pos in postres %}
                                     <div class="form-check py-1">
-                                        <input class="form-check-input check-postres" type="checkbox" name="item_sel_{{ pos.id }}" id="item_{{ pos.id }}" onchange="actualizarDropdown('postres')">
+                                        <input class="form-check-input check-cat check-postres" type="checkbox" name="item_sel_{{ pos.id }}" id="item_{{ pos.id }}" data-grupo="postres" data-total="{{ postres|length }}">
                                         <label class="form-check-label small fw-medium text-dark" for="item_{{ pos.id }}">{{ pos.nombre_detalle }}</label>
                                     </div>
                                     {% endfor %}
@@ -635,28 +667,30 @@ function toggleAlergias(mostrar) {
     }
 }
 
-function sincronizarSelector(selectEl, grupo) {
-    const val = selectEl.value;
-    const checks = document.querySelectorAll('.check-' + grupo);
-    checks.forEach(cb => {
-        if (val && cb.id === 'item_' + val) {
-            cb.checked = true;
-        } else {
-            cb.checked = false;
-        }
-    });
-}
-
-function actualizarDropdown(grupo) {
+function actualizarResumen(grupo, total) {
     const checks = document.querySelectorAll('.check-' + grupo + ':checked');
-    const selectEl = document.getElementById('select_' + grupo);
-    if (!selectEl) return;
-    if (checks.length === 1) {
-        const idVal = checks[0].id.replace('item_', '');
-        selectEl.value = idVal;
+    const label = document.getElementById('count_label_' + grupo);
+    if (!label) return;
+    if (checks.length === 0) {
+        label.textContent = total + ' opciones';
+        label.className = 'text-muted';
+    } else if (checks.length === 1) {
+        label.textContent = '✓ 1 seleccionada';
+        label.className = 'text-warning fw-bold';
     } else {
-        selectEl.value = '';
+        label.textContent = '✓ ' + checks.length + ' seleccionadas';
+        label.className = 'text-warning fw-bold';
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.check-cat').forEach(cb => {
+        cb.addEventListener('change', function() {
+            const grupo = this.dataset.grupo;
+            const total = this.dataset.total;
+            actualizarResumen(grupo, total);
+        });
+    });
+});
 </script>
 {% endblock %}
