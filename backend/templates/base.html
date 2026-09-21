@@ -798,7 +798,7 @@
     </footer>
 
     <!-- Floating WhatsApp Action Button (Modern Interactive UX) -->
-    <div class="position-fixed bottom-0 end-0 p-3 p-md-4" style="z-index: 1080;">
+    <div id="floatingWhatsApp" class="position-fixed bottom-0 end-0 p-3 p-md-4 floating-whatsapp-container" style="z-index: 1080; transition: bottom 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
         <a href="{{ EMPRESA_WHATSAPP_LINK }}" target="_blank" class="btn-whatsapp-pulse d-flex align-items-center justify-content-center text-white text-decoration-none shadow-lg" title="¿Tienes dudas? Escríbenos por WhatsApp al instante">
             <i class="bi bi-whatsapp fs-3"></i>
             <span class="whatsapp-label d-none d-md-inline ms-2 fw-bold small pe-2">¿Cotizar por WhatsApp?</span>
@@ -806,7 +806,7 @@
     </div>
 
     <!-- Floating Dark Mode Toggle Button (Bottom-Left Corner) -->
-    <div class="position-fixed bottom-0 start-0 p-3 p-md-4" style="z-index: 1080;">
+    <div id="floatingThemeToggle" class="position-fixed bottom-0 start-0 p-3 p-md-4 floating-theme-container" style="z-index: 1080; transition: bottom 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
         <button type="button" id="themeToggleBtn" class="btn-theme-toggle shadow-lg" title="Activar / Desactivar Modo Oscuro" aria-label="Cambiar tema">
             <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
         </button>

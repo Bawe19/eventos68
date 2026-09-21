@@ -633,20 +633,39 @@
             </div>
         </div>
 
-        <!-- SUBMIT BAR -->
-        <div class="card card-custom p-4 bg-white border-0 shadow-lg sticky-bottom">
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
-                <div>
-                    <h5 class="fw-bold mb-0 serif">¿Listo para generar tu cotización?</h5>
+        <!-- SUBMIT BAR (STICKY DOCK) -->
+        <div class="card card-custom p-3 p-md-4 bg-white shadow-lg sticky-bottom sticky-submit-bar" style="bottom: 12px; z-index: 1030; border: 1.5px solid var(--brand-gold) !important;">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+                <div class="pe-md-3">
+                    <h5 class="fw-bold mb-1 serif text-dark d-flex align-items-center gap-2">
+                        <i class="bi bi-file-earmark-pdf-fill text-warning fs-4"></i>
+                        <span>¿Listo para generar tu cotización?</span>
+                    </h5>
                     <p class="text-muted small mb-0">Recibirás tu presupuesto detallado con desglose de impuestos y PDF oficial al instante.</p>
                 </div>
-                <button type="submit" class="btn btn-brand-gold btn-lg px-5 shadow">
-                    <i class="bi bi-send-check-fill me-2"></i>Generar y Enviar Cotización
-                </button>
+                <div class="d-flex align-items-center flex-shrink-0 w-100 w-md-auto justify-content-end">
+                    <button type="submit" class="btn btn-brand-gold btn-lg px-4 px-md-5 shadow w-100 w-md-auto py-3">
+                        <i class="bi bi-send-check-fill me-2 fs-5"></i>Generar y Enviar Cotización
+                    </button>
+                </div>
             </div>
         </div>
     </form>
 </div>
+
+<style>
+/* Elevación por CSS de los botones flotantes para garantizar que jamás tapen la barra de envío */
+.floating-whatsapp-container,
+.floating-theme-container {
+    bottom: 110px !important;
+}
+@media (max-width: 767.98px) {
+    .floating-whatsapp-container,
+    .floating-theme-container {
+        bottom: 155px !important;
+    }
+}
+</style>
 
 <script>
 function seleccionarSalon(select) {
@@ -683,6 +702,18 @@ function actualizarResumen(grupo, total) {
     }
 }
 
+function sincronizarAlturaFlotantes() {
+    const submitBar = document.querySelector('.sticky-submit-bar');
+    const wa = document.getElementById('floatingWhatsApp');
+    const theme = document.getElementById('floatingThemeToggle');
+    if (submitBar && wa) {
+        const altura = submitBar.offsetHeight;
+        const nuevoBottom = (altura + 24) + 'px';
+        wa.style.setProperty('bottom', nuevoBottom, 'important');
+        if (theme) theme.style.setProperty('bottom', nuevoBottom, 'important');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.check-cat').forEach(cb => {
         cb.addEventListener('change', function() {
@@ -691,6 +722,17 @@ document.addEventListener('DOMContentLoaded', function() {
             actualizarResumen(grupo, total);
         });
     });
+
+    sincronizarAlturaFlotantes();
+    setTimeout(sincronizarAlturaFlotantes, 300);
 });
+
+window.addEventListener('resize', sincronizarAlturaFlotantes);
+if (window.ResizeObserver) {
+    const bar = document.querySelector('.sticky-submit-bar');
+    if (bar) {
+        new ResizeObserver(sincronizarAlturaFlotantes).observe(bar);
+    }
+}
 </script>
 {% endblock %}
