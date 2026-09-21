@@ -202,14 +202,30 @@ def solicitar_cotizacion(request):
     tipos_evento = TipoEvento.objects.filter(activo=True)
     servicios = Servicio.objects.filter(activo=True).prefetch_related('detalles')
     
-    # Agrupar detalles de gastronomía por categorías
+    # Agrupar detalles de gastronomía por categorías y subcategorías para selectores limpios
     detalles_comida = DetalleServicio.objects.filter(activo=True)
+
+    proteinas_pollo = detalles_comida.filter(categoria='Proteina', nombre_detalle__icontains='pollo')
+    proteinas_res = detalles_comida.filter(categoria='Proteina', nombre_detalle__icontains='res')
+    proteinas_cerdo = detalles_comida.filter(categoria='Proteina').filter(Q(nombre_detalle__icontains='cerdo') | Q(nombre_detalle__icontains='chicharrón'))
+    proteinas_pescado = detalles_comida.filter(categoria='Proteina').filter(Q(nombre_detalle__icontains='pescado') | Q(nombre_detalle__icontains='salmón'))
+
+    guarniciones_arroz = detalles_comida.filter(categoria='Guarnicion', nombre_detalle__icontains='arroz')
+    guarniciones_papas = detalles_comida.filter(categoria='Guarnicion').filter(Q(nombre_detalle__icontains='papa') | Q(nombre_detalle__icontains='puré') | Q(nombre_detalle__icontains='pastel'))
+    guarniciones_vegetales = detalles_comida.filter(categoria='Guarnicion', nombre_detalle__icontains='vegetal')
 
     context = {
         'tipos_evento': tipos_evento,
         'servicios': servicios,
         'proteinas': detalles_comida.filter(categoria='Proteina'),
+        'proteinas_pollo': proteinas_pollo,
+        'proteinas_res': proteinas_res,
+        'proteinas_cerdo': proteinas_cerdo,
+        'proteinas_pescado': proteinas_pescado,
         'guarniciones': detalles_comida.filter(categoria='Guarnicion'),
+        'guarniciones_arroz': guarniciones_arroz,
+        'guarniciones_papas': guarniciones_papas,
+        'guarniciones_vegetales': guarniciones_vegetales,
         'ensaladas': detalles_comida.filter(categoria='Ensalada'),
         'postres': detalles_comida.filter(categoria='Postre'),
         'bebidas': detalles_comida.filter(categoria='Bebida'),

@@ -156,34 +156,127 @@
                     </div>
                 </div>
 
-                <!-- BLOQUE A: CATERING TRADICIONAL & BANQUETES (PERSONALIZADO A TU MEDIDA) -->
+                <!-- BLOQUE A: CATERING TRADICIONAL & BANQUETES (SELECTORES A TU MEDIDA) -->
                 <div class="p-3 mb-4 rounded border" style="background: rgba(254, 250, 244, 0.75);">
                     <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
                         <div>
                             <h6 class="fw-bold mb-0 text-dark">
                                 <i class="bi bi-award-fill me-2 text-warning"></i>Catering Tradicional & Banquetes de Gala
                             </h6>
-                            <small class="text-muted">Tú tienes el control: selecciona las bases de tu menú y dinos exactamente cómo te gustaría su preparación.</small>
+                            <small class="text-muted">Elige tus preparaciones favoritas o despliega "Ver más" para combinar varias opciones.</small>
                         </div>
-                        <span class="badge bg-dark text-warning small">A tu Gusto</span>
+                        <span class="badge bg-dark text-warning small">Personalizable</span>
                     </div>
 
-                    <!-- Proteínas Principales -->
-                    <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">
-                        <i class="bi bi-check2-circle text-warning me-1"></i>Platos Fuertes & Proteínas (Opciones Versátiles):
-                    </p>
-                    <div class="row g-2 mb-3">
-                        {% for p in proteinas %}
-                        <div class="col-md-6">
-                            <div class="form-check p-2 border rounded bg-white h-100">
-                                <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}">
-                                <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ p.id }}">
-                                    <span class="fw-medium text-dark">{{ p.nombre_detalle }}</span>
-                                    <span class="badge bg-light text-dark border small">Proteína</span>
-                                </label>
+                    <!-- 1. SELECTORES DE PROTEÍNAS (Pollo, Res, Cerdo, Salmón) -->
+                    <div class="row g-3 mb-3">
+                        <!-- Pollo -->
+                        <div class="col-lg-3 col-md-6">
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <h6 class="fw-bold text-dark mb-0">🍗 Pollo</h6>
+                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasPollo" role="button">
+                                        Ver más <i class="bi bi-chevron-down small"></i>
+                                    </a>
+                                </div>
+                                <select class="form-select form-select-sm mb-2" id="select_pollo" onchange="sincronizarSelector(this, 'pollo')">
+                                    <option value="">-- Elige opción de Pollo --</option>
+                                    {% for p in proteinas_pollo %}
+                                    <option value="{{ p.id }}">{{ p.nombre_detalle }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="collapse pt-2 border-top" id="verMasPollo">
+                                    <small class="text-muted d-block mb-1">Opciones disponibles:</small>
+                                    {% for p in proteinas_pollo %}
+                                    <div class="form-check py-1">
+                                        <input class="form-check-input check-pollo" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}" onchange="actualizarDropdown('pollo')">
+                                        <label class="form-check-label small fw-medium text-dark" for="item_{{ p.id }}">{{ p.nombre_detalle }}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
-                        {% endfor %}
+
+                        <!-- Res -->
+                        <div class="col-lg-3 col-md-6">
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <h6 class="fw-bold text-dark mb-0">🥩 Res</h6>
+                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasRes" role="button">
+                                        Ver más <i class="bi bi-chevron-down small"></i>
+                                    </a>
+                                </div>
+                                <select class="form-select form-select-sm mb-2" id="select_res" onchange="sincronizarSelector(this, 'res')">
+                                    <option value="">-- Elige opción de Res --</option>
+                                    {% for p in proteinas_res %}
+                                    <option value="{{ p.id }}">{{ p.nombre_detalle }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="collapse pt-2 border-top" id="verMasRes">
+                                    <small class="text-muted d-block mb-1">Opciones disponibles:</small>
+                                    {% for p in proteinas_res %}
+                                    <div class="form-check py-1">
+                                        <input class="form-check-input check-res" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}" onchange="actualizarDropdown('res')">
+                                        <label class="form-check-label small fw-medium text-dark" for="item_{{ p.id }}">{{ p.nombre_detalle }}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cerdo -->
+                        <div class="col-lg-3 col-md-6">
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <h6 class="fw-bold text-dark mb-0">🍖 Cerdo</h6>
+                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasCerdo" role="button">
+                                        Ver más <i class="bi bi-chevron-down small"></i>
+                                    </a>
+                                </div>
+                                <select class="form-select form-select-sm mb-2" id="select_cerdo" onchange="sincronizarSelector(this, 'cerdo')">
+                                    <option value="">-- Elige opción de Cerdo --</option>
+                                    {% for p in proteinas_cerdo %}
+                                    <option value="{{ p.id }}">{{ p.nombre_detalle }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="collapse pt-2 border-top" id="verMasCerdo">
+                                    <small class="text-muted d-block mb-1">Opciones disponibles:</small>
+                                    {% for p in proteinas_cerdo %}
+                                    <div class="form-check py-1">
+                                        <input class="form-check-input check-cerdo" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}" onchange="actualizarDropdown('cerdo')">
+                                        <label class="form-check-label small fw-medium text-dark" for="item_{{ p.id }}">{{ p.nombre_detalle }}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pescado / Salmón -->
+                        <div class="col-lg-3 col-md-6">
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <h6 class="fw-bold text-dark mb-0">🐟 Pescado / Salmón</h6>
+                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasPescado" role="button">
+                                        Ver más <i class="bi bi-chevron-down small"></i>
+                                    </a>
+                                </div>
+                                <select class="form-select form-select-sm mb-2" id="select_pescado" onchange="sincronizarSelector(this, 'pescado')">
+                                    <option value="">-- Elige Pescado o Salmón --</option>
+                                    {% for p in proteinas_pescado %}
+                                    <option value="{{ p.id }}">{{ p.nombre_detalle }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="collapse pt-2 border-top" id="verMasPescado">
+                                    <small class="text-muted d-block mb-1">Opciones disponibles:</small>
+                                    {% for p in proteinas_pescado %}
+                                    <div class="form-check py-1">
+                                        <input class="form-check-input check-pescado" type="checkbox" name="item_sel_{{ p.id }}" id="item_{{ p.id }}" onchange="actualizarDropdown('pescado')">
+                                        <label class="form-check-label small fw-medium text-dark" for="item_{{ p.id }}">{{ p.nombre_detalle }}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Caja de Texto Interactiva: Preparación y Salsas de las Proteínas -->
@@ -192,57 +285,143 @@
                             <i class="bi bi-chat-heart-fill text-warning fs-5"></i>
                             <span>¿Cómo te gustaría la preparación de tus proteínas y tus salsas preferidas?</span>
                         </label>
-                        <textarea name="detallesPreparacion" class="form-control" rows="2" placeholder="Ej: Pollo a la plancha con salsa cremosa de champiñones, costillas de cerdo caramelizadas en salsa BBQ dulce, salmón al ajillo con limón y finas hierbas, salsa chimichurri artesanal, término de la carne de res 3/4..."></textarea>
-                        <small class="text-muted"><i class="bi bi-magic text-warning me-1"></i>¡Tú tienes el control! Nuestro chef adaptará la receta, salsa y técnica al gusto exacto de tus invitados.</small>
+                        <textarea name="detallesPreparacion" class="form-control" rows="2" placeholder="Ej: Pollo a la plancha con salsa de hongos, costillas BBQ, chimichurri casero, término de la carne 3/4..."></textarea>
+                        <small class="text-muted"><i class="bi bi-magic text-warning me-1"></i>Indícanos salsas, términos o aderezos para que nuestro equipo lo adapte a tu gusto.</small>
                     </div>
 
-                    <!-- Guarniciones & Acompañamientos -->
-                    <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">
-                        <i class="bi bi-check2-circle text-warning me-1"></i>Guarniciones & Acompañamientos:
-                    </p>
-                    <div class="row g-2 mb-3">
-                        {% for g in guarniciones %}
-                        <div class="col-md-4 col-sm-6">
-                            <div class="form-check p-2 border rounded bg-white h-100">
-                                <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ g.id }}" id="item_{{ g.id }}">
-                                <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ g.id }}">
-                                    <span class="fw-medium">{{ g.nombre_detalle }}</span>
-                                    <span class="badge bg-light text-secondary border small">Guarnición</span>
-                                </label>
+                    <!-- 2. SELECTORES DE GUARNICIONES (Arroz, Papas, Vegetales) -->
+                    <div class="row g-3 mb-4">
+                        <!-- Arroz -->
+                        <div class="col-md-4">
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <h6 class="fw-bold text-dark mb-0"><i class="bi bi-circle-fill text-warning me-1" style="font-size: 0.6rem;"></i>Arroz</h6>
+                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasArroz" role="button">
+                                        Ver más <i class="bi bi-chevron-down small"></i>
+                                    </a>
+                                </div>
+                                <select class="form-select form-select-sm mb-2" id="select_arroz" onchange="sincronizarSelector(this, 'arroz')">
+                                    <option value="">-- Elige opción de Arroz --</option>
+                                    {% for g in guarniciones_arroz %}
+                                    <option value="{{ g.id }}">{{ g.nombre_detalle }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="collapse pt-2 border-top" id="verMasArroz">
+                                    {% for g in guarniciones_arroz %}
+                                    <div class="form-check py-1">
+                                        <input class="form-check-input check-arroz" type="checkbox" name="item_sel_{{ g.id }}" id="item_{{ g.id }}" onchange="actualizarDropdown('arroz')">
+                                        <label class="form-check-label small fw-medium text-dark" for="item_{{ g.id }}">{{ g.nombre_detalle }}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
-                        {% endfor %}
+
+                        <!-- Papas -->
+                        <div class="col-md-4">
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <h6 class="fw-bold text-dark mb-0"><i class="bi bi-circle-fill text-warning me-1" style="font-size: 0.6rem;"></i>Papas</h6>
+                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasPapas" role="button">
+                                        Ver más <i class="bi bi-chevron-down small"></i>
+                                    </a>
+                                </div>
+                                <select class="form-select form-select-sm mb-2" id="select_papas" onchange="sincronizarSelector(this, 'papas')">
+                                    <option value="">-- Elige opción de Papas --</option>
+                                    {% for g in guarniciones_papas %}
+                                    <option value="{{ g.id }}">{{ g.nombre_detalle }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="collapse pt-2 border-top" id="verMasPapas">
+                                    {% for g in guarniciones_papas %}
+                                    <div class="form-check py-1">
+                                        <input class="form-check-input check-papas" type="checkbox" name="item_sel_{{ g.id }}" id="item_{{ g.id }}" onchange="actualizarDropdown('papas')">
+                                        <label class="form-check-label small fw-medium text-dark" for="item_{{ g.id }}">{{ g.nombre_detalle }}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Vegetales -->
+                        <div class="col-md-4">
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <h6 class="fw-bold text-dark mb-0"><i class="bi bi-circle-fill text-warning me-1" style="font-size: 0.6rem;"></i>Vegetales</h6>
+                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasVegetales" role="button">
+                                        Ver más <i class="bi bi-chevron-down small"></i>
+                                    </a>
+                                </div>
+                                <select class="form-select form-select-sm mb-2" id="select_vegetales" onchange="sincronizarSelector(this, 'vegetales')">
+                                    <option value="">-- Elige opción de Vegetales --</option>
+                                    {% for g in guarniciones_vegetales %}
+                                    <option value="{{ g.id }}">{{ g.nombre_detalle }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="collapse pt-2 border-top" id="verMasVegetales">
+                                    {% for g in guarniciones_vegetales %}
+                                    <div class="form-check py-1">
+                                        <input class="form-check-input check-vegetales" type="checkbox" name="item_sel_{{ g.id }}" id="item_{{ g.id }}" onchange="actualizarDropdown('vegetales')">
+                                        <label class="form-check-label small fw-medium text-dark" for="item_{{ g.id }}">{{ g.nombre_detalle }}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Ensaladas Frescas y Postres de Gala -->
+                    <!-- 3. SELECTORES DE ENSALADAS Y POSTRES -->
                     <div class="row g-3">
+                        <!-- Ensaladas -->
                         <div class="col-md-6">
-                            <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">
-                                <i class="bi bi-check2-circle text-warning me-1"></i>Ensaladas Frescas:
-                            </p>
-                            {% for e in ensaladas %}
-                            <div class="form-check p-2 border rounded bg-white mb-2">
-                                <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ e.id }}" id="item_{{ e.id }}">
-                                <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ e.id }}">
-                                    <span class="fw-medium">{{ e.nombre_detalle }}</span>
-                                    <span class="badge bg-light text-success border small">Fresco</span>
-                                </label>
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <h6 class="fw-bold text-dark mb-0">🥗 Ensaladas Frescas</h6>
+                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasEnsaladas" role="button">
+                                        Ver más <i class="bi bi-chevron-down small"></i>
+                                    </a>
+                                </div>
+                                <select class="form-select form-select-sm mb-2" id="select_ensaladas" onchange="sincronizarSelector(this, 'ensaladas')">
+                                    <option value="">-- Elige tu Ensalada --</option>
+                                    {% for e in ensaladas %}
+                                    <option value="{{ e.id }}">{{ e.nombre_detalle }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="collapse pt-2 border-top" id="verMasEnsaladas">
+                                    {% for e in ensaladas %}
+                                    <div class="form-check py-1">
+                                        <input class="form-check-input check-ensaladas" type="checkbox" name="item_sel_{{ e.id }}" id="item_{{ e.id }}" onchange="actualizarDropdown('ensaladas')">
+                                        <label class="form-check-label small fw-medium text-dark" for="item_{{ e.id }}">{{ e.nombre_detalle }}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
                             </div>
-                            {% endfor %}
                         </div>
+
+                        <!-- Postres -->
                         <div class="col-md-6">
-                            <p class="fw-semibold text-secondary small mb-2 text-uppercase" style="letter-spacing: 0.05em;">
-                                <i class="bi bi-check2-circle text-warning me-1"></i>Postres de Gala:
-                            </p>
-                            {% for pos in postres %}
-                            <div class="form-check p-2 border rounded bg-white mb-2">
-                                <input class="form-check-input ms-1 me-2" type="checkbox" name="item_sel_{{ pos.id }}" id="item_{{ pos.id }}">
-                                <label class="form-check-label d-flex justify-content-between align-items-center pe-2 w-100" for="item_{{ pos.id }}">
-                                    <span class="fw-medium">{{ pos.nombre_detalle }}</span>
-                                    <span class="badge bg-light text-primary border small">Artesanal</span>
-                                </label>
+                            <div class="card p-3 border rounded bg-white h-100 shadow-sm">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <h6 class="fw-bold text-dark mb-0">🍰 Postres</h6>
+                                    <a class="small text-warning text-decoration-none fw-semibold" data-bs-toggle="collapse" href="#verMasPostres" role="button">
+                                        Ver más <i class="bi bi-chevron-down small"></i>
+                                    </a>
+                                </div>
+                                <select class="form-select form-select-sm mb-2" id="select_postres" onchange="sincronizarSelector(this, 'postres')">
+                                    <option value="">-- Elige tu Postre --</option>
+                                    {% for pos in postres %}
+                                    <option value="{{ pos.id }}">{{ pos.nombre_detalle }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="collapse pt-2 border-top" id="verMasPostres">
+                                    {% for pos in postres %}
+                                    <div class="form-check py-1">
+                                        <input class="form-check-input check-postres" type="checkbox" name="item_sel_{{ pos.id }}" id="item_{{ pos.id }}" onchange="actualizarDropdown('postres')">
+                                        <label class="form-check-label small fw-medium text-dark" for="item_{{ pos.id }}">{{ pos.nombre_detalle }}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
                             </div>
-                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -453,6 +632,30 @@ function toggleAlergias(mostrar) {
     } else {
         caja.style.display = 'none';
         input.value = '';
+    }
+}
+
+function sincronizarSelector(selectEl, grupo) {
+    const val = selectEl.value;
+    const checks = document.querySelectorAll('.check-' + grupo);
+    checks.forEach(cb => {
+        if (val && cb.id === 'item_' + val) {
+            cb.checked = true;
+        } else {
+            cb.checked = false;
+        }
+    });
+}
+
+function actualizarDropdown(grupo) {
+    const checks = document.querySelectorAll('.check-' + grupo + ':checked');
+    const selectEl = document.getElementById('select_' + grupo);
+    if (!selectEl) return;
+    if (checks.length === 1) {
+        const idVal = checks[0].id.replace('item_', '');
+        selectEl.value = idVal;
+    } else {
+        selectEl.value = '';
     }
 }
 </script>
