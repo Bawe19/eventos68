@@ -129,20 +129,20 @@ def seed():
         (servicios_dict['Catering Tradicional y Banquetes'], 'Té frío natural con infusión de limón y hierbabuena', Decimal('500.00'), 'Vaso', 'Bebida'),
         (servicios_dict['Catering Tradicional y Banquetes'], 'Gaseosas variadas y agua embotellada', Decimal('800.00'), 'Unidad', 'Bebida'),
         (servicios_dict['Catering Tradicional y Banquetes'], 'Estación de café costarricense chorreado e infusiones', Decimal('600.00'), 'Taza', 'Bebida'),
-        (servicios_dict['Catering Tradicional y Banquetes'], 'Salsas gourmet y aderezos especiales de la casa', Decimal('250.00'), 'Porción', 'Salsa'),
+        (servicios_dict['Catering Tradicional y Banquetes'], 'Salsas y aderezos especiales de la casa', Decimal('250.00'), 'Porción', 'Salsa'),
 
         # --- BARRAS FUERTES / TÍPICAS EN TENDENCIA ---
-        (servicios_dict['Barras y Estaciones Típicas'], 'Barra de Chifrijo (Chicharrón de cerdo carnoso, arroz blanco, frijoles tiernos, pico de gallo, aguacate y chips de tortilla)', Decimal('3800.00'), 'Por persona', 'Barra_Fuerte'),
+        (servicios_dict['Barras y Estaciones Típicas'], 'Barra de chifrijo (Chicharrón de cerdo carnoso, arroz blanco, frijoles tiernos, pico de gallo, aguacate y chips de tortilla)', Decimal('3800.00'), 'Por persona', 'Barra_Fuerte'),
         (servicios_dict['Barras y Estaciones Típicas'], 'Barra de Sopa Azteca (Caldo de tomate y chipotle artesanal, pollo desmechado, aguacate, queso tierno, natilla y tiritas de maíz)', Decimal('3500.00'), 'Por persona', 'Barra_Fuerte'),
         (servicios_dict['Barras y Estaciones Típicas'], 'Barra de Desayunos Típicos (Gallo pinto tradicional, huevos al gusto, plátano maduro, queso frito o turrialba, natilla y tortillas palmeadas)', Decimal('3900.00'), 'Por persona', 'Barra_Fuerte'),
 
         # --- CARRITOS FAST FOOD ---
-        (servicios_dict['Carritos de Fast Food & Snacks'], 'Carrito de Perros Calientes (Salchicha premium, pan artesanal, tocineta crocante, papitas tostadas, queso fundido y salsas premium)', Decimal('2800.00'), 'Por persona', 'Fast_Food'),
+        (servicios_dict['Carritos de Fast Food & Snacks'], 'Carrito de Perros Calientes (Salchicha tradicional, pan suave, tocineta crocante, papitas tostadas, queso fundido y salsas de la casa)', Decimal('2800.00'), 'Por persona', 'Fast_Food'),
 
         # --- CARRITOS DE SNACKS & GOLOSINAS ---
         (servicios_dict['Carritos de Fast Food & Snacks'], 'Carrito de Palomitas de Maíz (Crispetas recién estalladas en máquina vintage, saladas y acarameladas en conos temáticos)', Decimal('1200.00'), 'Por persona', 'Snack'),
         (servicios_dict['Carritos de Fast Food & Snacks'], 'Carrito de Churros Artesanales (Churros crujientes al momento con azúcar y canela, acompañados de dulce de leche y chocolate)', Decimal('1600.00'), 'Por persona', 'Snack'),
-        (servicios_dict['Carritos de Fast Food & Snacks'], 'Estación de Waffles Belgas (Waffles dorados con miel de maple, nutella, fresas frescas, banano y crema chantilly)', Decimal('1800.00'), 'Por persona', 'Snack'),
+        (servicios_dict['Carritos de Fast Food & Snacks'], 'Estación de Waffles (Waffles dorados con miel de maple, nutella, fresas frescas, banano y crema chantilly)', Decimal('1800.00'), 'Por persona', 'Snack'),
         (servicios_dict['Carritos de Fast Food & Snacks'], 'Estación de Galletas Suizas Artesanales (Galletas finas horneadas tradicionales con rellenos y decoraciones selectas)', Decimal('1300.00'), 'Por persona', 'Snack'),
         (servicios_dict['Carritos de Fast Food & Snacks'], 'Carrito de Elotes Locos & Esquites (Mazorcas con salsas, queso rallado, limón y vasitos de esquites con mayonesa y chile piquín)', Decimal('1600.00'), 'Por persona', 'Snack'),
 
