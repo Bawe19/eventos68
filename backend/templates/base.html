@@ -155,12 +155,18 @@
         }
 
         .navbar-brand-img {
-            height: 60px;
+            height: 56px;
+            width: auto;
             object-fit: contain;
             background: transparent;
             border-radius: 0;
             box-shadow: none;
+            transition: filter 0.3s ease, transform 0.2s ease;
             filter: drop-shadow(0 2px 4px rgba(40, 30, 20, 0.08));
+        }
+
+        .navbar-brand-img:hover {
+            transform: scale(1.02);
         }
 
         .navbar-brand-title {
@@ -422,6 +428,9 @@
             background-color: rgba(22, 20, 18, 0.96) !important;
             border-bottom: 1px solid rgba(200, 134, 10, 0.25) !important;
         }
+        body.dark-mode .navbar-brand-img {
+            filter: brightness(0) invert(1) drop-shadow(0 2px 6px rgba(255, 255, 255, 0.2));
+        }
         body.dark-mode .nav-link-custom {
             color: #ede5da !important;
         }
@@ -655,7 +664,7 @@
     <nav class="navbar navbar-expand-lg navbar-brand-custom sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="{% url 'web:home' %}" title="{{ EMPRESA_NOMBRE }}">
-                <img src="{% static 'images/logos/logo_transparente_negro.png' %}" alt="{{ EMPRESA_NOMBRE }}" class="navbar-brand-img" onerror="this.onerror=null; this.src='{% static 'images/logos/sello68.jpg' %}';">
+                <img src="{% static 'images/logos/segundologo_transparente.png' %}" alt="{{ EMPRESA_NOMBRE }}" class="navbar-brand-img" onerror="this.onerror=null; this.src='{% static 'images/logos/segundologoescritorio.png' %}';">
             </a>
             <button class="navbar-toggler text-dark border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
                 <span class="navbar-toggler-icon"></span>
