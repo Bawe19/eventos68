@@ -5,12 +5,12 @@ services:
     buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
     startCommand: "gunicorn config.wsgi:application"
     plan: free
-    region: oregon
+    region: ohio
     envVars:
       - key: DEBUG
         value: "False"
       - key: ALLOWED_HOSTS
-        value: ".onrender.com,localhost,127.0.0.1"
+        value: ".onrender.com,localhost,127.0.0.1,eventos68.lat,www.eventos68.lat"
       - key: SECRET_KEY
         generateValue: true
       - key: DATABASE_URL
