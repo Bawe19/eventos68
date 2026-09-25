@@ -26,7 +26,8 @@ class CotizacionService:
                         incluir_mobiliario: bool = True, tipo_mobiliario: str = 'Redondas',
                         incluir_vajilla: bool = True, kilometros_transporte: int = 1,
                         alergias_restricciones: str = 'No presenta / No aplica',
-                        punto_salida: str = '', detalles_preparacion: str = '') -> Cotizacion:
+                        punto_salida: str = '', detalles_preparacion: str = '',
+                        notas_adicionales: str = '') -> Cotizacion:
         """
         Crea una solicitud pública de cotización con todas las automatizaciones inteligentes
         de vajilla, cristalería, mantelería, mobiliario, transporte, punto de salida y preferencias gastronómicas.
@@ -58,6 +59,7 @@ class CotizacionService:
             direccion_evento=direccion_evento,
             punto_salida=punto_salida.strip(),
             detalles_preparacion=detalles_preparacion.strip(),
+            notas_adicionales=notas_adicionales.strip(),
             estado='Solicitud',
             modalidad_servicio=modalidad_servicio,
             alergias_restricciones=alergias_restricciones or 'No presenta / No aplica',

@@ -90,6 +90,12 @@
                     <span class="text-secondary small">{{ cotizacion.detalles_preparacion }}</span>
                 </div>
                 {% endif %}
+                {% if cotizacion.notas_adicionales %}
+                <div class="mt-2 p-2 rounded bg-light border">
+                    <small class="fw-bold text-dark d-block"><i class="bi bi-stars text-warning me-1"></i>Servicios Adicionales & Notas del Cliente:</small>
+                    <span class="text-secondary small" style="white-space: pre-line;">{{ cotizacion.notas_adicionales }}</span>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

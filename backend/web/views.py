@@ -1,4 +1,6 @@
+import os
 import time
+import logging
 from decimal import Decimal
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
@@ -13,6 +15,8 @@ from django.db.models import Sum, Q, Count
 from django.utils import timezone
 from django.utils.html import strip_tags
 
+logger = logging.getLogger(__name__)
+
 from core.models import (
     Cliente, TipoEvento, Servicio, DetalleServicio,
     Cotizacion, DetalleCotizacion, Evento, Gasto, Pago
@@ -22,6 +26,66 @@ from core.pdf_service import generar_pdf_cotizacion
 
 ALLOWED_UPLOAD_EXTS = ('.png', '.jpg', '.jpeg', '.webp', '.pdf')
 MAX_UPLOAD_SIZE = 5 * 1024 * 1024  # 5 MB
+
+
+def notificar_equipo_nueva_cotizacion(cotizacion):
+    """
+    Envía una notificación por correo al equipo de Eventos68 cuando entra una nueva cotización.
+    Maneja excepciones de forma segura para no interrumpir el flujo del usuario si el servidor SMTP no está configurado.
+    """
+    try:
+        destinatarios = []
+        admin_email = os.getenv('ADMIN_NOTIFICATION_EMAIL') or os.getenv('EMAIL_HOST_USER') or 'info@eventos68.lat'
+        if admin_email:
+            destinatarios.append(admin_email)
+        
+        extra_emails = os.getenv('EXTRA_NOTIFICATION_EMAILS', '')
+        if extra_emails:
+            destinatarios.extend([e.strip() for e in extra_emails.split(',') if e.strip()])
+
+        destinatarios = list(set([d for d in destinatarios if d]))
+        if not destinatarios:
+            return
+
+        asunto = f"🔔 Nueva Solicitud de Cotización #EV68-{cotizacion.id:04d} - {cotizacion.cliente.nombre}"
+        cuerpo = (
+            f"¡Nueva solicitud de cotización recibida en Eventos68!\n\n"
+            f"DATOS DEL CLIENTE:\n"
+            f"• Nombre: {cotizacion.cliente.nombre}\n"
+            f"• Cédula/Identificación: {cotizacion.cliente.identificacion}\n"
+            f"• Teléfono / WhatsApp: {cotizacion.cliente.telefono}\n"
+            f"• Correo: {cotizacion.cliente.correo}\n\n"
+            f"DETALLES DEL EVENTO:\n"
+            f"• Tipo de Evento: {cotizacion.tipo_evento.nombre}\n"
+            f"• Fecha Programada: {cotizacion.fecha_evento.strftime('%d/%m/%Y')}\n"
+            f"• Cantidad de Personas: {cotizacion.cantidad_personas} invitados\n"
+            f"• Lugar / Zona: {cotizacion.direccion_evento}\n"
+            f"• Punto de Salida: {cotizacion.punto_salida or 'No especificado'}\n"
+            f"• Modalidad: {cotizacion.modalidad_servicio}\n"
+            f"• Alergias / Restricciones: {cotizacion.alergias_restricciones}\n\n"
+        )
+        if cotizacion.detalles_preparacion:
+            cuerpo += f"PREFERENCIAS GASTRONÓMICAS:\n{cotizacion.detalles_preparacion}\n\n"
+        if cotizacion.notas_adicionales:
+            cuerpo += f"SERVICIOS ADICIONALES Y NOTAS:\n{cotizacion.notas_adicionales}\n\n"
+
+        cuerpo += (
+            f"PANEL DE GESTIÓN:\n"
+            f"Puedes revisar y responder a esta solicitud en:\n"
+            f"https://www.eventos68.lat/gestor/cotizacion/{cotizacion.id}/\n\n"
+            f"--\nEventos68 Notificaciones Automáticas"
+        )
+
+        from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', None) or 'Eventos68 <notificaciones@eventos68.lat>'
+        email = EmailMessage(
+            subject=asunto,
+            body=cuerpo,
+            from_email=from_email,
+            to=destinatarios
+        )
+        email.send(fail_silently=True)
+    except Exception as e:
+        logger.warning(f"Aviso: No se pudo enviar el correo de notificación de cotización: {e}")
 
 
 def validar_archivo_seguro(archivo):
@@ -156,6 +220,19 @@ def solicitar_cotizacion(request):
             punto_salida = strip_tags(request.POST.get('direccionSalida', ''))[:250].strip()
             detalles_preparacion = strip_tags(request.POST.get('detallesPreparacion', ''))[:800].strip()
 
+            # 3.3 Servicios adicionales de entretenimiento, producción y requerimientos especiales
+            servicios_adicionales = [strip_tags(s).strip() for s in request.POST.getlist('servicios_adicionales') if s.strip()]
+            otro_servicio_adicional = strip_tags(request.POST.get('otro_servicio_adicional', '')).strip()[:800]
+
+            notas_partes = []
+            if servicios_adicionales:
+                notas_partes.append("Servicios Adicionales Requeridos:\n" + "\n".join(f"• {item}" for item in servicios_adicionales))
+            if otro_servicio_adicional:
+                notas_partes.append(f"Requerimientos Especiales / Otros Servicios:\n{otro_servicio_adicional}")
+            if detalle_otros:
+                notas_partes.append(f"Otros Detalles de Alimentación:\n{detalle_otros}")
+            notas_adicionales_texto = "\n\n".join(notas_partes)
+
             # 4. Extraer checkboxes de componentes seleccionados de forma controlada
             items_seleccionados = []
             for key, val in request.POST.items():
@@ -189,8 +266,12 @@ def solicitar_cotizacion(request):
                 kilometros_transporte=km_transporte,
                 alergias_restricciones=detalle_alergias,
                 punto_salida=punto_salida,
-                detalles_preparacion=detalles_preparacion
+                detalles_preparacion=detalles_preparacion,
+                notas_adicionales=notas_adicionales_texto
             )
+
+            # 6. Notificar al equipo de Eventos68 por correo electrónico (sin bloquear al usuario)
+            notificar_equipo_nueva_cotizacion(cotizacion)
 
             return redirect('web:solicitud_enviada', cotizacion_id=cotizacion.id)
 

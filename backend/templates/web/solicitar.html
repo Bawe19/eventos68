@@ -80,6 +80,7 @@
                         <input type="number" name="cantidadPersonas" id="cantidadPersonas" class="form-control" min="1" value="50" required>
                     </div>
                     <div class="col-md-12">
+                        <!-- Selector de salones y quintas con convenio (Oculto temporalmente mientras se cierran tratos)
                         <label class="form-label fw-semibold">Salón o Quinta Asociada (Convenios Opcionales)</label>
                         <select class="form-select mb-2" onchange="seleccionarSalon(this)">
                             <option value="">-- Opcional: Seleccionar salón con convenio para autocompletar --</option>
@@ -89,8 +90,9 @@
                             <option value="Salón Garden Palace, 2 km sur del Molino, Cartago">Salón Garden Palace (Convenio - Cartago)</option>
                             <option value="Quinta El Mirador, San Antonio de Escazú, 500m oeste del mirador, San José">Quinta El Mirador (Convenio - Escazú)</option>
                         </select>
-                        <label class="form-label fw-semibold">Dirección Exacta del Evento *</label>
-                        <input type="text" name="direccionEvento" id="direccionEvento" class="form-control" required placeholder="Lugar exacto o zona donde se proyecta el evento">
+                        -->
+                        <label class="form-label fw-semibold">Lugar o Zona Tentativa del Evento *</label>
+                        <input type="text" name="direccionEvento" id="direccionEvento" class="form-control" required placeholder="Ej: San José, Heredia, Alajuela, Cartago o tu zona tentativa">
                         <small class="text-muted"><i class="bi bi-geo-alt me-1 text-warning"></i>Si aún estás cotizando o no has cerrado el salón definitivo, puedes indicar "Por definir" o tu zona tentativa.</small>
                     </div>
                 </div>
@@ -633,19 +635,191 @@
             </div>
         </div>
 
+        <!-- 5. SERVICIOS ADICIONALES & ENTRETENIMIENTO (OPCIONALES) -->
+        <div class="card card-custom mb-4">
+            <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold text-dark">
+                    <i class="bi bi-stars text-warning me-2"></i>5. Servicios Adicionales & Entretenimiento (Opcionales)
+                </h5>
+                <span class="badge bg-warning text-dark small fw-semibold">Personaliza tu Evento</span>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-muted small mb-4">
+                    Selecciona todos los servicios complementarios que deseas incluir en tu evento. Aprovechamos nuestra red de artistas, técnicos y animadores profesionales para ofrecerte tarifas preferenciales y producción integral.
+                </p>
+
+                <!-- Fila 1: Música, Sonido & Shows -->
+                <div class="mb-4">
+                    <h6 class="fw-bold text-dark small text-uppercase mb-3" style="letter-spacing: 0.05em; color: var(--brand-gold) !important;">
+                        <i class="bi bi-music-note-beamed me-2"></i>Música, Audio & Show en Vivo
+                    </h6>
+                    <div class="row g-2">
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Animación - Maestro de Ceremonias">
+                                <span class="small fw-semibold text-dark">Animación - Maestro de Ceremonias</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="DJ - Música">
+                                <span class="small fw-semibold text-dark">DJ - Música</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Sonido - Equipo">
+                                <span class="small fw-semibold text-dark">Sonido - Equipo</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Artista en Vivo">
+                                <span class="small fw-semibold text-dark">Artista en Vivo</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-6 col-md-8 col-sm-12">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Música Ambiente (Saxofón, Violín, Piano entre otros)">
+                                <span class="small fw-semibold text-dark">Música Ambiente (Saxofón, Violín, Piano entre otros)</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Mariachi">
+                                <span class="small fw-semibold text-dark">Mariachi</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Comparsa">
+                                <span class="small fw-semibold text-dark">Comparsa</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fila 2: Fotografía, Contenido, Efectos & Barra -->
+                <div class="mb-4">
+                    <h6 class="fw-bold text-dark small text-uppercase mb-3" style="letter-spacing: 0.05em; color: var(--brand-gold) !important;">
+                        <i class="bi bi-camera-reels-fill me-2"></i>Producción Visual, Efectos & Barra
+                    </h6>
+                    <div class="row g-2">
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Fotógrafo">
+                                <span class="small fw-semibold text-dark">Fotógrafo</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Video Maker">
+                                <span class="small fw-semibold text-dark">Video Maker</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Generador de Contenido">
+                                <span class="small fw-semibold text-dark">Generador de Contenido</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="PhotoBooth">
+                                <span class="small fw-semibold text-dark">PhotoBooth</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Juego de Pólvora">
+                                <span class="small fw-semibold text-dark">Juego de Pólvora</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Pista de Baile Led">
+                                <span class="small fw-semibold text-dark">Pista de Baile LED</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Barra Coctelera">
+                                <span class="small fw-semibold text-dark">Barra Coctelera</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fila 3: Animación Infantil & Recreación -->
+                <div class="mb-4">
+                    <h6 class="fw-bold text-dark small text-uppercase mb-3" style="letter-spacing: 0.05em; color: var(--brand-gold) !important;">
+                        <i class="bi bi-emoji-smile-fill me-2"></i>Animación Infantil, Dinámicas & Recreación
+                    </h6>
+                    <div class="row g-2">
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Pinta Caritas">
+                                <span class="small fw-semibold text-dark">Pinta Caritas</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Payasito">
+                                <span class="small fw-semibold text-dark">Payasito</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Mago en Vivo">
+                                <span class="small fw-semibold text-dark">Mago en Vivo</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Inflables">
+                                <span class="small fw-semibold text-dark">Inflables</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Juegos Recreativos">
+                                <span class="small fw-semibold text-dark">Juegos Recreativos</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <label class="form-check p-2 border rounded bg-white h-100 d-flex align-items-center gap-2 mb-0 shadow-sm cursor-pointer">
+                                <input class="form-check-input ms-1" type="checkbox" name="servicios_adicionales" value="Instructor">
+                                <span class="small fw-semibold text-dark">Instructor</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cajón de texto para explicar algún servicio que quiera -->
+                <div class="mt-4 pt-3 border-top">
+                    <label class="form-label fw-bold text-dark d-flex align-items-center gap-2">
+                        <i class="bi bi-chat-text-fill text-warning"></i>
+                        <span>Otros Servicios o Requerimientos Especiales:</span>
+                    </label>
+                    <textarea name="otro_servicio_adicional" rows="3" class="form-control" placeholder="Explícanos aquí si requieres algún servicio especial no listado arriba, horario extendido, temática particular o especificaciones para tu evento..."></textarea>
+                    <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Revisaremos tus solicitudes especiales para integrarlas con las mejores tarifas en tu cotización personalizada.</small>
+                </div>
+            </div>
+        </div>
+
         <!-- SUBMIT BAR (STICKY DOCK) -->
         <div class="card card-custom p-3 p-md-4 shadow-lg sticky-bottom submit-sticky-bar" style="bottom: 15px; z-index: 1020; border: 1.5px solid var(--brand-gold) !important;">
             <div class="row align-items-center g-3">
                 <div class="col-12 col-md-7 col-lg-8">
                     <h5 class="fw-bold mb-1 serif text-dark d-flex align-items-center gap-2">
-                        <i class="bi bi-file-earmark-pdf-fill text-warning fs-4"></i>
-                        <span>¿Listo para generar tu cotización?</span>
+                        <i class="bi bi-send-check-fill text-warning fs-4"></i>
+                        <span>¿Listo para enviar tu solicitud?</span>
                     </h5>
-                    <p class="text-muted small mb-0">Recibirás tu presupuesto detallado con desglose de impuestos y PDF oficial al instante.</p>
+                    <p class="text-muted small mb-0">Analizaremos tus selecciones para enviarte una cotización formal y personalizada.</p>
                 </div>
                 <div class="col-12 col-md-5 col-lg-4 text-md-end submit-btn-wrapper">
                     <button type="submit" class="btn btn-brand-gold btn-lg px-4 shadow-sm" style="white-space: nowrap;">
-                        <i class="bi bi-send-check-fill me-2"></i>Generar y Enviar Cotización
+                        <i class="bi bi-send-check-fill me-2"></i>Enviar Solicitud
                     </button>
                 </div>
             </div>
